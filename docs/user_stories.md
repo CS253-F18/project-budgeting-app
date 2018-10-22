@@ -1,10 +1,12 @@
 Budgeting Application User Stories
+-----------------------
 
 Authors: Joe Ruppenthal, Johnny Whitfield, Jonathan Nocek, Alex O’Neill
 
 The system for priorities and estimates are ranked by high, medium, and low priorities or estimates.  High priority is a user story that we want to accomplish first.  High estimate is a user story that will take a lot of work to accomplish.  
 
 High Priority
+-----------------------
 
 Add an income
 -----------------------
@@ -120,6 +122,7 @@ As a user, I want to be able to view my total net income so that I can view how 
    3. Test step 3: Check that the right data shows up for each user
 
 Medium Priority
+-----------------------
 
 Expense Alert
 -----------------------
@@ -182,6 +185,7 @@ As a user, I want to be able to filter which incomes and expenses are being disp
    3. Test step 3: View data based on the category
 
 Low Priority
+-----------------------
 
 Sub-account
 -----------------------
