@@ -5,6 +5,7 @@ Authors: Joe Ruppenthal, Johnny Whitfield, Jonathan Nocek, Alex O’Neill
 The system for priorities and estimates are ranked by high, medium, and low priorities or estimates.  High priority is a user story that we want to accomplish first.  High estimate is a user story that will take a lot of work to accomplish.  
 
 High Priority
+
 Add an income
 -----------------------
 As a user, I want to be able to add an income to my account so that I can view my inflows of money.
@@ -117,9 +118,9 @@ As a user, I want to be able to view my total net income so that I can view how 
    1. Test step 1: Create a total net income function
    2. Test step 2: Make the total net income individual for each user
    3. Test step 3: Check that the right data shows up for each user
-   4. …
 
 Medium Priority
+
 Expense Alert
 -----------------------
 As a user, I want to receive an alert when I close to or have gone over a limit that I set for expenses so that my expenses do not exceed my income.
@@ -128,10 +129,9 @@ As a user, I want to receive an alert when I close to or have gone over a limit 
  - Estimate: Medium
  - Confirmation:
 
-   1. Test step 1: 
-   2. Test step 2
-   3. Test step 3
-   4. …
+   1. Test step 1: add an income
+   2. Test step 2: add an expense greater than income
+   3. Test step 3: check if alert appears
 
 Regular expenses
 -----------------------
@@ -144,7 +144,6 @@ As a user, I want to be able to set regular expenses that will be applied to my 
    1. Test step 1: Make regular expenses that show up as user input
    2. Test step 2: Test to make sure that they show up monthly
    3. Test step 3: Make sure that they do not show up any time but monthly
-   4. …
 
 Limit on Expenses
 -----------------------
@@ -183,6 +182,7 @@ As a user, I want to be able to filter which incomes and expenses are being disp
    3. Test step 3: View data based on the category
 
 Low Priority
+
 Sub-account
 -----------------------
 As a user, I want to be able to create a sub-account within my user-account so that I can isolate specific incomes and expenses to budget for specific events like a birthday or christmas.
@@ -221,7 +221,6 @@ As a user, I want to be able to delete my account so that my information is remo
    1. Test step 1: A a delete option
    2. Test step 2: Make sure that it shows up for the user
    3. Test step 3: Make sure that it deletes the users data from the database
-   4. …
 
 Monthly history
 -----------------------
