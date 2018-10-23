@@ -12,8 +12,9 @@ Add an income
 -----------------------
 As a user, I want to be able to add an income to my account so that I can view my inflows of money.
 
- - Priority: high
+ - Priority: High
  - Estimate: Low
+ - Dependencies: Create a database
  - Confirmation:
 
    1. Test step 1: enter a number in the income field
@@ -26,6 +27,7 @@ As a user, I want to be able to add an expense to my account so that I can view 
 
  - Priority: High
  - Estimate: Low
+ - Dependencies: Create a database
  - Confirmation:
    1. Test step 1: enter a number in the expense field
    2. Test step 2: check if the database is not empty
@@ -37,6 +39,7 @@ As a user, I want to be able to remove an income from my account so that my infl
 
  - Priority: High
  - Estimate: Low
+ - Dependencies: Create a database
  - Confirmation:
 
    1. Test step 1: add an income
@@ -50,6 +53,7 @@ As a user, I want to be able to remove an expense from my account so that my out
 
  - Priority: High
  - Estimate: Low
+ - Dependencies: Create a database
  - Confirmation:
 
    1. Test step 1: add an expense
@@ -63,6 +67,7 @@ As a user, I want to be able to edit an income from my account so that I can upd
 
  - Priority: High
  - Estimate: Low
+ - Dependencies: Add an income
  - Confirmation:
 
    1. Test step 1: add an income
@@ -77,6 +82,7 @@ As a user, I want to be able to edit an expense from my account so that I can up
 
  - Priority: High
  - Estimate: Low
+ - Dependencies: Add an expense
  - Confirmation:
 
    1. Test step 1: add an expense
@@ -91,6 +97,7 @@ As a user, I want to be able to view the date an expense was applied to my accou
 
  - Priority: High
  - Estimate: Medium
+ - Dependencies: Add an expense
  - Confirmation:
 
    1. Test step 1: Add the date of the expense
@@ -103,6 +110,7 @@ As a user, I want to be able to view my expenses in a graph so that I have a vis
 
  - Priority: High
  - Estimate: High
+ - Dependencies: Add an expense, add an income, filter categories, edit an income, edit a expense, remove an income, remove an expense
  - Confirmation:
 
    1. Test step 1: See if a graph shows up at all in the User’s page
@@ -115,6 +123,7 @@ As a user, I want to be able to view my total net income so that I can view how 
 
  - Priority: High
  - Estimate: Low
+ - Dependencies: Add an income, add an expense, remove an income, remove an expense, edit an income, edit an expense
  - Confirmation:
 
    1. Test step 1: Create a total net income function
@@ -130,6 +139,7 @@ As a user, I want to receive an alert when I close to or have gone over a limit 
 
  - Priority: Medium
  - Estimate: Medium
+ - Dependencies: Add an expense, add an income, add a net income
  - Confirmation:
 
    1. Test step 1: add an income
@@ -142,6 +152,7 @@ As a user, I want to be able to set regular expenses that will be applied to my 
 
  - Priority: Medium
  - Estimate: Medium
+ - Dependencies: Add an expense
  - Confirmation:
 
    1. Test step 1: Make regular expenses that show up as user input
@@ -154,6 +165,7 @@ As a user, I want set a max total expense to be applied to my account so that my
 
  - Priority: Medium
  - Estimate: Medium
+ - Dependencies: Add an expense
  - Confirmation:
 
    1. Test step 1: Have a max total expense option
@@ -166,7 +178,8 @@ As a user, I want to be able label incomes and expenses so that I can differenti
 
  - Priority: Medium
  - Estimate: Low
- - Confirmation:
+ - Dependencies: Add an income, add an expense
+ - Confirmation: 
 
    1. Test step 1: Add a category option to income and expenses
    2. Test step 2: Make it a user input for the user to be able to name their own labels
@@ -178,11 +191,28 @@ As a user, I want to be able to filter which incomes and expenses are being disp
 
  - Priority: Medium
  - Estimate: Medium
+ - Dependencies: Add an income, add an expense
  - Confirmation:
 
    1. Test step 1: Be able to add categories to the income and expenses
    2. Test step 2: Make it a user input
    3. Test step 3: View data based on the category
+
+Sub-account
+-----------------------
+As a user, I want to be able to create an account so I can store my data.
+
+ - Priority: Medium
+ - Estimate: High
+ - Dependencies: Create a database
+ - Confirmation:
+
+   1. Test step 1: Create an account
+   2. Test step 2: Add two different incomes to general and Christmas totals
+   3. Test step 3: Login to user account
+   4. Test step 4: Is your data in the accoutnt?
+   5. Test step 5: Is your data in a different account?
+
 
 Low Priority
 -----------------------
@@ -193,6 +223,7 @@ As a user, I want to be able to create a sub-account within my user-account so t
 
  - Priority: Low
  - Estimate: High
+ - Dependencies: Add an account,  create a database
  - Confirmation:
 
    1. Test step 1: Create a “Christmas” sub-account
@@ -207,6 +238,7 @@ As an administrator, I want to be able to view how much activity user accounts h
 
  - Priority: Low
  - Estimate: Medium
+ - Dependencies: Add an account
  - Confirmation:
 
    1. Test step 1: Add an income to a user’s account
@@ -220,6 +252,7 @@ As a user, I want to be able to delete my account so that my information is remo
 
  - Priority: Low
  - Estimate: Low
+ - Dependencies: Add an account
  - Confirmation:
 
    1. Test step 1: A a delete option
@@ -232,6 +265,7 @@ As a user, I want to be able to view my activity in past months so that I can co
 
  - Priority: Low
  - Estimate: Medium
+ - Dependencies: Add an account
  - Confirmation:
 
    1. Test step 1: Add a monthly history column to the home page to link to other pages with months
