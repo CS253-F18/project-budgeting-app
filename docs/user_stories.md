@@ -39,7 +39,7 @@ As a user, I want to be able to remove an income from my account so that my infl
 
  - Priority: High
  - Estimate: Low
- - Dependencies: Create a database
+ - Dependencies: Create a database, Add an income
  - Confirmation:
 
    1. Test step 1: add an income
@@ -53,7 +53,7 @@ As a user, I want to be able to remove an expense from my account so that my out
 
  - Priority: High
  - Estimate: Low
- - Dependencies: Create a database
+ - Dependencies: Create a database, Add an expense
  - Confirmation:
 
    1. Test step 1: add an expense
@@ -130,6 +130,22 @@ As a user, I want to be able to view my total net income so that I can view how 
    2. Test step 2: Make the total net income individual for each user
    3. Test step 3: Check that the right data shows up for each user
 
+User Account
+-----------------------
+As a user, I want to be able to create an account so I can store my data.
+
+ - Priority: High
+ - Estimate: High
+ - Dependencies: Create a database
+ - Confirmation:
+
+   1. Test step 1: Create an account
+   2. Test step 2: Add two different incomes to general and Christmas totals
+   3. Test step 3: Login to user account
+   4. Test step 4: Is your data in the accoutnt?
+   5. Test step 5: Is your data in a different account?
+
+
 Medium Priority
 -----------------------
 
@@ -197,22 +213,6 @@ As a user, I want to be able to filter which incomes and expenses are being disp
    1. Test step 1: Be able to add categories to the income and expenses
    2. Test step 2: Make it a user input
    3. Test step 3: View data based on the category
-
-Sub-account
------------------------
-As a user, I want to be able to create an account so I can store my data.
-
- - Priority: Medium
- - Estimate: High
- - Dependencies: Create a database
- - Confirmation:
-
-   1. Test step 1: Create an account
-   2. Test step 2: Add two different incomes to general and Christmas totals
-   3. Test step 3: Login to user account
-   4. Test step 4: Is your data in the accoutnt?
-   5. Test step 5: Is your data in a different account?
-
 
 Low Priority
 -----------------------
