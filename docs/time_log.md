@@ -11,7 +11,7 @@ October 21st
 October 22nd
 -----------------------
 
-8:00 PM - 9:00
+8:00 PM - 9:00 PM
  - Worked on the iteration plan
  - Continued to discuss the architecture and goals of application
  - All team members present
