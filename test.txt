@@ -1,0 +1,25 @@
+<h2>Net Income:</h2>
+<table id="test">
+  <tr>
+    <th>Incomes</th>
+    <th>Total Income:</th>
+  </tr>
+  <tr>
+    <td>Category</td>
+    <td>Amount</td>
+    <td>Date</td>
+    <td>Edit</td>
+    <td>Delete</td>
+  </tr>
+  <tr>
+    <th>Expenses</th>
+    <th>Total Expenses:</th>
+  </tr>
+    <tr>
+    <td>Category</td>
+    <td>Amount</td>
+    <td>Date</td>
+    <td>Edit</td>
+    <td>Delete</td>
+  </tr>
+</table>
