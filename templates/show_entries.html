@@ -1,9 +1,11 @@
 {% extends "layout.html" %}
 {% block body %}
     <form action="{{ url_for('add_income') }}" method="post" class="add-income">
-
+    <dt>Add Income:
+        <dd><input type="text" size="30" name="add_income">
     </form>
     <form action ="{{ url_for('add_expense') }}" method="post" class="add-expense">
-
+    <dt>Add Expense:
+        <dd><input type="text" size="30" name="add_expense">
     </form>
 {% endblock %}

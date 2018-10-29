@@ -4,5 +4,6 @@ create table entries (
   'label' text not null,
   'category' category not null,
   'date' text not null,
-  'amount' float not null
+  'incomeAmount' float not null,
+  'expenseAmount' float not null
 );
