@@ -1,0 +1,16 @@
+#income_table {
+  border-collapse: collapse;
+}
+
+#income_table td, #income_table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+#income_table th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: green;
+    color: white;
+}
