@@ -1,11 +1,62 @@
-.column {
-    float: left;
-    width: 50%;
+#header {
+  padding: 5px 10px;
+  background: #ddd;
 }
 
-/* Clear floats after the columns */
-.row:after {
-    content: "";
-    display: table;
-    clear: both;
+h1 {
+  margin: 0;
+}
+
+#columnOne {
+  float: left;
+  padding: 10px;
+  background: #9c9;
+  width: 50%;
+}
+
+#footer {
+  clear: both;
+  padding: 5px 10px;
+  background: #cc9;
+}
+
+h2 {
+  margin: 0 0 1em;
+}
+
+#columnTwo {
+  float: right;
+  width: 46%;
+  padding: 10px;
+  background: #c9c;
+}
+
+#footer p {
+  margin: 0;
+}
+
+#nav ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+#nav li {
+  display: inline;
+  margin: 0;
+  padding: 0;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  color: #000;
+  background: #a7a09a;
+}
+
+#wrap {
+  width: 1000px;
+  margin: 0 auto;
+  background: #99c;
 }
