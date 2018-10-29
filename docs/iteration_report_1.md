@@ -14,13 +14,11 @@ What was completed
  - Jonathan: Created the basic layout and formatting for layout.html and style.css. This
 included: creating a title for the webpage, creating two columns for each side of the
 webpage, creating setions for the income table, expense table, the add income function,
-the add expense function, and graphs. Created the show_entries.html file as well. This included
-the show functions for add_income and add_expense.
+the add expense function, and graphs. Created the show_entries.html file as well. 
  - Joe: Transferred the framework from Flaskr into our application which included app.py. Then added the add income and add expenses functions.
-Helped the group setup Flask configurations. This included the run and initdb tests. Helped create 
-show_entries.html
- - Johnny: Created the schema file. He made the unit tests for add_income and add_expense.
- - Alex: Created the html for the expense and income table. Included the columns for category, edit, delete, and amount. 
+Helped the group setup Flask configurations. This included the run and initdb tests. Helped create show_entries.html with Jonathan
+ - Johnny: Created the schema file. Assisted with debugging in app.py
+ - Alex: Created the html for the expense and income table which included the columns for category, edit, delete, and amount. 
 
 
 
@@ -34,7 +32,9 @@ other's code for bugs as a new set of eyes can quickly catch errors.
 What was planned but not finished
 -----------------------
 
-
+We planned to finish the show_entries.html for the add income and add expense function but we were unable to complete it. We also did
+not finish the unit tests for the add_income and add_expense functions. We are also having trouble loading the webpage after we intialize.
+This will be our first priority to get working starting week 3. 
 
 What troubles/issues/roadblocks/difficulties you encountered
 -----------------------
@@ -57,7 +57,7 @@ out periodcally thoughout the week instead of meeting the days before the due da
 Which user stories and tasks you plan to complete in the coming iteration and in the two iterations following it.
 -----------------------
 
-Week 2:
+Week 3:
  - The first priority will be to test show_entries and the income/expense table.
  - Once that is complete, we will add a categories feature and test it. These appear next the the add entry function and give the
 user an option to give each entry a predetermined category.
@@ -66,14 +66,14 @@ by one of the predetermined categories
  - Create net income display. This should be show the income remaining after each income and expense is added. This will
 be displayed above the table in the top right corner of the page. Test it.
 
-Week 3:
+Week 4:
  - Continue the work from the previous week if we do not finish everything.
  - Create the remove an expense and remove an income functions. Work on associated .html files
 so the delete/remove button appears next to each entry within the table. Test it.
  - Create the edit expense/income functions and associated html. This should be displayed next
 to each entry within the table. Test it.
 
-Week 4:
+Week 5:
  - Continue the work that was not completed from the previous week.
  - Create a "Create User Account" page and make associated html. Test it.
  - Create a database that stores usernames and passwords.  Test it. 
@@ -81,7 +81,7 @@ Week 4:
 Who will be responsible for each user story planned for the next iteration, not the following two.
 -----------------------
 
-Week 2:
+Week 3:
  - Joe: Finish what is left of the show_entries function for the add expense and income. 
 Then test to ensure that it is working within the income and expense table.
  - Jonathan: Create the add categories feature and test it. These appear next the the add entry function and give the
