@@ -1,15 +1,26 @@
-<!doctype html>
-<title>Budgeting Application</title>
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
-<div class="page">
-  <h1>Budgeting Application</h1>
-  {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
-  {% endfor %}
-  {% block body %}{% endblock %}
-</div>
+<!-- October 29th, 2018
+layout.html
+Creating the html layout for the Budgeting Application webpage -->
 
-<div class="row">
-  <div class="column"></div>
-  <div class="column"></div>
+<!doctype html>
+<!-- Link the css file to layout.html (style.css) -->
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
+<div id="page">
+  <div id="header">
+    <h1>Budgeting Application</h1>
+  </div>
+  <div id="columnOne">
+    <h3>Add Income</h3>
+    <h3>Add Expense</h3>
+      <h2>Graphs</h2>
+  </div>
+  <div id="columnTwo">
+    <h2>Income Table</h2>
+    <p>Income Table...</p>
+      <h2>Expense Table</h2>
+      <p>Expense Table...</p>
+  </div>
+  <div id="footer">
+    <p>Created By: Jonathan Nocek, Alex O'Neill, Joe Ruppenthal, Johnny Whitfield</p>
+  </div>
 </div>
