@@ -1,10 +1,9 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>$Title$</title>
-</head>
-<body>
-$END$
-</body>
-</html>
+{% extends "layout.html" %}
+{% block body %}
+    <form action="{{ url_for('add_income') }}" method="post" class="add-income">
+
+    </form>
+    <form action ="{{ url_for('add_expense') }}" method="post" class="add-expense">
+
+    </form>
+{% endblock %}
