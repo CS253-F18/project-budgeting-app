@@ -17,9 +17,11 @@ webpage, creating setions for the income table, expense table, the add income fu
 the add expense function, and graphs. Created the show_entries.html file as well. This included
 the show functions for add_income and add_expense.
  - Joe: Transferred the framework from Flaskr into our application which included app.py. Then added the add income and add expenses functions.
-Helped the group setup Flask configurations. This included the run and initdb tests. 
+Helped the group setup Flask configurations. This included the run and initdb tests. Helped create 
+show_entries.html
  - Johnny: Created the schema file. He made the unit tests for add_income and add_expense.
- - Alex: Created the html for the expense and income table. Included the columns for category, edit, delete, and amount.
+ - Alex: Created the html for the expense and income table. Included the columns for category, edit, delete, and amount. 
+
 
 
 One tool or process or approach you used that you felt was especially helpful, and why.
@@ -40,7 +42,9 @@ What troubles/issues/roadblocks/difficulties you encountered
 We discovered that we did not correctly consider the scope of an add function. We did not distrubute work correctly. We should have
 had each person write their respective html for their functions. Instead, we had two people work on all the html while
 two other people worked on the unit tests and python. This resulted in our group not being able to test out functions individually
-since the people writing the python code did not have the html and visa versa. We did not account for the time taken to setup PyCharm. 
+since the people writing the python code did not have the html and visa versa. We did not account for the time taken to setup PyCharm.
+Our iteration plan was too vauge. This led to it being difficult to know exactly how much needed to be done. We were worried about 
+not assigning enough work and wasting a week of work. In future weeks, we will be more specific as to what exactly need to be done.
 
 What adjustments to your overall design you discovered
 -----------------------
@@ -78,7 +82,11 @@ Who will be responsible for each user story planned for the next iteration, not 
 -----------------------
 
 Week 2:
- - Joe:
- - Jonathan:
- - Johnny:
- - Alex: 
+ - Joe: Finish what is left of the show_entries function for the add expense and income. 
+Then test to ensure that it is working within the income and expense table.
+ - Jonathan: Create the add categories feature and test it. These appear next the the add entry function and give the
+user an option to give each entry a predetermined category.
+ - Johnny: Create a net income display. This should be show the income remaining to be spend.
+It will update after each expense and income is added.
+ - Alex: Create filter categories feature and test it. This will appear below the table and give the user the option to sort the table
+by one of the predetermined categories
