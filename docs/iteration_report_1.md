@@ -55,11 +55,30 @@ Which user stories and tasks you plan to complete in the coming iteration and in
 
 Week 2:
  - The first priority will be to test show_entries and the income/expense table.
- - Once that is complete, we will add a categories feature and test it.
- - Create filter categories feature and test it.
- - Create delete functions and test it.
+ - Once that is complete, we will add a categories feature and test it. These appear next the the add entry function and give the
+user an option to give each entry a predetermined category.
+ - Create filter categories feature and test it. This will appear below the table and give the user the option to sort the table
+by one of the predetermined categories
+ - Create net income display. This should be show the income remaining after each income and expense is added. This will
+be displayed above the table in the top right corner of the page. Test it.
 
+Week 3:
+ - Continue the work from the previous week if we do not finish everything.
+ - Create the remove an expense and remove an income functions. Work on associated .html files
+so the delete/remove button appears next to each entry within the table. Test it.
+ - Create the edit expense/income functions and associated html. This should be displayed next
+to each entry within the table. Test it.
+
+Week 4:
+ - Continue the work that was not completed from the previous week.
+ - Create a "Create User Account" page and make associated html. Test it.
+ - Create a database that stores usernames and passwords.  Test it. 
 
 Who will be responsible for each user story planned for the next iteration, not the following two.
 -----------------------
 
+Week 2:
+ - Joe:
+ - Jonathan:
+ - Johnny:
+ - Alex: 
