@@ -12,7 +12,7 @@ Styles the background, text, margins, and positioning for each respective spot o
 #columnOne {
   float: left;
   padding: 10px;
-  background: #9c9;
+  background: #c9d;
   width: 50%;
 }
 
@@ -20,7 +20,7 @@ Styles the background, text, margins, and positioning for each respective spot o
   float: right;
   width: 50%;
   padding: 10px;
-  background: #c9c;
+  background: #9cc;
 }
 
 #footer {
