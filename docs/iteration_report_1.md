@@ -89,4 +89,4 @@ user an option to give each entry a predetermined category.
  - Johnny: Create a net income display. This should be show the income remaining to be spend.
 It will update after each expense and income is added.
  - Alex: Create filter categories feature and test it. This will appear below the table and give the user the option to sort the table
-by one of the predetermined categories
+by one of the predetermined categories.
