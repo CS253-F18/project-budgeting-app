@@ -17,7 +17,7 @@ webpage, creating setions for the income table, expense table, the add income fu
 the add expense function, and graphs. Created the show_entries.html file as well. 
  - Joe: Transferred the framework from Flaskr into our application which included app.py. Then added the add income and add expenses functions.
 Helped the group setup Flask configurations. This included the run and initdb tests. Helped create show_entries.html with Jonathan
- - Johnny: Created the schema file. Assisted with debugging in app.py
+ - Johnny: Created the schema file. Assisted with debugging in app.py. Completed unit tests.
  - Alex: Created the html for the expense and income table which included the columns for category, edit, delete, and amount. 
 
 
@@ -89,4 +89,4 @@ user an option to give each entry a predetermined category.
  - Johnny: Create a net income display. This should be show the income remaining to be spend.
 It will update after each expense and income is added.
  - Alex: Create filter categories feature and test it. This will appear below the table and give the user the option to sort the table
-by one of the predetermined categories
+by one of the predetermined categories.

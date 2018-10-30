@@ -36,8 +36,9 @@ October 28th
 October 29th
 -----------------------
 
-12:30 PM - 4:00 PM
+12:30 PM - 5:00 PM
  - Joe helped everyone set up Flask on their own devices.
  - Continued after resolution of problems.
  - Merged branches and corrected any overlapping issues.
- - All team memebers present.
+ - All team memebers present until 2 PM.
+ - Jonathan and Joe worked together from 3:00 - 5:00
