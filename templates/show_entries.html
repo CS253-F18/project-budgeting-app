@@ -1,11 +1,43 @@
 {% extends "layout.html" %}
 {% block body %}
-    <form action="{{ url_for('add_income') }}" method="post" class="add-income">
-    <dt>Add Income:
-        <dd><input type="text" size="30" name="add_income">
-    </form>
-    <form action ="{{ url_for('add_expense') }}" method="post" class="add-expense">
-    <dt>Add Expense:
-        <dd><input type="text" size="30" name="add_expense">
-    </form>
+    <div id="columnOne">
+        <form action="{{ url_for('add_income') }}" method="post" class="add-income">
+            <dt>Add Income:
+            <dd><input type="text" size="30" name="add_income">
+        </form>
+        <form action ="{{ url_for('add_expense') }}" method="post" class="add-expense">
+            <dt>Add Expense:
+            <dd><input type="text" size="30" name="add_expense">
+        </form>
+        <h2>Graphs</h2>
+    </div>
+    <div id="columnTwo">
+        <h2>Net Income:</h2>
+        <table id="income_table">
+            <tr>
+                <th>Incomes</th>
+                <th id = "table_total_income">Total Income:</th>
+            </tr>
+            <tr>
+                <td class = "table_category">Category</td>
+                <td class = "table_amount">Amount</td>
+                <td class = "table_date">Date</td>
+                <td class = "table_edit">Edit</td>
+                <td class = "table_delete">Delete</td>
+            </tr>
+        </table>
+        <table id="expense_table">
+            <tr>
+                <th>Expenses</th>
+                <th id = "table_total_expenses">Total Expenses:</th>
+            </tr>
+            <tr>
+                <td class = "table_category">Category</td>
+                <td class = "table_amount">Amount</td>
+                <td class = "table_date">Date</td>
+                <td class = "table_edit">Edit</td>
+                <td class = "table_delete">Delete</td>
+            </tr>
+        </table>
+    </div>
 {% endblock %}
