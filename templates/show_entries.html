@@ -18,13 +18,16 @@
                 <th>Incomes</th>
                 <th id = "table_total_income">Total Income:</th>
             </tr>
+                {% for incomeEntry in entries %}
+
             <tr>
                 <td class = "table_category">Category</td>
-                <td class = "table_amount">Amount</td>
+                <td class = "table_amount">Amount {{ incomeEntry.incomeAmount }}</td>
                 <td class = "table_date">Date</td>
                 <td class = "table_edit">Edit</td>
                 <td class = "table_delete">Delete</td>
             </tr>
+                            {% endfor %}
         </table>
         <table id="expense_table">
             <tr>
@@ -40,4 +43,5 @@
             </tr>
         </table>
     </div>
+
 {% endblock %}

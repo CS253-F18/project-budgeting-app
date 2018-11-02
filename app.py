@@ -81,16 +81,17 @@ def show_entries():
 def add_income():
     db = get_db()
     db.execute('INSERT INTO entries (incomeAmount) VALUES (?)',
-               [request.form['incomeAmount']])
+               [request.form['add_income']])
     db.commit()
     flash('New income was successfully added')
     return redirect(url_for('show_entries'))
+
 
 @app.route('/add_expense', methods=['POST'])
 def add_expense():
     db = get_db()
     db.execute('INSERT INTO entries (expenseAmount) VALUES (?)',
-               [request.form['expenseAmount']])
+               [request.form['add_expense']])
     db.commit()
     flash('New expense was successfully added')
     return redirect(url_for('show_entries'))
