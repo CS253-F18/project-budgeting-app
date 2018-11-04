@@ -72,7 +72,7 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select incomeAmount, expenseAmount from entries order by id desc')
+    cur = db.execute('select incomeAmount, expenseAmount, incomeCategory from entries order by id desc')
     entries = cur.fetchall()
     return render_template('show_entries.html', entries=entries)
 
@@ -80,8 +80,8 @@ def show_entries():
 @app.route('/add_income', methods=['POST'])
 def add_income():
     db = get_db()
-    db.execute('INSERT INTO entries (incomeAmount) VALUES (?)',
-               [request.form['add_income']])
+    db.execute('INSERT INTO entries (incomeAmount, incomeCategory) VALUES (?, ?)',
+               [request.form['add_income'],request.form['incomeCategory']])
     db.commit()
     flash('New income was successfully added')
     return redirect(url_for('show_entries'))
