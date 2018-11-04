@@ -4,6 +4,13 @@
         <form action="{{ url_for('add_income') }}" method="post" class="add-income">
             <dt>Add Income:
             <dd><input type="text" size="30" name="add_income">
+                <select name="incomeCategory">
+                        <option value="option1">Option 1</option>
+                        <option value="option2">Option 2</option>
+                        <option value="option3">Option 3</option>
+                    </select></dd>
+            <dd><input type="submit" value="Share">
+                <!-- Created the share feature -->
         </form>
         <form action ="{{ url_for('add_expense') }}" method="post" class="add-expense">
             <dt>Add Expense:
@@ -21,7 +28,7 @@
                 {% for incomeEntry in entries %}
 
             <tr>
-                <td class = "table_category">Category</td>
+                <td class = "table_category">Category {{ incomeEntry.incomeCategory }}</td>
                 <td class = "table_amount">Amount {{ incomeEntry.incomeAmount }}</td>
                 <td class = "table_date">Date</td>
                 <td class = "table_edit">Edit</td>
