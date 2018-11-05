@@ -30,11 +30,11 @@
                 <th>Incomes</th>
                 <th id = "table_total_income">Total Income:</th>
             </tr>
-            {% for incomeEntry in entries %}
+            {% for incomeEntry in incomes %}
 
                 <tr>
-                    <td class = "table_category">Category {{ incomeEntry.incomeCategory }}</td>
-                    <td class = "table_amount">Amount {{ incomeEntry.incomeAmount }}</td>
+                    <td class = "table_category">Category {{ incomeEntry.category }}</td>
+                    <td class = "table_amount">Amount {{ incomeEntry.amount }}</td>
                     <td class = "table_date">Date</td>
                     <td class = "table_edit">Edit</td>
                     <td class = "table_delete">Delete</td>
@@ -46,10 +46,10 @@
                 <th>Expenses</th>
                 <th id = "table_total_expenses">Total Expenses:</th>
             </tr>
-            {% for expenseEntry in entries %}
+            {% for expenseEntry in expenses %}
             <tr>
-                <td class = "table_category">Category {{ expenseEntry.expenseCategory }}</td>
-                <td class = "table_amount">Amount {{ expenseEntry.expenseAmount }}</td>
+                <td class = "table_category">Category {{ expenseEntry.category }}</td>
+                <td class = "table_amount">Amount {{ expenseEntry.amount }}</td>
                 <td class = "table_date">Date</td>
                 <td class = "table_edit">Edit</td>
                 <td class = "table_delete">Delete</td>
