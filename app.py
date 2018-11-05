@@ -86,6 +86,7 @@ def add_income():
     flash('New income was successfully added')
     return redirect(url_for('show_entries'))
 
+
 @app.route('/add_expense', methods=['POST'])
 def add_expense():
     db = get_db()
