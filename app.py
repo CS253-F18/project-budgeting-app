@@ -76,7 +76,22 @@ def show_entries():
     incomes = cur.fetchall()
     cur = db.execute('select amount, category from expenses order by id desc')
     expenses = cur.fetchall()
-    return render_template('show_entries.html', incomes=incomes, expenses=expenses)
+
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes')
+    incomeTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses')
+    expenseTotal = cur.fetchone()[0]
+
+    if incomeTotal == "None" and expenseTotal == "None":
+        net = 0.00
+    elif incomeTotal != "None" and expenseTotal == "None":
+        net = incomeTotal
+    elif incomeTotal == "None" and expenseTotal != "None":
+        net = 0.00 - expenseTotal
+    else:
+        net = incomeTotal - expenseTotal
+
+    return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net)
 
 
 @app.route('/add_income', methods=['POST'])
@@ -98,12 +113,14 @@ def add_expense():
     flash('New expense was successfully added')
     return redirect(url_for('show_entries'))
 
+
 @app.route('/filter_income', methods=['POST'])
 def filter_income():
     db = get_db()
     cur = db.execute("select amount, category from incomes where category=? order by id desc",[request.form['filter_income']])
     incomes = cur.fetchall()
     return render_template('show_entries.html', incomes=incomes)
+
 
 @app.route('/filter_expense', methods=['POST'])
 def filter_expense():
