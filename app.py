@@ -97,3 +97,17 @@ def add_expense():
     db.commit()
     flash('New expense was successfully added')
     return redirect(url_for('show_entries'))
+
+@app.route('/filter_income', methods=['POST'])
+def filter_income():
+    db = get_db()
+    cur = db.execute("select amount, category from incomes where category=? order by id desc",[request.form['filter_income']])
+    incomes = cur.fetchall()
+    return render_template('show_entries.html', incomes=incomes)
+
+@app.route('/filter_expense', methods=['POST'])
+def filter_expense():
+    db = get_db()
+    cur = db.execute("select amount, category from expenses where category=? order by id desc",[request.form['filter_expense']])
+    expenses = cur.fetchall()
+    return render_template('show_entries.html', expenses=expenses)
