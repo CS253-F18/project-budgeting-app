@@ -3,7 +3,8 @@ create table entries (
   id integer primary key autoincrement,
   'label' text,
   'date' text,
-  'incomeAmount' float not null,
+  'incomeAmount' float,
   'expenseAmount' float,
-  incomeCategory text not null
+  incomeCategory text,
+  expenseCategory text
 );
