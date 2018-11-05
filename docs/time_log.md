@@ -42,3 +42,16 @@ October 29th
  - Merged branches and corrected any overlapping issues.
  - All team memebers present until 2 PM.
  - Jonathan and Joe worked together from 3:00 - 5:00
+
+October 31st
+-----------------------
+
+8:00 PM - 11:00 PM
+ - Started work on iteration 2
+ - All team members present
+
+November 4th
+-----------------------
+
+7:30 PM - 
+ - 
