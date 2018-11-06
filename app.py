@@ -72,9 +72,9 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select amount, category from incomes order by id desc')
+    cur = db.execute('select id, amount, category from incomes order by id desc')
     incomes = cur.fetchall()
-    cur = db.execute('select amount, category from expenses order by id desc')
+    cur = db.execute('select id, amount, category from expenses order by id desc')
     expenses = cur.fetchall()
 
     cur = db.execute('SELECT TOTAL(amount) FROM incomes')
@@ -125,6 +125,25 @@ def filter_income():
 @app.route('/filter_expense', methods=['POST'])
 def filter_expense():
     db = get_db()
-    cur = db.execute("select amount, category from expenses where category=? order by id desc",[request.form['filter_expense']])
+    cur = db.execute("select amount, category from expenses where category=? order by id desc", [request.form['filter_expense']])
     expenses = cur.fetchall()
     return render_template('show_entries.html', expenses=expenses)
+
+
+@app.route('/delete_income', methods=['POST'])
+def delete_income():
+    db = get_db()
+    db.execute('DELETE FROM incomes WHERE id=?', [request.form['income-id']])
+    db.commit()
+    flash('Income deleted')
+    return redirect(url_for('show_entries'))
+
+
+@app.route('/delete_expense', methods=['POST'])
+def delete_expense():
+    db = get_db()
+    db.execute('DELETE FROM expenses WHERE id=?', [request.form['expense-id']])
+    db.commit()
+    flash('Expense deleted')
+    return redirect(url_for('show_entries'))
+
