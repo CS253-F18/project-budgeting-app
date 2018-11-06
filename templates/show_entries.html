@@ -53,7 +53,10 @@
                     <td class = "table_amount">Amount {{ incomeEntry.amount }}</td>
                     <td class = "table_date">Date</td>
                     <td class = "table_edit">Edit</td>
-                    <td class = "table_delete">Delete</td>
+                    <td class = "table_delete"><form action="{{ url_for('delete_income') }}" method="post">
+                        <input type="hidden" name="income-id" value="{{ incomeEntry.id }}">
+                        <button type="submit" class="del-inc-button">Delete</button>
+                    </form></td>
                 </tr>
             {% endfor %}
         </table>
@@ -68,7 +71,10 @@
                     <td class = "table_amount">Amount {{ expenseEntry.amount }}</td>
                     <td class = "table_date">Date</td>
                     <td class = "table_edit">Edit</td>
-                    <td class = "table_delete">Delete</td>
+                    <td class = "table_delete"><form action="{{ url_for('delete_expense') }}" method="post">
+                        <input type="hidden" name="expense-id" value="{{ expenseEntry.id }}">
+                        <button type="submit" class="del-exp-button">Delete</button>
+                    </form></td>
                 </tr>
             {% endfor %}
         </table>
