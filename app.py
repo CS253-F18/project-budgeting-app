@@ -97,3 +97,32 @@ def add_expense():
     db.commit()
     flash('New expense was successfully added')
     return redirect(url_for('show_entries'))
+
+# Function to redirect the webpage to the edit_entires.html page
+@app.route('/redirect_edit_income', methods=['GET'])
+def redirect_edit_income():
+    db = get_db()
+    cur = db.execute('select id, amount, category from incomes where id=?', [request.args['edit_text']])
+    # Created the redirect_edit() function. Used similar format as the functions above.
+    incomes = cur.fetchall()
+    return render_template('edit_entries.html', incomes=incomes)
+
+# Function to redirect the webpage to the edit_entires.html page
+@app.route('/redirect_edit_income', methods=['GET'])
+def redirect_edit_expense():
+    db = get_db()
+    cur = db.execute('select id, amount, category from expenses where id=?', [request.args['edit_text']])
+    # Created the redirect_edit() function. Used similar format as the functions above.
+    expenses = cur.fetchall()
+    return render_template('edit_entries.html', expenses=expenses)
+
+# Function that actually edits the posts. The function will load a new page with the selected text already preloaded.
+@app.route('/edit_entries', methods=['POST'])
+def edit_entries():
+    db = get_db()
+    # https://stackoverflow.com/questions/1307378/python-mysql-update-statement
+    # Used the above link for the update. It helped me learn the syntax.
+    db.execute("update incomes, expenses set amount = ?, category = ? where id = ?",
+               [request.form['amount'], request.form['category'],request.form['edit_text']])
+    db.commit()
+    return show_entries()
