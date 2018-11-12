@@ -72,9 +72,9 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select amount, category from incomes order by id desc')
+    cur = db.execute('select amount, category, income_date from incomes order by id desc')
     incomes = cur.fetchall()
-    cur = db.execute('select amount, category from expenses order by id desc')
+    cur = db.execute('select amount, category, expense_date from expenses order by id desc')
     expenses = cur.fetchall()
 
     cur = db.execute('SELECT TOTAL(amount) FROM incomes')
@@ -97,18 +97,17 @@ def show_entries():
 @app.route('/add_income', methods=['POST'])
 def add_income():
     db = get_db()
-    db.execute('INSERT INTO incomes (amount, category) VALUES (?, ?)',
-               [request.form['add_income'], request.form['incomeCategory']])
+    db.execute('INSERT INTO incomes (amount, category, income_date) VALUES (?,?,?)',
+               [request.form['add_income'], request.form['incomeCategory'], request.form['income_date']])
     db.commit()
     flash('New income was successfully added')
     return redirect(url_for('show_entries'))
 
-
 @app.route('/add_expense', methods=['POST'])
 def add_expense():
     db = get_db()
-    db.execute('INSERT INTO expenses (amount, category) VALUES (?, ?)',
-               [request.form['add_expense'], request.form['expenseCategory']])
+    db.execute('INSERT INTO expenses (amount, category, expense_date) VALUES (?, ?, ?)',
+               [request.form['add_expense'], request.form['expenseCategory'], request.form['expense_date']])
     db.commit()
     flash('New expense was successfully added')
     return redirect(url_for('show_entries'))
