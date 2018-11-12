@@ -57,11 +57,17 @@
                         <button type="submit" class="del-inc-button">Delete</button>
                     </form></td>
                 </tr>
+            {% else %}
+                <i>No incomes entered</i>
             {% endfor %}
         </table>
         <h3>Expenses</h3>
         <table id="expense_table">
-            {% for expenseEntry in expenses %}
+          <tr>
+              <th>Expenses</th>
+              <th id = "table_total_expenses">Total Expenses:</th>
+           </tr>
+              {% for expenseEntry in expenses %}
                 <tr>
                     <td class = "table_category">Category {{ expenseEntry.category }}</td>
                     <td class = "table_amount">Amount {{ expenseEntry.amount }}</td>
@@ -72,6 +78,8 @@
                         <button type="submit" class="del-exp-button">Delete</button>
                     </form></td>
                 </tr>
+            {% else %}
+                <i>No expenses entered</i>
             {% endfor %}
         </table>
     </div>
