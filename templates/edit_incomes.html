@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block body %}
+    <table id="income_table">
+        <tr>
+            <th>Incomes</th>
+            <th id = "table_total_income">Total Income:</th>
+        </tr>
+        {% for incomeEntry in incomes %}
+
+            <tr>
+                <td class = "table_category"><select name="incomeCategory">
+                    <option value="Salary">Salary</option>
+                    <option value="Miscellaneous">Miscellaneous</option>
+                </select></td>
+                <td class = "table_amount"><input type="text" size="30" name="add_income" value={{ incomeEntry.amount }}></td>
+                <td class = "table_date">Date</td>
+                <td class = "table_edit"> <form action ="{{ url_for('redirect_edit_income') }}" method="get">
+                    <button type="submit" name="edit_text" value={{ incomeEntry.id }}> Edit Text </button>
+                </form></td>
+                <td class = "table_delete">Delete</td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}

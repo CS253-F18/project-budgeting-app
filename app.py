@@ -105,16 +105,16 @@ def redirect_edit_income():
     cur = db.execute('select id, amount, category from incomes where id=?', [request.args['edit_text']])
     # Created the redirect_edit() function. Used similar format as the functions above.
     incomes = cur.fetchall()
-    return render_template('edit_entries.html', incomes=incomes)
+    return render_template('edit_incomes.html', incomes=incomes)
 
 # Function to redirect the webpage to the edit_entires.html page
-@app.route('/redirect_edit_income', methods=['GET'])
+@app.route('/redirect_edit_expense', methods=['GET'])
 def redirect_edit_expense():
     db = get_db()
     cur = db.execute('select id, amount, category from expenses where id=?', [request.args['edit_text']])
     # Created the redirect_edit() function. Used similar format as the functions above.
     expenses = cur.fetchall()
-    return render_template('edit_entries.html', expenses=expenses)
+    return render_template('edit_expenses.html', expenses=expenses)
 
 # Function that actually edits the posts. The function will load a new page with the selected text already preloaded.
 @app.route('/edit_entries', methods=['POST'])

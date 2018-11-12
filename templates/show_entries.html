@@ -53,7 +53,9 @@
                     <td class = "table_category">Category {{ expenseEntry.category }}</td>
                     <td class = "table_amount">Amount {{ expenseEntry.amount }}</td>
                     <td class = "table_date">Date</td>
-                    <td class = "table_edit"> </td>
+                    <td class = "table_edit"> <form action ="{{ url_for('redirect_edit_expense') }}" method="get">
+                        <button type="submit" name="edit_text" value={{ expenseEntry.id }}> Edit Text </button>
+                    </form></td>
                     <td class = "table_delete">Delete</td>
                 </tr>
             {% endfor %}
