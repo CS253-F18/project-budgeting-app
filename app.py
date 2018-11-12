@@ -99,7 +99,7 @@ def show_entries():
 def add_income():
     db = get_db()
     db.execute('INSERT INTO incomes (amount, category, income_date) VALUES (?, ?, ?)',
-               [request.form['add_income'], request.form['incomeCategory'], request.form['income_date'])
+               [request.form['add_income'], request.form['incomeCategory'], request.form['income_date']])
     db.commit()
     flash('New income was successfully added')
     return redirect(url_for('show_entries'))
@@ -109,7 +109,7 @@ def add_income():
 def add_expense():
     db = get_db()
     db.execute('INSERT INTO expenses (amount, category, expense_date) VALUES (?, ?, ?)',
-               [request.form['add_expense'], request.form['expenseCategory'], request.form['expense_date'])
+               [request.form['add_expense'], request.form['expenseCategory'], request.form['expense_date']])
     db.commit()
     flash('New expense was successfully added')
     return redirect(url_for('show_entries'))
