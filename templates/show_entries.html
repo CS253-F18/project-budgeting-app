@@ -45,22 +45,20 @@
             <tr>
                 <th>Incomes</th>
                 <th id = "table_total_income">Total Income:</th>
-            </tr>te">Delete</td>
+            </tr>
+            {% for incomeEntry in incomes %}
+                <tr>
+                    <td class = "table_category">Category {{ incomeEntry.category }}</td>
+                    <td class = "table_amount">Amount {{ incomeEntry.amount }}</td>
+                    <td class = "table_date">Date</td>
+                    <td class = "table_edit">Edit</td>
+                    <td class = "table_delete">Delete</td>
                 </tr>
             {% else %}
                 <i>No incomes entered</i>
             {% endfor %}
         </table>
         <table id="expense_table">
-            <tr>
-            {% for incomeEntry in incomes %}
-
-                <tr>
-                    <td class = "table_category">Category {{ incomeEntry.category }}</td>
-                    <td class = "table_amount">Amount {{ incomeEntry.amount }}</td>
-                    <td class = "table_date">Date</td>
-                    <td class = "table_edit">Edit</td>
-                    <td class = "table_dele
                 <th>Expenses</th>
                 <th id = "table_total_expenses">Total Expenses:</th>
             </tr>
