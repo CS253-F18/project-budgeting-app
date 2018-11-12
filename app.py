@@ -1,3 +1,4 @@
+
 # -*- coding: utf-8 -*-
 """
     Budgeting Application
@@ -72,18 +73,33 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select amount, category, id from incomes order by id desc')
+    cur = db.execute('select amount, category, id, income_date from incomes order by id desc')
     incomes = cur.fetchall()
-    cur = db.execute('select amount, category, id from expenses order by id desc')
+    cur = db.execute('select amount, category, id, expense_date from expenses order by id desc')
     expenses = cur.fetchall()
-    return render_template('show_entries.html', incomes=incomes, expenses=expenses)
+    
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes')
+    incomeTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses')
+    expenseTotal = cur.fetchone()[0]
+
+    if incomeTotal == "None" and expenseTotal == "None":
+        net = 0.00
+    elif incomeTotal != "None" and expenseTotal == "None":
+        net = incomeTotal
+    elif incomeTotal == "None" and expenseTotal != "None":
+        net = 0.00 - expenseTotal
+    else:
+        net = incomeTotal - expenseTotal
+    
+    return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net)
 
 
 @app.route('/add_income', methods=['POST'])
 def add_income():
     db = get_db()
-    db.execute('INSERT INTO incomes (amount, category) VALUES (?, ?)',
-               [request.form['add_income'], request.form['incomeCategory']])
+    db.execute('INSERT INTO incomes (amount, category, income_date) VALUES (?, ?, ?)',
+               [request.form['add_income'], request.form['incomeCategory'], request.form['income_date'])
     db.commit()
     flash('New income was successfully added')
     return redirect(url_for('show_entries'))
@@ -92,8 +108,8 @@ def add_income():
 @app.route('/add_expense', methods=['POST'])
 def add_expense():
     db = get_db()
-    db.execute('INSERT INTO expenses (amount, category) VALUES (?, ?)',
-               [request.form['add_expense'], request.form['expenseCategory']])
+    db.execute('INSERT INTO expenses (amount, category, expense_date) VALUES (?, ?, ?)',
+               [request.form['add_expense'], request.form['expenseCategory'], request.form['expense_date'])
     db.commit()
     flash('New expense was successfully added')
     return redirect(url_for('show_entries'))
@@ -106,7 +122,23 @@ def edit_income_form():
     income = cur.fetchone()
     return render_template('edit_incomes.html', income=income)
 
+                
+@app.route('/filter_income', methods=['POST'])
+def filter_income():
+    db = get_db()
+    cur = db.execute("select amount, category from incomes where category=? order by id desc",[request.form['filter_income']])
+    incomes = cur.fetchall()
+    return render_template('show_entries.html', incomes=incomes)
+                
 
+@app.route('/filter_expense', methods=['POST'])
+def filter_expense():
+    db = get_db()
+    cur = db.execute("select amount, category from expenses where category=? order by id desc", [request.form['filter_expense']])
+    expenses = cur.fetchall()
+    return render_template('show_entries.html', expenses=expenses)
+
+                
 @app.route('/edit_expense_form', methods=['GET'])
 def edit_expense_form():
     db = get_db()
@@ -132,3 +164,21 @@ def edit_expenses():
                [request.form['amount'], request.form['category'],request.form['edit_expenses']])
     db.commit()
     return redirect(url_for("show_entries"))
+  
+@app.route('/delete_income', methods=['POST'])
+def delete_income():
+    db = get_db()
+    db.execute('DELETE FROM incomes WHERE id=?', [request.form['income-id']])
+    db.commit()
+    flash('Income deleted')
+    return redirect(url_for('show_entries'))
+
+
+@app.route('/delete_expense', methods=['POST'])
+def delete_expense():
+    db = get_db()
+    db.execute('DELETE FROM expenses WHERE id=?', [request.form['expense-id']])
+    db.commit()
+    flash('Expense deleted')
+    return redirect(url_for('show_entries'))
+  
