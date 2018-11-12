@@ -72,9 +72,9 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select amount, category from incomes order by id desc')
+    cur = db.execute('select amount, category, id from incomes order by id desc')
     incomes = cur.fetchall()
-    cur = db.execute('select amount, category from expenses order by id desc')
+    cur = db.execute('select amount, category, id from expenses order by id desc')
     expenses = cur.fetchall()
     return render_template('show_entries.html', incomes=incomes, expenses=expenses)
 
@@ -98,31 +98,37 @@ def add_expense():
     flash('New expense was successfully added')
     return redirect(url_for('show_entries'))
 
-# Function to redirect the webpage to the edit_entires.html page
-@app.route('/redirect_edit_income', methods=['GET'])
-def redirect_edit_income():
-    db = get_db()
-    cur = db.execute('select id, amount, category from incomes where id=?', [request.args['edit_text']])
-    # Created the redirect_edit() function. Used similar format as the functions above.
-    incomes = cur.fetchall()
-    return render_template('edit_incomes.html', incomes=incomes)
 
-# Function to redirect the webpage to the edit_entires.html page
-@app.route('/redirect_edit_expense', methods=['GET'])
-def redirect_edit_expense():
+@app.route('/edit_income_form', methods=['GET'])
+def edit_income_form():
     db = get_db()
-    cur = db.execute('select id, amount, category from expenses where id=?', [request.args['edit_text']])
-    # Created the redirect_edit() function. Used similar format as the functions above.
-    expenses = cur.fetchall()
-    return render_template('edit_expenses.html', expenses=expenses)
+    cur = db.execute('select id, amount, category from incomes where id=?', [request.args['edit_incomes']])
+    income = cur.fetchone()
+    return render_template('edit_incomes.html', income=income)
 
-# Function that actually edits the posts. The function will load a new page with the selected text already preloaded.
-@app.route('/edit_entries', methods=['POST'])
-def edit_entries():
+
+@app.route('/edit_expense_form', methods=['GET'])
+def edit_expense_form():
     db = get_db()
-    # https://stackoverflow.com/questions/1307378/python-mysql-update-statement
-    # Used the above link for the update. It helped me learn the syntax.
-    db.execute("update incomes, expenses set amount = ?, category = ? where id = ?",
-               [request.form['amount'], request.form['category'],request.form['edit_text']])
+    cur = db.execute('select id, amount, category from expenses where id=?', [request.args['edit_expenses']])
+    # Created the redirect_edit() function. Used similar format as the functions above.
+    expense = cur.fetchone()
+    return render_template('edit_expenses.html', expense=expense)
+
+
+@app.route('/edit_incomes', methods=['POST'])
+def edit_incomes():
+    db = get_db()
+    db.execute("update incomes set amount = ?, category = ? where id = ?",
+               [request.form['amount'], request.form['category'],request.form['edit_incomes']])
     db.commit()
-    return show_entries()
+    return redirect(url_for("show_entries"))
+
+
+@app.route('/edit_expenses', methods=['POST'])
+def edit_expenses():
+    db = get_db()
+    db.execute("update expenses set amount = ?, category = ? where id = ?",
+               [request.form['amount'], request.form['category'],request.form['edit_expenses']])
+    db.commit()
+    return redirect(url_for("show_entries"))

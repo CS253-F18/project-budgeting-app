@@ -1,24 +1,23 @@
 {% extends "layout.html" %}
 {% block body %}
+    <form action="{{ url_for('edit_incomes') }}" method="post" class="edit-incomes">
     <table id="income_table">
         <tr>
             <th>Incomes</th>
             <th id = "table_total_income">Total Income:</th>
         </tr>
-        {% for incomeEntry in incomes %}
 
             <tr>
-                <td class = "table_category"><select name="incomeCategory">
+                <td class = "table_category"><select name="category">
                     <option value="Salary">Salary</option>
                     <option value="Miscellaneous">Miscellaneous</option>
                 </select></td>
-                <td class = "table_amount"><input type="text" size="30" name="add_income" value={{ incomeEntry.amount }}></td>
+                <td class = "table_amount"><input type="text" size="30" name="amount" value={{ income.amount }}></td>
                 <td class = "table_date">Date</td>
-                <td class = "table_edit"> <form action ="{{ url_for('redirect_edit_income') }}" method="get">
-                    <button type="submit" name="edit_text" value={{ incomeEntry.id }}> Edit Text </button>
-                </form></td>
-                <td class = "table_delete">Delete</td>
             </tr>
-        {% endfor %}
     </table>
+        <input type="hidden" name="edit_incomes" value="{{ income.id }}">
+    <button type="submit">
+                Save Changes </button>
+    </form>
 {% endblock %}
