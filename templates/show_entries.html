@@ -44,13 +44,9 @@
     </div>
     <div id="columnTwo">
         <h2>Net Income: ${{ net }}</h2>
+        <h3>Incomes</h3>
         <table id="income_table">
-            <tr>
-                <th>Incomes</th>
-                <th id = "table_total_income">Total Income:</th>
-            </tr>
             {% for incomeEntry in incomes %}
-
                 <tr>
                     <td class = "table_category">Category {{ incomeEntry.category }}</td>
                     <td class = "table_amount">Amount {{ incomeEntry.amount }}</td>
@@ -63,11 +59,8 @@
                 </tr>
             {% endfor %}
         </table>
+        <h3>Expenses</h3>
         <table id="expense_table">
-            <tr>
-                <th>Expenses</th>
-                <th id = "table_total_expenses">Total Expenses:</th>
-            </tr>
             {% for expenseEntry in expenses %}
                 <tr>
                     <td class = "table_category">Category {{ expenseEntry.category }}</td>

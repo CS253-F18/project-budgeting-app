@@ -72,9 +72,9 @@ def close_db(error):
 @app.route('/')
 def show_entries():
     db = get_db()
-    cur = db.execute('select amount, category, income_date from incomes order by id desc')
+    cur = db.execute('select id, amount, category, income_date from incomes order by id desc')
     incomes = cur.fetchall()
-    cur = db.execute('select amount, category, expense_date from expenses order by id desc')
+    cur = db.execute('select id, amount, category, expense_date from expenses order by id desc')
     expenses = cur.fetchall()
 
     cur = db.execute('SELECT TOTAL(amount) FROM incomes')
