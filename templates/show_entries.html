@@ -44,55 +44,67 @@
     </div>
     <div id="columnTwo">
         <h2>Net Income: ${{ net }}</h2>
+    <div class="row">
+    <div class="col">
         <h3>Incomes</h3>
-        <table id="income_table">
-      <tr>
-                <th>Incomes</th>
-                <th id = "table_total_income">Total Income:</th>
+        <table id="income_table" class="table table-dark">
+            <tr>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Edit</th>
+                <th>Delete</th>
             </tr>
             <ul class="incomes">
-            {% for incomeEntry in incomes %}
-                <tr>
-                    <td class = "table_category">Category {{ incomeEntry.category }}</td>
-                    <td class = "table_amount">Amount {{ incomeEntry.amount }}</td>
-                    <td class = "table_date">Date {{ incomeEntry.income_date }}</td>
-                    <td class = "table_edit"><form action ="{{ url_for('edit_income_form') }}" method="get">
+                {% for incomeEntry in incomes %}
+                    <tr>
+                        <td class = "table_category">{{ incomeEntry.category }}</td>
+                        <td class = "table_amount">{{ incomeEntry.amount }}</td>
+                        <td class = "table_date">{{ incomeEntry.income_date }}</td>
+                        <td class = "table_edit"><form action ="{{ url_for('edit_income_form') }}" method="get">
                             <input type="hidden" name="edit_incomes" value="{{ incomeEntry.id }}">
-                      <button type="submit"> Edit Text </button></form></td>
-                    <td class = "table_delete"><form action="{{ url_for('delete_income') }}" method="post">
-                        <input type="hidden" name="income-id" value="{{ incomeEntry.id }}">
-                        <button type="submit" class="del-inc-button">Delete</button>
-                    </form></td>
-                </tr>
-            {% else %}
-                <i>No incomes entered</i>
-            {% endfor %}
-              </ul>
+                            <button type="submit"> Edit Text </button></form></td>
+                        <td class = "table_delete"><form action="{{ url_for('delete_income') }}" method="post">
+                            <input type="hidden" name="income-id" value="{{ incomeEntry.id }}">
+                            <button type="submit" class="del-inc-button">Delete</button>
+                        </form></td>
+                    </tr>
+                {% else %}
+                    <i>No incomes entered</i>
+                {% endfor %}
+            </ul>
         </table>
+    </div>
+    <div class="col">
         <h3>Expenses</h3>
-        <table id="expense_table">
-          <tr>
-              <th>Expenses</th>
-              <th id = "table_total_expenses">Total Expenses:</th>
-           </tr>
-           <ul class="expenses">
-              {% for expenseEntry in expenses %}
-                <tr>
-                    <td class = "table_category">Category {{ expenseEntry.category }}</td>
-                    <td class = "table_amount">Amount {{ expenseEntry.amount }}</td>
-                    <td class = "table_date">Date {{ expenseEntry.expense_date }}</td>
-                    <td class = "table_edit"><form action ="{{ url_for('edit_expense_form') }}" method="get">
+        <table id="expense_table" class="table table-dark">
+            <tr>
+                <th>Category</th>
+                <th>Amount</th>
+                <th>Date</th>
+                <th>Edit</th>
+                <th>Delete</th>
+            </tr>
+            <ul class="expenses">
+                {% for expenseEntry in expenses %}
+                    <tr>
+                        <td class = "table_category">{{ expenseEntry.category }}</td>
+                        <td class = "table_amount">{{ expenseEntry.amount }}</td>
+                        <td class = "table_date">{{ expenseEntry.expense_date }}</td>
+                        <td class = "table_edit"><form action ="{{ url_for('edit_expense_form') }}" method="get">
                             <button type="submit" name="edit_expenses" value={{ expenseEntry.id }}> Edit Text </button>
                         </form></td></td>
-                    <td class = "table_delete"><form action="{{ url_for('delete_expense') }}" method="post">
-                        <input type="hidden" name="expense-id" value="{{ expenseEntry.id }}">
-                        <button type="submit" class="del-exp-button">Delete</button>
-                    </form></td>
-                </tr>
-              </ul>
-            {% else %}
-                <i>No expenses entered</i>
-            {% endfor %}
+                        <td class = "table_delete"><form action="{{ url_for('delete_expense') }}" method="post">
+                            <input type="hidden" name="expense-id" value="{{ expenseEntry.id }}">
+                            <button type="submit" class="del-exp-button">Delete</button>
+                        </form></td>
+                    </tr>
+                    </ul>
+                {% else %}
+                    <i>No expenses entered</i>
+                {% endfor %}
         </table>
+    </div>
+    </div>
     </div>
 {% endblock %}
