@@ -3,6 +3,8 @@ layout.html
 Creating the html layout for the Budgeting Application webpage -->
 
 <!doctype html>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <!-- Link the css file to layout.html (style.css) -->
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='style.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='html_table.css') }}">
@@ -12,7 +14,7 @@ Creating the html layout for the Budgeting Application webpage -->
         <h1>Budgeting Application</h1>
     </div>
     {% for message in get_flashed_messages() %}
-    <div class="flash">{{ message }}</div>
+        <div class="flash">{{ message }}</div>
     {% endfor %}
     {% block body %}{% endblock %}
     <div id="footer">
