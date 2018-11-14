@@ -19,4 +19,4 @@ create table login (
   id integer primary key autoincrement,
   'username' text,
   'password' text
-)
+);

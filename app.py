@@ -128,6 +128,7 @@ def filter_income():
     db = get_db()
     cur = db.execute("select amount, category from incomes where category=? order by id desc",[request.form['filter_income']])
     incomes = cur.fetchall()
+    flash('Income filtered')
     return render_template('show_entries.html', incomes=incomes)
                 
 
@@ -136,6 +137,7 @@ def filter_expense():
     db = get_db()
     cur = db.execute("select amount, category from expenses where category=? order by id desc", [request.form['filter_expense']])
     expenses = cur.fetchall()
+    flash('Expense filtered')
     return render_template('show_entries.html', expenses=expenses)
 
                 
@@ -154,6 +156,7 @@ def edit_incomes():
     db.execute("update incomes set amount = ?, category = ? where id = ?",
                [request.form['amount'], request.form['category'],request.form['edit_incomes']])
     db.commit()
+    flash('Income edited')
     return redirect(url_for("show_entries"))
 
 
@@ -163,6 +166,7 @@ def edit_expenses():
     db.execute("update expenses set amount = ?, category = ? where id = ?",
                [request.form['amount'], request.form['category'],request.form['edit_expenses']])
     db.commit()
+    flash('Expense edited')
     return redirect(url_for("show_entries"))
   
 @app.route('/delete_income', methods=['POST'])
