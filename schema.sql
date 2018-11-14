@@ -14,3 +14,9 @@ create table expenses (
   'amount' float,
   category text
 );
+drop table if exists login;
+create table login (
+  id integer primary key autoincrement,
+  'username' text,
+  'password' text
+)
