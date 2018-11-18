@@ -17,7 +17,7 @@
 """
 import os
 from sqlite3 import dbapi2 as sqlite3
-from flask import Flask, request, g, redirect, url_for, render_template, flash
+from flask import Flask, request, g, redirect, url_for, render_template, flash, session
 
 
 # create our little application :)
@@ -28,6 +28,8 @@ app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'budget.db'),
     DEBUG=True,
     SECRET_KEY='development key',
+    USERNAME='admin',
+    PASSWORD='default'
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
@@ -70,7 +72,40 @@ def close_db(error):
         g.sqlite_db.close()
 
 
-@app.route('/')
+# Code found from the following website: http://flask.pocoo.org/docs/0.12/tutorial/views/
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    error = None
+    if request.method == 'POST':
+        if request.form['login_username'] != app.config['USERNAME']:
+            error = 'Invalid username'
+        elif request.form['login_password'] != app.config['PASSWORD']:
+            error = 'Invalid password'
+        else:
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('show_entries'))
+    return render_template('login.html', error=error)
+
+# Code found from the following website http://flask.pocoo.org/docs/0.12/tutorial/views/
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+    return redirect(url_for('show_entries'))
+
+
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    db = get_db()
+    db.execute('INSERT INTO login (username, password) VALUES (?, ?)',
+               [request.form['add_username'],request.form['add_password']])
+    db.commit()
+    flash('New user was successfully added')
+    return redirect(url_for('login'))
+
+
+@app.route('/show_entries')
 def show_entries():
     db = get_db()
     cur = db.execute('select amount, category, id, income_date from incomes order by id desc')
