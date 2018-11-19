@@ -71,15 +71,24 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
+@app.route('/')
+def login_page():
+    return render_template('login.html')
+
 
 # Code found from the following website: http://flask.pocoo.org/docs/0.12/tutorial/views/
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
+    db = get_db()
+    cur = db.execute('select username from login where username=?', [request.form['login_username']])
+    loginUsername = cur.fetchone()[0]
+    cur1 = db.execute('select password from login where password=?', [request.form['login_password']])
+    loginPassword = cur1.fetchone()[0]
     error = None
     if request.method == 'POST':
-        if request.form['login_username'] != app.config['USERNAME']:
+        if request.form['login_username'] != loginUsername:
             error = 'Invalid username'
-        elif request.form['login_password'] != app.config['PASSWORD']:
+        elif request.form['login_password'] != loginPassword:
             error = 'Invalid password'
         else:
             session['logged_in'] = True
@@ -102,7 +111,7 @@ def add_user():
                [request.form['add_username'],request.form['add_password']])
     db.commit()
     flash('New user was successfully added')
-    return redirect(url_for('login'))
+    return redirect(url_for('login_page'))
 
 
 @app.route('/show_entries')
