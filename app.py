@@ -17,7 +17,7 @@
 """
 import os
 from sqlite3 import dbapi2 as sqlite3
-from flask import Flask, request, g, redirect, url_for, render_template, flash
+from flask import Flask, request, g, redirect, url_for, render_template, flash, session
 
 
 # create our little application :)
@@ -28,6 +28,8 @@ app.config.update(dict(
     DATABASE=os.path.join(app.root_path, 'budget.db'),
     DEBUG=True,
     SECRET_KEY='development key',
+    USERNAME='admin',
+    PASSWORD='default'
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
@@ -69,8 +71,50 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
-
 @app.route('/')
+def login_page():
+    return render_template('login.html')
+
+
+# Code found from the following website: http://flask.pocoo.org/docs/0.12/tutorial/views/
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    db = get_db()
+    cur = db.execute('select username from login where username=?', [request.form['login_username']])
+    loginUsername = cur.fetchone()[0]
+    cur1 = db.execute('select password from login where password=?', [request.form['login_password']])
+    loginPassword = cur1.fetchone()[0]
+    error = None
+    if request.method == 'POST':
+        if request.form['login_username'] != loginUsername:
+            error = 'Invalid username'
+        elif request.form['login_password'] != loginPassword:
+            error = 'Invalid password'
+        else:
+            session['logged_in'] = True
+            flash('You were logged in')
+            return redirect(url_for('show_entries'))
+    return render_template('login.html', error=error)
+
+# Code found from the following website http://flask.pocoo.org/docs/0.12/tutorial/views/
+@app.route('/logout')
+def logout():
+    session.pop('logged_in', None)
+    flash('You were logged out')
+    return redirect(url_for('show_entries'))
+
+
+@app.route('/add_user', methods=['POST'])
+def add_user():
+    db = get_db()
+    db.execute('INSERT INTO login (username, password) VALUES (?, ?)',
+               [request.form['add_username'],request.form['add_password']])
+    db.commit()
+    flash('New user was successfully added')
+    return redirect(url_for('login_page'))
+
+
+@app.route('/show_entries')
 def show_entries():
     db = get_db()
     cur = db.execute('select amount, category, id, income_date from incomes order by id desc')
