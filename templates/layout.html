@@ -13,9 +13,18 @@ Creating the html layout for the Budgeting Application webpage -->
     <div id="header">
         <h1>Budgeting Application</h1>
     </div>
-    {% for message in get_flashed_messages() %}
-        <div class="flash">{{ message }}</div>
-    {% endfor %}
+    <!-- https://coderwall.com/p/ijrrpa/flask-flash-messages-as-bootstrap-alert -->
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    <!-- Categories: success (green), info (blue), warning (yellow), danger (red) -->
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <!-- <strong>Title</strong> --> {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endwith %}
     {% block body %}{% endblock %}
     <div id="footer">
         <p>Created By: Jonathan Nocek, Alex O'Neill, Joe Ruppenthal, Johnny Whitfield</p>
