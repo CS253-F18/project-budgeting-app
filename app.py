@@ -78,9 +78,9 @@ def show_entries():
     cur = db.execute('select amount, category, id, expense_date from expenses order by id desc')
     expenses = cur.fetchall()
     
-    cur = db.execute('SELECT ROUND(TOTAL(amount), 2) FROM incomes')
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes')
     incomeTotal = cur.fetchone()[0]
-    cur = db.execute('SELECT ROUND(TOTAL(amount), 2) FROM expenses')
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses')
     expenseTotal = cur.fetchone()[0]
 
     if incomeTotal == "None" and expenseTotal == "None":
