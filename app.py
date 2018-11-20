@@ -73,6 +73,7 @@ def close_db(error):
 
 @app.route('/')
 def login_page():
+    flash('Welcome to our Budgeting Application')
     return render_template('login.html')
 
 
@@ -97,11 +98,11 @@ def login():
     return render_template('login.html', error=error)
 
 # Code found from the following website http://flask.pocoo.org/docs/0.12/tutorial/views/
-@app.route('/logout')
+@app.route('/logout', methods=['POST'])
 def logout():
     session.pop('logged_in', None)
     flash('You were logged out')
-    return redirect(url_for('show_entries'))
+    return redirect(url_for('login_page'))
 
 
 @app.route('/add_user', methods=['POST'])
