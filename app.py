@@ -16,9 +16,9 @@
 
 """
 import os
+import formatter
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, g, redirect, url_for, render_template, flash, session
-
 
 # create our little application :)
 app = Flask(__name__)
@@ -149,11 +149,11 @@ def show_entries():
     else:
         net = incomeTotal - expenseTotal
 
-    net = round(net, 2)
-
     if net < 0:
         flash("Expenses outweigh incomes, needs re-budgeting", "danger")
-    
+
+    net = "{:.2f}".format(net)
+
     return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
     housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
                            incomeTotal=incomeTotal, expenseTotal=expenseTotal)
@@ -195,6 +195,15 @@ def filter_income():
     flash('Incomes filtered', "info")
     return render_template('show_entries.html', incomes=incomes)
                 
+
+@app.route('/filter_date', methods=['POST'])
+def filter_date():
+    db = get_db()
+    cur = db.execute("select amount, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
+    expenses = cur.fetchall()
+    flash('Dates filtered', "info")
+    return render_template('show_entries.html', expenses=expenses)
+
 
 @app.route('/filter_expense', methods=['POST'])
 def filter_expense():
