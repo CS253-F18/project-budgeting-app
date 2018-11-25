@@ -66,7 +66,7 @@
                             {% for incomeEntry in incomes %}
                                 <tr>
                                     <td class = "table_category">{{ incomeEntry.category }}</td>
-                                    <td class = "table_amount">{{ incomeEntry.amount }}</td>
+                                    <td class = "table_amount">{{ "{:.2f}".format(incomeEntry.amount) }}</td>
                                     <td class = "table_date">{{ incomeEntry.income_date }}</td>
                                     <td class = "table_edit"><form action ="{{ url_for('edit_income_form') }}" method="get">
                                         <input type="hidden" name="edit_incomes" value="{{ incomeEntry.id }}">
@@ -96,7 +96,7 @@
                             {% for expenseEntry in expenses %}
                                 <tr>
                                     <td class = "table_category">{{ expenseEntry.category }}</td>
-                                    <td class = "table_amount">{{ expenseEntry.amount }}</td>
+                                    <td class = "table_amount">{{ "{:.2f}".format(expenseEntry.amount) }}</td>
                                     <td class = "table_date">{{ expenseEntry.expense_date }}</td>
                                     <td class = "table_edit"><form action ="{{ url_for('edit_expense_form') }}" method="get">
                                         <button type="submit" name="edit_expenses" value={{ expenseEntry.id }}> Edit Text </button>
