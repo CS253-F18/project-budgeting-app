@@ -76,7 +76,7 @@
                                         <input type="hidden" name="edit_incomes" value="{{ incomeEntry.id }}">
                                         <button type="submit"> Edit Text </button></form></td>
                                     <td class = "table_delete"><form action="{{ url_for('delete_income') }}" method="post">
-                                        <input type="hidden" name="income-id" value="{{ incomeEntry.id }}">
+                                        <input type="hidden" name="income_id" value="{{ incomeEntry.id }}">
                                         <button type="submit" class="del-inc-button">Delete</button>
                                     </form></td>
                                 </tr>
@@ -106,7 +106,7 @@
                                         <button type="submit" name="edit_expenses" value={{ expenseEntry.id }}> Edit Text </button>
                                     </form></td></td>
                                     <td class = "table_delete"><form action="{{ url_for('delete_expense') }}" method="post">
-                                        <input type="hidden" name="expense-id" value="{{ expenseEntry.id }}">
+                                        <input type="hidden" name="expense_id" value="{{ expenseEntry.id }}">
                                         <button type="submit" class="del-exp-button">Delete</button>
                                     </form></td>
                                 </tr>
