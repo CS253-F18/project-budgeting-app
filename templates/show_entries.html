@@ -46,6 +46,10 @@
                     </select>
                     <input type="submit" value="Filter Expense">
                 </form>
+                <form action ="{{ url_for('filter_date') }}" method="post">
+                    <input type="date" name="filter_date">
+                    <input type="submit" value="Filter Date">
+                </form>
             </div>
 
         </div>

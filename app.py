@@ -182,6 +182,15 @@ def filter_income():
     return render_template('show_entries.html', incomes=incomes)
                 
 
+@app.route('/filter_date', methods=['POST'])
+def filter_date():
+    db = get_db()
+    cur = db.execute("select amount, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
+    expenses = cur.fetchall()
+    flash('Dates filtered', "info")
+    return render_template('show_entries.html', expenses=expenses)
+
+
 @app.route('/filter_expense', methods=['POST'])
 def filter_expense():
     db = get_db()
