@@ -16,9 +16,9 @@
 
 """
 import os
+import formatter
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, g, redirect, url_for, render_template, flash, session
-
 
 # create our little application :)
 app = Flask(__name__)
@@ -136,11 +136,11 @@ def show_entries():
     else:
         net = incomeTotal - expenseTotal
 
-    net = round(net, 2)
-
     if net < 0:
         flash("Expenses outweigh incomes, needs re-budgeting", "danger")
-    
+
+    net = "{:.2f}".format(net)
+
     return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net)
 
 
