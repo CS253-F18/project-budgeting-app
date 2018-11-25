@@ -116,6 +116,8 @@
         </div>
         <div>
             <h2>Graphs</h2>
+
+
             <head>
                 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                 <script type="text/javascript">
@@ -126,12 +128,72 @@
 
                         var data = google.visualization.arrayToDataTable([
                             ['Incomes', 'Amount'],
-                            ['Salary',     10],
-                            ['Miscellaneous', 10],
+                            ['Salary', {{ salaryTotal }}],
+                            ['Miscellaneous', {{ miscellaneous1Total }}],
                         ]);
 
                         var options = {
-                            title: 'Pie Chart'
+                            title: 'Income Pie Chart'
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('incomepiechart'));
+
+                        chart.draw(data, options);
+                    }
+                </script>
+            </head>
+            <body>
+            <div id="incomepiechart" style="width: 900px; height: 500px;"></div>
+            </body>
+
+
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Expenses', 'Amount'],
+                            ['Housing', {{ housingTotal }}],
+                            ['Food/Drink', {{ fooddrinkTotal }}],
+                            ['Miscellaneous', {{ miscellaneous2Total }}],
+                            ['Transportation', {{ transportationTotal }}]
+                        ]);
+
+                        var options = {
+                            title: 'Expenses Pie Chart'
+                        };
+
+                        var chart = new google.visualization.PieChart(document.getElementById('expensespiechart'));
+
+                        chart.draw(data, options);
+                    }
+                </script>
+            </head>
+            <body>
+            <div id="expensespiechart" style="width: 900px; height: 500px;"></div>
+            </body>
+
+
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Type', 'Amount'],
+                            ['Income', {{ incomeTotal }}],
+                            ['Expenses', {{ expenseTotal }}]
+                        ]);
+
+                        var options = {
+                            title: 'Income/Expenses Pie Chart'
                         };
 
                         var chart = new google.visualization.PieChart(document.getElementById('piechart'));
@@ -143,36 +205,8 @@
             <body>
             <div id="piechart" style="width: 900px; height: 500px;"></div>
             </body>
-            <head>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
 
-                    function drawChart() {
-                        var data = google.visualization.arrayToDataTable([
-                            ['Month', 'Amount'],
-                            ['January',  1000],
-                            ['February',  2000],
-                            ['March',  500],
-                            ['April',  3000]
-                        ]);
 
-                        var options = {
-                            title: 'Line Chart',
-                            curveType: 'function',
-                            legend: { position: 'bottom' }
-                        };
-
-                        var chart = new google.visualization.LineChart(document.getElementById('curve_chart'));
-
-                        chart.draw(data, options);
-                    }
-                </script>
-            </head>
-            <body>
-            <div id="curve_chart" style="width: 900px; height: 500px"></div>
-            </body>
         </div>
     </div>
 {% endblock %}

@@ -127,6 +127,18 @@ def show_entries():
     incomeTotal = cur.fetchone()[0]
     cur = db.execute('SELECT TOTAL(amount) FROM expenses')
     expenseTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Salary"')
+    salaryTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Miscellaneous"')
+    miscellaneous1Total = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Housing"')
+    housingTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Transportation"')
+    transportationTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Food/Drink"')
+    fooddrinkTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Miscellaneous"')
+    miscellaneous2Total = cur.fetchone()[0]
 
     if incomeTotal == "None" and expenseTotal == "None":
         net = 0.00
@@ -142,7 +154,9 @@ def show_entries():
     if net < 0:
         flash("Expenses outweigh incomes, needs re-budgeting", "danger")
     
-    return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net)
+    return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
+    housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
+                           incomeTotal=incomeTotal, expenseTotal=expenseTotal)
 
 
 @app.route('/add_income', methods=['POST'])
