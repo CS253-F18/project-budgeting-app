@@ -15,6 +15,9 @@ Creating the html layout for the Budgeting Application webpage -->
         <form action ="{{ url_for('logout') }}" method="post" class="logout">
             <dd><input type="submit" value="Logout"></dd>
         </form>
+        <form action ="{{ url_for('remove_filter') }}" method="post" class="remove_filter">
+            <dd><input type="submit" value="Remove Filter"></dd>
+        </form>
     </div>
     <!-- https://coderwall.com/p/ijrrpa/flask-flash-messages-as-bootstrap-alert -->
     {% with messages = get_flashed_messages(with_categories=true) %}

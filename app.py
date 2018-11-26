@@ -258,4 +258,8 @@ def delete_expense():
     db.commit()
     flash('Expense deleted', "info")
     return redirect(url_for('show_entries'))
-  
+
+@app.route('/remove_filter', methods=['POST'])
+def remove_filter():
+    flash('Showing Everything', "info")
+    return redirect(url_for('show_entries'))
