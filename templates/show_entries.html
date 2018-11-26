@@ -211,6 +211,95 @@
             </body>
 
 
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Type', 'Amount', { role: "style" } ],
+                            ['Income', {{ incomeTotal }}, "red"],
+                            ['Expenses', {{ expenseTotal }}, "blue"]
+                        ]);
+
+                        var options = {
+                            title: 'Income/Expenses Bar Chart'
+                        };
+
+                        var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+
+                        chart.draw(data, options);
+                    }
+                </script>
+            </head>
+            <body>
+            <div id="barchart" style="width: 900px; height: 500px;"></div>
+            </body>
+
+
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Expenses', 'Amount', { role: "style" } ],
+                            ['Housing', {{ housingTotal }}, "red"],
+                            ['Food/Drink', {{ fooddrinkTotal }}, "blue"],
+                            ['Miscellaneous', {{ miscellaneous2Total }}, "green"],
+                            ['Transportation', {{ transportationTotal }}, "orange"]
+                        ]);
+
+                        var options = {
+                            title: 'Expenses Bar Chart'
+                        };
+
+                        var chart = new google.visualization.BarChart(document.getElementById('expensesbarchart'));
+
+                        chart.draw(data, options);
+                    }
+                </script>
+            </head>
+            <body>
+            <div id="expensesbarchart" style="width: 900px; height: 500px;"></div>
+            </body>
+
+
+            <head>
+                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                <script type="text/javascript">
+                    google.charts.load('current', {'packages':['corechart']});
+                    google.charts.setOnLoadCallback(drawChart);
+
+                    function drawChart() {
+
+                        var data = google.visualization.arrayToDataTable([
+                            ['Incomes', 'Amount', { role: "style" } ],
+                            ['Salary', {{ salaryTotal }}, "red"],
+                            ['Miscellaneous', {{ miscellaneous1Total }}, "blue"],
+                        ]);
+
+                        var options = {
+                            title: 'Income Bar Chart'
+                        };
+
+                        var chart = new google.visualization.BarChart(document.getElementById('incomebarchart'));
+
+                        chart.draw(data, options);
+                    }
+                </script>
+            </head>
+            <body>
+            <div id="incomebarchart" style="width: 900px; height: 500px;"></div>
+            </body>
+
+
         </div>
     </div>
 {% endblock %}
