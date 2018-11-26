@@ -53,3 +53,8 @@ html {
     margin: 0 auto;
     background: #ccc;
 }
+
+.graphs {
+    visibility: hidden;
+}
+
