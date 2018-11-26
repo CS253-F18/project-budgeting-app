@@ -245,7 +245,7 @@ def edit_expenses():
 @app.route('/delete_income', methods=['POST'])
 def delete_income():
     db = get_db()
-    db.execute('DELETE FROM incomes WHERE id=?', [request.form['income-id']])
+    db.execute('DELETE FROM incomes WHERE id=?', [request.form['income_id']])
     db.commit()
     flash('Income deleted', "info")
     return redirect(url_for('show_entries'))
@@ -254,7 +254,7 @@ def delete_income():
 @app.route('/delete_expense', methods=['POST'])
 def delete_expense():
     db = get_db()
-    db.execute('DELETE FROM expenses WHERE id=?', [request.form['expense-id']])
+    db.execute('DELETE FROM expenses WHERE id=?', [request.form['expense_id']])
     db.commit()
     flash('Expense deleted', "info")
     return redirect(url_for('show_entries'))

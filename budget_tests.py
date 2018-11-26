@@ -20,34 +20,36 @@ class BudgetTestCase(unittest.TestCase):
         os.unlink(budget.app.config['DATABASE'])
 
     def test_empty_db(self):
-        rv = self.app.get('/')
+        rv = self.app.get('/show_entries')
         assert b'No incomes entered' in rv.data
         assert b'No expenses entered' in rv.data
 
     def test_add_income(self):
         rv = self.app.post('/add_income', data=dict(
+            income_date="2018-11-16",
             add_income=50,
             incomeCategory="Salary"
         ), follow_redirects=True)
         assert b'No incomes entered' not in rv.data
-        assert b'Category Salary' in rv.data
-        assert b'Amount 50.0' in rv.data
+        assert b'50.00' in rv.data
 
     def test_add_expense(self):
         rv = self.app.post('/add_expense', data=dict(
+            expense_date="2018-11-16",
             add_expense=50,
             expenseCategory="Housing"
         ), follow_redirects=True)
         assert b'No expenses entered' not in rv.data
-        assert b'Category Housing' in rv.data
-        assert b'Amount 50.0' in rv.data
+        assert b'50.00' in rv.data
 
     def test_filter_income(self):
         rv = self.app.post('/add_income', data=dict(
+            income_date="2018-11-16",
             add_income=50,
             incomeCategory="Salary"
         ), follow_redirects=True)
         rv = self.app.post('/add_income', data=dict(
+            income_date="2018-11-17",
             add_income=55,
             incomeCategory="Miscellaneous"
         ), follow_redirects=True)
@@ -55,16 +57,17 @@ class BudgetTestCase(unittest.TestCase):
             filter_income="Salary"
         ), follow_redirects=True)
         assert b'No incomes entered' not in rv.data
-        assert b'Amount 55.0' not in rv.data
-        assert b'Amount 50.0' in rv.data
-        assert b'Category Salary' in rv.data
+        assert b'55.00' not in rv.data
+        assert b'50.00' in rv.data
 
     def test_filter_expense(self):
         rv = self.app.post('/add_expense', data=dict(
+            expense_date="2018-11-16",
             add_expense=50,
             expenseCategory="Housing"
         ), follow_redirects=True)
         rv = self.app.post('/add_expense', data=dict(
+            expense_date="2018-11-17",
             add_expense=55,
             expenseCategory="Transportation"
         ), follow_redirects=True)
@@ -72,40 +75,41 @@ class BudgetTestCase(unittest.TestCase):
             filter_expense="Housing"
         ), follow_redirects=True)
         assert b'No expenses entered' not in rv.data
-        assert b'Amount 55.0' not in rv.data
-        assert b'Amount 50.0' in rv.data
-        assert b'Category Housing' in rv.data
+        assert b'55.00' not in rv.data
+        assert b'50.00' in rv.data
 
     def test_delete_income(self):
         rv = self.app.post('/add_income', data=dict(
-            add_expense_date="2018-11-16",
+            income_date="2018-11-16",
             add_income=50,
             incomeCategory="Salary"
         ), follow_redirects=True)
         rv = self.app.post('/add_income', data=dict(
+            income_date="2018-11-16",
             add_income=55,
             incomeCategory="Miscellaneous"
         ), follow_redirects=True)
         rv = self.app.post('/delete_income', data=dict(
-            id=1
+            income_id=1
         ), follow_redirects=True)
         assert b'No incomes entered' not in rv.data
-        assert b'Amount 50.0' not in rv.data
-        assert b'Amount 55.0' in rv.data
+        assert b'50.00' not in rv.data
+        assert b'55.00' in rv.data
 
     def test_delete_expense(self):
         rv = self.app.post('/add_expense', data=dict(
-            add_income_date="2018-11-16",
+            expense_date="2018-11-16",
             add_expense=50,
             expenseCategory="Housing"
         ), follow_redirects=True)
         rv = self.app.post('/add_expense', data=dict(
+            expense_date="2018-11-17",
             add_expense=55,
             expenseCategory="Transportation"
         ), follow_redirects=True)
         rv = self.app.post('/delete_expense', data=dict(
-            id=1
+            expense_id=1
         ), follow_redirects=True)
-        assert b'No incomes entered' not in rv.data
-        assert b'Amount 50.0' not in rv.data
-        assert b'Amount 55.0' in rv.data
+        assert b'No expenses entered' not in rv.data
+        assert b'50.0' not in rv.data
+        assert b'55.0' in rv.data
