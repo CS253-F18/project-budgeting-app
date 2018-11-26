@@ -54,3 +54,7 @@ html {
     background: #ccc;
 }
 
+.graphs {
+    visibility: hidden;
+}
+

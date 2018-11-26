@@ -1,7 +1,13 @@
+<<<<<<< HEAD
+Iteration Report 2
+-----------------------
+ What each person was responsible for accomplishing
+=======
 Iteration Report 1
 -----------------------
 
 What each person was responsible for accomplishing
+>>>>>>> d0bf3c99be84d8090e21ed8f188ea2f76f38b5e8
 -----------------------
 (From iteration report 1)
  - Joe: Finish what is left of the show_entries function for the add expense and income. 
@@ -13,8 +19,12 @@ It will update after each expense and income is added.
  - Alex: Create filter categories feature and test it. This will appear below the table and give the user the option to sort the table
 by one of the predetermined categories.
 
+<<<<<<< HEAD
+ What was completed
+=======
 
 What was completed
+>>>>>>> d0bf3c99be84d8090e21ed8f188ea2f76f38b5e8
 -----------------------
  - Jonathan: A select box was added next to the Add Income/Expense buttons, allowing the user to pick from a few pre-made
  options of categories they can assign to each entry added. The option selected appears in the table, next to their
@@ -26,16 +36,34 @@ What was completed
  - Alex: Worked with Jonathan to create a filter for the categories created. Due to being out of town and unable to work
  until late Sunday night, Jonathan helped him get up to speed with his categories code, and they ultimately worked on the
  whole function together.
+<<<<<<< HEAD
+ 
+ One tool or process or approach you used that you felt was especially helpful, and why.
+-----------------------
+ Similar to last week, we found trying out some code on our own and then meeting up as a group to work through various
+=======
 
 
 One tool or process or approach you used that you felt was especially helpful, and why.
 -----------------------
 
 Similar to last week, we found trying out some code on our own and then meeting up as a group to work through various
+>>>>>>> d0bf3c99be84d8090e21ed8f188ea2f76f38b5e8
 roadblocks was immensely helpful. We were able to find solutions and work out recurring issues quickly and easily when
 we collaborated in person. GroupMe was used to discuss basic issues and schedule times when we could meet to work through
 challenges.
 
+<<<<<<< HEAD
+ What was planned but not finished
+-----------------------
+ Our unit tests are not up to date with our functions. Skeleton unit tests were made last week that we can then adjust as
+we create new functions and change current ones, but as they are now, they are not accurately testing our code as they
+should.
+
+ What troubles/issues/roadblocks/difficulties you encountered
+-----------------------
+ Joe reported that he had several problems with GitHub and his repository overwriting files and not allowing him to push
+=======
 What was planned but not finished
 -----------------------
 
@@ -47,11 +75,23 @@ What troubles/issues/roadblocks/difficulties you encountered
 -----------------------
 
 Joe reported that he had several problems with GitHub and his repository overwriting files and not allowing him to push
+>>>>>>> d0bf3c99be84d8090e21ed8f188ea2f76f38b5e8
 when he needed to. This slowed our progress, because it prevented him from updating the show_entries function, which was
 the focus of this week's plan. Additionally, Johnny lost his laptop at the start of the weekend, which had some work that
 was not yet pushed into the repository because, and this is true, he is dumb. (To be clear, Johnny wrote this) Everything
 was still completed as planned despite these minor setbacks.
 
+<<<<<<< HEAD
+ What adjustments to your overall design you discovered
+-----------------------
+ We found this week that debugging our code is significantly faster when we work as a group, so we will attempt a basic
+solution for the assignments we each have, but when an issue presents itself to us, we will reach out to each other sooner
+rather than later.
+
+ Which user stories and tasks you plan to complete in the coming iteration and in the two iterations following it.
+-----------------------
+ Week 4:
+=======
 What adjustments to your overall design you discovered
 -----------------------
 
@@ -63,6 +103,7 @@ Which user stories and tasks you plan to complete in the coming iteration and in
 -----------------------
 
 Week 4:
+>>>>>>> d0bf3c99be84d8090e21ed8f188ea2f76f38b5e8
  - Adjust unit tests to accurately tests the code we currently have, then create new ones for new functions.
  - Create the remove an expense and remove an income functions. Work on associated .html files
 so the delete/remove button appears next to each entry within the table. Test it.
@@ -71,7 +112,11 @@ to each entry within the table. Test it.
  - Fix up the HTML pages. Specifically, making it two separate columns and making the table more organized and clear in
 how it's displaying its data.
 
+<<<<<<< HEAD
+ Week 5:
+=======
 Week 5:
+>>>>>>> d0bf3c99be84d8090e21ed8f188ea2f76f38b5e8
  - Continue the work that was not completed from the previous week.
  - Create a "Create User Account" page and make associated html. Test it.
  - Create a database that stores usernames and passwords.  Test it. 
@@ -81,11 +126,18 @@ Week 6:
  - Begin work on graphs. This will include looking for possible libraries or built in functions we could
  take advantage of
  - Date and time of incomes and expenses being added to the table
+<<<<<<< HEAD
+ 
+ Who will be responsible for each user story planned for the next iteration, not the following two.
+-----------------------
+ Week 4:
+=======
 
 Who will be responsible for each user story planned for the next iteration, not the following two.
 -----------------------
 
 Week 4:
+>>>>>>> d0bf3c99be84d8090e21ed8f188ea2f76f38b5e8
  - Joe: Create the remove an expense and remove an income functions. Work on associated .html files
 so the delete/remove button appears next to each entry within the table. Test it.
  - Jonathan: Create the edit expense/income functions and associated html. This should be displayed next

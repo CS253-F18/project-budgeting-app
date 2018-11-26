@@ -120,185 +120,208 @@
         </div>
         <div>
             <h2>Graphs</h2>
+            <script type="text/javascript">
+                function changeVisibility(desiredGraph){
 
+                    document.getElementById('incomePie').style.visibility='hidden';
+                    document.getElementById('expensePie').style.visibility='hidden';
+                    document.getElementById('totalPie').style.visibility='hidden';
+                    document.getElementById('incomeBar').style.visibility='hidden';
+                    document.getElementById('expenseBar').style.visibility='hidden';
+                    document.getElementById('totalBar').style.visibility='hidden';
 
-            <head>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
+                    document.getElementById(desiredGraph).style.visibility='visible';
+                }
+            </script>
+            <input type="button" value="Income Pie Chart" onClick="changeVisibility('incomePie')">
+            <input type="button" value="Expense Pie Chart" onClick="changeVisibility('expensePie')">
+            <input type="button" value="Total Pie Chart" onClick="changeVisibility('totalPie')">
+            <input type="button" value="Income Bar Graph" onClick="changeVisibility('incomeBar')">
+            <input type="button" value="Expense Bar Graph" onClick="changeVisibility('expenseBar')">
+            <input type="button" value="Total Bar Graph" onClick="changeVisibility('totalBar')">
+            <div class="graphs" id="incomePie">
+                <head>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                    function drawChart() {
+                        function drawChart() {
 
-                        var data = google.visualization.arrayToDataTable([
-                            ['Incomes', 'Amount'],
-                            ['Salary', {{ salaryTotal }}],
-                            ['Miscellaneous', {{ miscellaneous1Total }}],
-                        ]);
+                            var data = google.visualization.arrayToDataTable([
+                                ['Incomes', 'Amount'],
+                                ['Salary', {{ salaryTotal }}],
+                                ['Miscellaneous', {{ miscellaneous1Total }}],
+                            ]);
 
-                        var options = {
-                            title: 'Income Pie Chart'
-                        };
+                            var options = {
+                                title: 'Income Pie Chart'
+                            };
 
-                        var chart = new google.visualization.PieChart(document.getElementById('incomepiechart'));
+                            var chart = new google.visualization.PieChart(document.getElementById('incomepiechart'));
 
-                        chart.draw(data, options);
-                    }
-                </script>
-            </head>
-            <body>
-            <div id="incomepiechart" style="width: 900px; height: 500px;"></div>
-            </body>
+                            chart.draw(data, options);
+                        }
+                    </script>
+                </head>
+                <body>
+                <div id="incomepiechart" style="width: 900px; height: 500px;"></div>
+                </body>
+            </div>
 
+            <div class="graphs" id="expensePie">
+                <head>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-            <head>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
+                        function drawChart() {
 
-                    function drawChart() {
+                            var data = google.visualization.arrayToDataTable([
+                                ['Expenses', 'Amount'],
+                                ['Housing', {{ housingTotal }}],
+                                ['Food/Drink', {{ fooddrinkTotal }}],
+                                ['Miscellaneous', {{ miscellaneous2Total }}],
+                                ['Transportation', {{ transportationTotal }}]
+                            ]);
 
-                        var data = google.visualization.arrayToDataTable([
-                            ['Expenses', 'Amount'],
-                            ['Housing', {{ housingTotal }}],
-                            ['Food/Drink', {{ fooddrinkTotal }}],
-                            ['Miscellaneous', {{ miscellaneous2Total }}],
-                            ['Transportation', {{ transportationTotal }}]
-                        ]);
+                            var options = {
+                                title: 'Expenses Pie Chart'
+                            };
 
-                        var options = {
-                            title: 'Expenses Pie Chart'
-                        };
+                            var chart = new google.visualization.PieChart(document.getElementById('expensespiechart'));
 
-                        var chart = new google.visualization.PieChart(document.getElementById('expensespiechart'));
+                            chart.draw(data, options);
+                        }
+                    </script>
+                </head>
+                <body>
+                <div id="expensespiechart" style="width: 900px; height: 500px;"></div>
+                </body>
+            </div>
 
-                        chart.draw(data, options);
-                    }
-                </script>
-            </head>
-            <body>
-            <div id="expensespiechart" style="width: 900px; height: 500px;"></div>
-            </body>
+            <div class="graphs" id="totalPie">
+                <head>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
+                        function drawChart() {
 
-            <head>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
+                            var data = google.visualization.arrayToDataTable([
+                                ['Type', 'Amount'],
+                                ['Income', {{ incomeTotal }}],
+                                ['Expenses', {{ expenseTotal }}]
+                            ]);
 
-                    function drawChart() {
+                            var options = {
+                                title: 'Income/Expenses Pie Chart'
+                            };
 
-                        var data = google.visualization.arrayToDataTable([
-                            ['Type', 'Amount'],
-                            ['Income', {{ incomeTotal }}],
-                            ['Expenses', {{ expenseTotal }}]
-                        ]);
+                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-                        var options = {
-                            title: 'Income/Expenses Pie Chart'
-                        };
+                            chart.draw(data, options);
+                        }
+                    </script>
+                </head>
+                <body>
+                <div id="piechart" style="width: 900px; height: 500px;"></div>
+                </body>
+            </div>
 
-                        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+            <div class="graphs" id="totalBar">
+                <head>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                        chart.draw(data, options);
-                    }
-                </script>
-            </head>
-            <body>
-            <div id="piechart" style="width: 900px; height: 500px;"></div>
-            </body>
+                        function drawChart() {
 
+                            var data = google.visualization.arrayToDataTable([
+                                ['Type', 'Amount', { role: "style" } ],
+                                ['Income', {{ incomeTotal }}, "red"],
+                                ['Expenses', {{ expenseTotal }}, "blue"]
+                            ]);
 
-            <head>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
+                            var options = {
+                                title: 'Income/Expenses Bar Chart'
+                            };
 
-                    function drawChart() {
+                            var chart = new google.visualization.BarChart(document.getElementById('barchart'));
 
-                        var data = google.visualization.arrayToDataTable([
-                            ['Type', 'Amount', { role: "style" } ],
-                            ['Income', {{ incomeTotal }}, "red"],
-                            ['Expenses', {{ expenseTotal }}, "blue"]
-                        ]);
+                            chart.draw(data, options);
+                        }
+                    </script>
+                </head>
+                <body>
+                <div id="barchart" style="width: 900px; height: 500px;"></div>
+                </body>
+            </div>
 
-                        var options = {
-                            title: 'Income/Expenses Bar Chart'
-                        };
+            <div class="graphs" id="expenseBar">
+                <head>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                        var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+                        function drawChart() {
 
-                        chart.draw(data, options);
-                    }
-                </script>
-            </head>
-            <body>
-            <div id="barchart" style="width: 900px; height: 500px;"></div>
-            </body>
+                            var data = google.visualization.arrayToDataTable([
+                                ['Expenses', 'Amount', { role: "style" } ],
+                                ['Housing', {{ housingTotal }}, "red"],
+                                ['Food/Drink', {{ fooddrinkTotal }}, "blue"],
+                                ['Miscellaneous', {{ miscellaneous2Total }}, "green"],
+                                ['Transportation', {{ transportationTotal }}, "orange"]
+                            ]);
 
+                            var options = {
+                                title: 'Expenses Bar Chart'
+                            };
 
-            <head>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
+                            var chart = new google.visualization.BarChart(document.getElementById('expensesbarchart'));
 
-                    function drawChart() {
+                            chart.draw(data, options);
+                        }
+                    </script>
+                </head>
+                <body>
+                <div id="expensesbarchart" style="width: 900px; height: 500px;"></div>
+                </body>
+            </div>
 
-                        var data = google.visualization.arrayToDataTable([
-                            ['Expenses', 'Amount', { role: "style" } ],
-                            ['Housing', {{ housingTotal }}, "red"],
-                            ['Food/Drink', {{ fooddrinkTotal }}, "blue"],
-                            ['Miscellaneous', {{ miscellaneous2Total }}, "green"],
-                            ['Transportation', {{ transportationTotal }}, "orange"]
-                        ]);
+            <div class="graphs" id="incomeBar">
+                <head>
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                        var options = {
-                            title: 'Expenses Bar Chart'
-                        };
+                        function drawChart() {
 
-                        var chart = new google.visualization.BarChart(document.getElementById('expensesbarchart'));
+                            var data = google.visualization.arrayToDataTable([
+                                ['Incomes', 'Amount', { role: "style" } ],
+                                ['Salary', {{ salaryTotal }}, "red"],
+                                ['Miscellaneous', {{ miscellaneous1Total }}, "blue"],
+                            ]);
 
-                        chart.draw(data, options);
-                    }
-                </script>
-            </head>
-            <body>
-            <div id="expensesbarchart" style="width: 900px; height: 500px;"></div>
-            </body>
+                            var options = {
+                                title: 'Income Bar Chart'
+                            };
 
+                            var chart = new google.visualization.BarChart(document.getElementById('incomebarchart'));
 
-            <head>
-                <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                <script type="text/javascript">
-                    google.charts.load('current', {'packages':['corechart']});
-                    google.charts.setOnLoadCallback(drawChart);
-
-                    function drawChart() {
-
-                        var data = google.visualization.arrayToDataTable([
-                            ['Incomes', 'Amount', { role: "style" } ],
-                            ['Salary', {{ salaryTotal }}, "red"],
-                            ['Miscellaneous', {{ miscellaneous1Total }}, "blue"],
-                        ]);
-
-                        var options = {
-                            title: 'Income Bar Chart'
-                        };
-
-                        var chart = new google.visualization.BarChart(document.getElementById('incomebarchart'));
-
-                        chart.draw(data, options);
-                    }
-                </script>
-            </head>
-            <body>
-            <div id="incomebarchart" style="width: 900px; height: 500px;"></div>
-            </body>
-
+                            chart.draw(data, options);
+                        }
+                    </script>
+                </head>
+                <body>
+                <div id="incomebarchart" style="width: 900px; height: 500px;"></div>
+                </body>
+            </div>
 
         </div>
     </div>
