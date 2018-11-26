@@ -81,20 +81,37 @@ def login_page():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     db = get_db()
-    cur = db.execute('select username from login where username=?', [request.form['login_username']])
-    loginUsername = cur.fetchone()[0]
-    cur1 = db.execute('select password from login where password=?', [request.form['login_password']])
-    loginPassword = cur1.fetchone()[0]
-    error = None
-    if request.method == 'POST':
-        if request.form['login_username'] != loginUsername:
+    try:
+        cur = db.execute('select username from login where username=?', [request.form['login_username']])
+        loginUsername = cur.fetchone()[0]
+        cur = db.execute('select id from login where username=?', [request.form['login_username']])
+        usernameId = cur.fetchone()[0]
+    except TypeError:
+        if request.method == 'POST':
             error = 'Invalid username'
-        elif request.form['login_password'] != loginPassword:
+        return render_template('login.html', error=error)
+    try:
+        cur1 = db.execute('select password from login where password=?', [request.form['login_password']])
+        loginPassword = cur1.fetchone()[0]
+        cur = db.execute('select id from login where password=?', [request.form['login_password']])
+        passwordId = cur.fetchone()[0]
+    except TypeError:
+        if request.method == 'POST':
             error = 'Invalid password'
+        return render_template('login.html', error=error)
+    if request.method == 'POST':
+        if usernameId == passwordId:
+            if request.form['login_username'] == loginUsername:
+                if request.form['login_password'] == loginPassword:
+                    session['logged_in'] = True
+                    flash('You were logged in')
+                    return redirect(url_for('show_entries'))
+                else:
+                    error = 'Invalid password'
+            else:
+                error = 'Invalid username'
         else:
-            session['logged_in'] = True
-            flash('You were logged in')
-            return redirect(url_for('show_entries'))
+            error = 'Username and password do not match'
     return render_template('login.html', error=error)
 
 # Code found from the following website http://flask.pocoo.org/docs/0.12/tutorial/views/
@@ -122,7 +139,7 @@ def show_entries():
     incomes = cur.fetchall()
     cur = db.execute('select amount, category, id, expense_date from expenses order by id desc')
     expenses = cur.fetchall()
-    
+
     cur = db.execute('SELECT TOTAL(amount) FROM incomes')
     incomeTotal = cur.fetchone()[0]
     cur = db.execute('SELECT TOTAL(amount) FROM expenses')
@@ -151,6 +168,7 @@ def show_entries():
 
     if net < 0:
         flash("Expenses outweigh incomes, needs re-budgeting", "danger")
+
 
     net = "{:.2f}".format(net)
 
@@ -186,7 +204,7 @@ def edit_income_form():
     income = cur.fetchone()
     return render_template('edit_incomes.html', income=income)
 
-                
+
 @app.route('/filter_income', methods=['POST'])
 def filter_income():
     db = get_db()
@@ -194,7 +212,7 @@ def filter_income():
     incomes = cur.fetchall()
     flash('Incomes filtered', "info")
     return render_template('show_entries.html', incomes=incomes)
-                
+
 
 @app.route('/filter_date', methods=['POST'])
 def filter_date():
@@ -213,7 +231,7 @@ def filter_expense():
     flash('Expenses filtered', "info")
     return render_template('show_entries.html', expenses=expenses)
 
-                
+
 @app.route('/edit_expense_form', methods=['GET'])
 def edit_expense_form():
     db = get_db()
@@ -241,7 +259,7 @@ def edit_expenses():
     db.commit()
     flash('Expense edited', "info")
     return redirect(url_for("show_entries"))
-  
+
 @app.route('/delete_income', methods=['POST'])
 def delete_income():
     db = get_db()
