@@ -279,5 +279,5 @@ def delete_expense():
 
 @app.route('/remove_filter', methods=['POST'])
 def remove_filter():
-    flash('Showing Everything', "info")
+    flash('Removed filter', "info")
     return redirect(url_for('show_entries'))

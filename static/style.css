@@ -5,41 +5,40 @@ Styles the background, text, margins, and positioning for each respective spot o
  */
 
 #header {
-    padding: 5px 10px;
-    background: #ccc;
+    padding: 20px;
+    background: lightskyblue;
 }
-
-#columnOne {
-    flex: 50%;
-    padding: 10px;
-    background: #c9d;
+#rowOne {
+    padding: 20px;
+    background: lightcoral;
 }
-
-#columnTwo {
-    flex: 50%;
+#rowTwo {
     border: 1px black;
-    padding: 10px;
-    background: #9cc;
+    padding: 20px;
+    background: palegreen;
 }
-
+#rowThree {
+    padding: 20px;
+    background: lightgoldenrodyellow;
+}
+#login {
+    padding: 20px;
+    background: lightgoldenrodyellow;
+}
 #footer {
     clear: both;
-    padding: 5px 10px;
-    background: #ccc;
+    padding: 10px 20px;
+    background: lightskyblue;
 }
-
 h1 {
     margin: 0;
 }
-
 h2, h3 {
     margin: 0 0 1em;
 }
-
 #footer p {
     margin: 0;
 }
-
 body,
 html {
     margin: 0;
@@ -47,13 +46,15 @@ html {
     color: #000;
     background: #ccc;
 }
-
+#messages {
+    background: lavender;
+    padding: 0px;
+}
 #page {
     width: 100%;
     margin: 0 auto;
     background: #ccc;
 }
-
 .graphs {
     visibility: hidden;
 }
