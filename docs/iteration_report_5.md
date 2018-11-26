@@ -14,7 +14,8 @@ What each person was responsible for accomplishing
 What was completed
 -----------------------
  - Joe: Fixed issues with the login page from last week. Login page will now show 
- - Jonathan: Added logout feature. Added filter date feature. Worked with Joe to get login page funtional.
+ - Jonathan: Added logout feature. Added filter date feature. Worked with Joe to get login page funtional. Added a remove filter button 
+so the user can go back and see their entire table after adding a filter.
  - Johnny: Fixed unit tests so they are now passing in PyCharm. Added a show/hide feature for each of the graphs. Added rounding to the incomes.
  - Alex: Created 6 different graphs. They are now functional and use the data from each table.
 
