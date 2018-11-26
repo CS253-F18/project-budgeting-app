@@ -16,9 +16,9 @@
 
 """
 import os
+import formatter
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, g, redirect, url_for, render_template, flash, session
-
 
 # create our little application :)
 app = Flask(__name__)
@@ -144,6 +144,18 @@ def show_entries():
     incomeTotal = cur.fetchone()[0]
     cur = db.execute('SELECT TOTAL(amount) FROM expenses')
     expenseTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Salary"')
+    salaryTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Miscellaneous"')
+    miscellaneous1Total = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Housing"')
+    housingTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Transportation"')
+    transportationTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Food/Drink"')
+    fooddrinkTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Miscellaneous"')
+    miscellaneous2Total = cur.fetchone()[0]
 
     if incomeTotal == "None" and expenseTotal == "None":
         net = 0.00
@@ -154,12 +166,15 @@ def show_entries():
     else:
         net = incomeTotal - expenseTotal
 
-    net = round(net, 2)
-
     if net < 0:
         flash("Expenses outweigh incomes, needs re-budgeting", "danger")
 
-    return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net)
+
+    net = "{:.2f}".format(net)
+
+    return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
+    housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
+                           incomeTotal=incomeTotal, expenseTotal=expenseTotal)
 
 
 @app.route('/add_income', methods=['POST'])
@@ -197,6 +212,15 @@ def filter_income():
     incomes = cur.fetchall()
     flash('Incomes filtered', "info")
     return render_template('show_entries.html', incomes=incomes)
+
+
+@app.route('/filter_date', methods=['POST'])
+def filter_date():
+    db = get_db()
+    cur = db.execute("select amount, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
+    expenses = cur.fetchall()
+    flash('Dates filtered', "info")
+    return render_template('show_entries.html', expenses=expenses)
 
 
 @app.route('/filter_expense', methods=['POST'])
@@ -239,7 +263,7 @@ def edit_expenses():
 @app.route('/delete_income', methods=['POST'])
 def delete_income():
     db = get_db()
-    db.execute('DELETE FROM incomes WHERE id=?', [request.form['income-id']])
+    db.execute('DELETE FROM incomes WHERE id=?', [request.form['income_id']])
     db.commit()
     flash('Income deleted', "info")
     return redirect(url_for('show_entries'))
@@ -248,7 +272,7 @@ def delete_income():
 @app.route('/delete_expense', methods=['POST'])
 def delete_expense():
     db = get_db()
-    db.execute('DELETE FROM expenses WHERE id=?', [request.form['expense-id']])
+    db.execute('DELETE FROM expenses WHERE id=?', [request.form['expense_id']])
     db.commit()
     flash('Expense deleted', "info")
     return redirect(url_for('show_entries'))

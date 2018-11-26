@@ -53,5 +53,39 @@ October 31st
 November 4th
 -----------------------
 
-7:30 PM - 
- - 
+7:30 PM - 10:00 PM
+ - Worked on respective tasks for iteration
+ - All team members present
+
+November 11th
+-----------------------
+
+7:00 PM - 9:30 PM
+ - Worked on respective tasks for iteration
+ - All team members present
+
+November 12th
+-----------------------
+
+10:00 AM - 11:00 AM 
+ - Jonathan met with Professor at office hours
+
+November 18th
+-----------------------
+
+3:00 PM - 7:00 PM 
+ - Worked on respective tasks for iteration
+ - All team members present
+
+November 19th
+-----------------------
+
+10:00 AM - 11:00 AM 
+ - Jonathan and Joe met with Professor Lifiton during office hours
+
+November 25th
+-----------------------
+
+3:00 PM - 6:00 PM 
+ - Worked on respective tasks for current iteration
+ - All team members present
