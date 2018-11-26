@@ -13,7 +13,8 @@ What each person was responsible for accomplishing
 
 What was completed
 -----------------------
- - Joe: Fixed issues with the login page from last week. Login page will now show 
+ - Joe: Fixed issues with the login page from last week. Login page will no longer break due to incorrect username/password. Also, the
+page will no longer login with an incorrect username and correct password.
  - Jonathan: Added logout feature. Added filter date feature. Worked with Joe to get login page funtional. Added a remove filter button 
 so the user can go back and see their entire table after adding a filter. Started making the page look better.
  - Johnny: Fixed unit tests so they are now passing in PyCharm. Added a show/hide feature for each of the graphs. Added rounding to the incomes.
@@ -22,7 +23,8 @@ so the user can go back and see their entire table after adding a filter. Starte
 
 What was planned but not finished
 -----------------------
-The graphs show up on the page, however, they are not functional.  Rounding for individual values in the table is not functional.
+The personalized greeting messages were never completed. The "show more" and "show less" to income and expense table. Group may
+reevaluate to see whether adding this feature is necessary considering we already have a filter option for the table. 
 
 
 What troubles/issues/roadblocks/difficulties you encountered
@@ -33,8 +35,10 @@ the problem online.
 
 What adjustments to your overall design you discovered
 -----------------------
+This week our group swithced some of our individual tasks in order to complete the iteration on time. For example, Alex was able to complete the pie charts so he was able
+to do the bar graphs for Johnny.
 I believe our overall design is looking good right now. We need to dedicate time in the future to ensuring there are now bugs in our program that allow users to login incorrectly. We need
-to test all cases before the program in completed.
+to test all cases before the program in completed. 
 
 
 One important thing you learned during this iteration
@@ -51,8 +55,11 @@ Week 7
  - Add all missing unit tests. Make sure they are all passing in GitHub and PyCharm.
  - Start searching for bugs and places where the program does not work as intended by testing all cases.
  - Check all Flask messages to ensure they are working. Add messages for any function where one is needed.
+ - Ensure that you cannot log in by changing your url to show_entries
+ - Add logic that ensures you will not be able add the same username to database twice. Print message to tell user.
 
 Week 8 
+ - Complete work from previous week.
  - Continue search for bugs and errors by testing all cases and functionality. 
  - Prepare final presentation. 
 
@@ -60,8 +67,10 @@ Week 8
 Who will be responsible for each user story planned for the next iteration, not the following two.
 -----------------------
 
- - Joe: Get user accounts to save data on different accounts.  Personalize accounts with greeting message. Add ability to filter by date.
- - Jonathan: Get user accounts to save data on different accounts.  Add "show More" and "show less" to income and expense tables
- - Johnny: Add buttons to hide and show specific graphs.  Add bar graph. Get rounding working for all values in all tables. 
- - Alex: Get graphs working properly.  Help Jonathan with show more/less
- - Everyone: get previous unit tests working so we can focus on the new ones
+ - Joe: Ensure that you cannot log in by changing your url to show_entries.  - Check all Flask messages to ensure they are working. Add messages
+ for any function where one is needed.
+ - Jonathan: Work with Alex on the looks of page.  Add all missing unit tests. Make sure they are all passing in GitHub and PyCharm.
+ - Johnny: Add logic that ensures you will not be able add the same username to database twice. Print message to tell user. Work with Jonathan
+to make unit tests pass in GitHub.
+ - Alex: Implement bootstrap. Group will discuss specifics on how the page will look. Alex will be responsible for those changes.
+ - Everyone: Search for bugs and places where the program does not work as intended
