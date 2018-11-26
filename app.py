@@ -78,41 +78,19 @@ def login_page():
 
 
 # Code found from the following website: http://flask.pocoo.org/docs/0.12/tutorial/views/
-@app.route('/login', methods=['GET', 'POST'])
+@app.route('/login', methods=['POST'])
 def login():
     db = get_db()
-    try:
-        cur = db.execute('select username from login where username=?', [request.form['login_username']])
-        loginUsername = cur.fetchone()[0]
-        cur = db.execute('select id from login where username=?', [request.form['login_username']])
-        usernameId = cur.fetchone()[0]
-    except TypeError:
-        if request.method == 'POST':
-            error = 'Invalid username'
+    cur = db.execute('select username, password, id from login where username=? and password=?',
+                     [request.form['login_username'], request.form['login_password']])
+    loginRow = cur.fetchone()
+    if loginRow == None:
+        error = 'Username and password do not match'
         return render_template('login.html', error=error)
-    try:
-        cur1 = db.execute('select password from login where password=?', [request.form['login_password']])
-        loginPassword = cur1.fetchone()[0]
-        cur = db.execute('select id from login where password=?', [request.form['login_password']])
-        passwordId = cur.fetchone()[0]
-    except TypeError:
-        if request.method == 'POST':
-            error = 'Invalid password'
-        return render_template('login.html', error=error)
-    if request.method == 'POST':
-        if usernameId == passwordId:
-            if request.form['login_username'] == loginUsername:
-                if request.form['login_password'] == loginPassword:
-                    session['logged_in'] = True
-                    flash('You were logged in')
-                    return redirect(url_for('show_entries'))
-                else:
-                    error = 'Invalid password'
-            else:
-                error = 'Invalid username'
-        else:
-            error = 'Username and password do not match'
-    return render_template('login.html', error=error)
+    else:
+        session['logged_in'] = True
+        flash('You were logged in')
+        return redirect(url_for('show_entries'))
 
 # Code found from the following website http://flask.pocoo.org/docs/0.12/tutorial/views/
 @app.route('/logout', methods=['POST'])
@@ -173,7 +151,7 @@ def show_entries():
     net = "{:.2f}".format(net)
 
     return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
-    housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
+                           housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
                            incomeTotal=incomeTotal, expenseTotal=expenseTotal)
 
 
