@@ -103,11 +103,18 @@ def logout():
 @app.route('/add_user', methods=['POST'])
 def add_user():
     db = get_db()
-    db.execute('INSERT INTO login (username, password) VALUES (?, ?)',
-               [request.form['add_username'],request.form['add_password']])
-    db.commit()
-    flash('New user was successfully added')
-    return redirect(url_for('login_page'))
+    cur = db.execute('select username from login where username=?',
+                     [request.form['add_username']])
+    userRow = cur.fetchone()
+    if userRow == None:
+        db.execute('INSERT INTO login (username, password) VALUES (?, ?)',
+                   [request.form['add_username'], request.form['add_password']])
+        db.commit()
+        flash('New user was successfully added')
+        return redirect(url_for('login_page'))
+    else:
+        flash('Username unavailable')
+        return redirect(url_for('login_page'))
 
 
 @app.route('/show_entries')
