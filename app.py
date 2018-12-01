@@ -106,15 +106,16 @@ def add_user():
     cur = db.execute('select username from login where username=?',
                      [request.form['add_username']])
     userRow = cur.fetchone()
-    if userRow == None:
-        db.execute('INSERT INTO login (username, password) VALUES (?, ?)',
-                   [request.form['add_username'], request.form['add_password']])
-        db.commit()
-        flash('New user was successfully added')
-        return redirect(url_for('login_page'))
-    else:
+    if userRow != None:
         flash('Username unavailable')
         return redirect(url_for('login_page'))
+    
+    db.execute('INSERT INTO login (username, password) VALUES (?, ?)',
+               [request.form['add_username'], request.form['add_password']])
+    db.commit()
+    flash('New user was successfully added')
+    return redirect(url_for('login_page'))
+
 
 
 @app.route('/show_entries')
