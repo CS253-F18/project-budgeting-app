@@ -155,12 +155,14 @@ def show_entries():
     if net < 0:
         flash("Expenses outweigh incomes, needs re-budgeting", "danger")
 
-
     net = "{:.2f}".format(net)
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
+                               housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
+                               incomeTotal=incomeTotal, expenseTotal=expenseTotal)
 
-    return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
-                           housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
-                           incomeTotal=incomeTotal, expenseTotal=expenseTotal)
+    flash('You are not logged in')
+    return redirect(url_for('login_page'))
 
 
 @app.route('/add_income', methods=['POST'])
@@ -188,7 +190,10 @@ def edit_income_form():
     db = get_db()
     cur = db.execute('select id, amount, category from incomes where id=?', [request.args['edit_incomes']])
     income = cur.fetchone()
-    return render_template('edit_incomes.html', income=income)
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('edit_incomes.html', income=income)
+    flash('You are not logged in')
+    return redirect(url_for('login_page'))
 
 
 @app.route('/filter_income', methods=['POST'])
@@ -224,7 +229,10 @@ def edit_expense_form():
     cur = db.execute('select id, amount, category from expenses where id=?', [request.args['edit_expenses']])
     # Created the redirect_edit() function. Used similar format as the functions above.
     expense = cur.fetchone()
-    return render_template('edit_expenses.html', expense=expense)
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('edit_expenses.html', expense=expense)
+    flash('You are not logged in')
+    return redirect(url_for('login_page'))
 
 
 @app.route('/edit_incomes', methods=['POST'])
