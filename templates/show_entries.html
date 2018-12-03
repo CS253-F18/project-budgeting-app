@@ -130,14 +130,14 @@
                 <script type="text/javascript">
                     function changeVisibility(desiredGraph){
 
-                        document.getElementById('incomePie').style.visibility='hidden';
-                        document.getElementById('expensePie').style.visibility='hidden';
-                        document.getElementById('totalPie').style.visibility='hidden';
-                        document.getElementById('incomeBar').style.visibility='hidden';
-                        document.getElementById('expenseBar').style.visibility='hidden';
-                        document.getElementById('totalBar').style.visibility='hidden';
+                        document.getElementById('incomePie').style.display='none';
+                        document.getElementById('expensePie').style.display='none';
+                        document.getElementById('totalPie').style.display='none';
+                        document.getElementById('incomeBar').style.display='none';
+                        document.getElementById('expenseBar').style.display='none';
+                        document.getElementById('totalBar').style.display='none';
 
-                        document.getElementById(desiredGraph).style.visibility='visible';
+                        document.getElementById(desiredGraph).style.display='block';
                     }
                 </script>
                 <select class="btn btn-dark">
