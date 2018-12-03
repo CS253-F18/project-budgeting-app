@@ -6,29 +6,29 @@ Styles the background, text, margins, and positioning for each respective spot o
 
 #header {
     padding: 20px;
-    background: lightskyblue;
+    background: white;
 }
 #rowOne {
     padding: 20px;
-    background: lightcoral;
+    background: white;
 }
 #rowTwo {
     border: 1px black;
     padding: 20px;
-    background: palegreen;
+    background: white;
 }
 #rowThree {
     padding: 20px;
-    background: lightgoldenrodyellow;
+    background: white;
 }
 #login {
     padding: 20px;
-    background: lightgoldenrodyellow;
+    background: white;
 }
 #footer {
     clear: both;
     padding: 10px 20px;
-    background: lightskyblue;
+    background: white;
 }
 h1 {
     margin: 0;
@@ -47,7 +47,7 @@ html {
     background: #ccc;
 }
 #messages {
-    background: lavender;
+    background: white;
     padding: 0px;
 }
 #page {
