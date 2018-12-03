@@ -9,19 +9,19 @@
                         <h4>Add Income:</h4>
                         <dd><input type="date" name="income_date"></dd>
                         <dd><input type="text" size="30" name="add_income">
-                            <select name="incomeCategory">
+                            <select name="incomeCategory" class="btn btn-primary">
                                 <option value="Salary">Salary</option>
                                 <option value="Miscellaneous">Miscellaneous</option>
                             </select></dd>
-                        <dd><input type="submit" value="Add Income">
+                        <dd><input type="submit" class="btn btn-dark" value="Add Income">
                     </form>
                     <br>
                     <form action ="{{ url_for('filter_income') }}" method="post">
-                        <select name="filter_income">
+                        <select name="filter_income" class="btn btn-primary">
                             <option value="Salary">Salary</option>
                             <option value="Miscellaneous">Miscellaneous</option>
                         </select>
-                        <input type="submit" value="Filter Income">
+                        <input type="submit" class="btn btn-dark" value="Filter Income">
                         <!-- Created the Filter Text feature -->
                     </form>
                 </div>
@@ -30,31 +30,31 @@
                         <h4>Add Expense:</h4>
                         <dd><input type="date" name="expense_date"></dd>
                         <dd><input type="text" size="30" name="add_expense">
-                            <select name="expenseCategory">
+                            <select name="expenseCategory" class="btn btn-primary">
                                 <option value="Housing">Housing</option>
                                 <option value="Transportation">Transportation</option>
                                 <option value="Food/Drink">Food/Drink</option>
                                 <option value="Miscellaneous">Miscellaneous</option>
                             </select></dd>
-                        <dd><input type="submit" value="Add Expense">
+                        <dd><input type="submit" class="btn btn-dark" value="Add Expense">
                     </form>
                     <br>
                     <form action ="{{ url_for('filter_expense') }}" method="post">
-                        <select name="filter_expense">
+                        <select name="filter_expense" class="btn btn-primary">
                             <option value="Housing">Housing</option>
                             <option value="Transportation">Transportation</option>
                             <option value="Food/Drink">Food/Drink</option>
                             <option value="Miscellaneous">Miscellaneous</option>
                         </select>
-                        <input type="submit" value="Filter Expense">
+                        <input type="submit" class="btn btn-dark" value="Filter Expense">
                     </form>
                     <form action ="{{ url_for('filter_date') }}" method="post">
-                        <input type="date" name="filter_date">
-                        <input type="submit" value="Filter Date">
+                        <input type="date" style="margin-top: 20px;" name="filter_date">
+                        <input type="submit" class="btn btn-dark" value="Filter Date">
                     </form>
                     <br>
                     <form action ="{{ url_for('remove_filter') }}" method="post" class="remove_filter">
-                        <dd><input type="submit" value="Remove Filter"></dd>
+                        <dd><input type="submit" class="btn btn-dark" value="Remove Filter"></dd>
                     </form>
                 </div>
             </div>
@@ -80,10 +80,10 @@
                                     <td class = "table_date">{{ incomeEntry.income_date }}</td>
                                     <td class = "table_edit"><form action ="{{ url_for('edit_income_form') }}" method="get">
                                         <input type="hidden" name="edit_incomes" value="{{ incomeEntry.id }}">
-                                        <button type="submit"> Edit Text </button></form></td>
+                                        <button type="submit" class="btn btn-light"> Edit Text </button></form></td>
                                     <td class = "table_delete"><form action="{{ url_for('delete_income') }}" method="post">
                                         <input type="hidden" name="income_id" value="{{ incomeEntry.id }}">
-                                        <button type="submit" class="del-inc-button">Delete</button>
+                                        <button type="submit" class="btn btn-light" class="del-inc-button">Delete</button>
                                     </form></td>
                                 </tr>
                             {% else %}
@@ -109,11 +109,11 @@
                                     <td class = "table_amount">{{ "{:.2f}".format(expenseEntry.amount) }}</td>
                                     <td class = "table_date">{{ expenseEntry.expense_date }}</td>
                                     <td class = "table_edit"><form action ="{{ url_for('edit_expense_form') }}" method="get">
-                                        <button type="submit" name="edit_expenses" value={{ expenseEntry.id }}> Edit Text </button>
+                                        <button type="submit" name="edit_expenses" class="btn btn-light" value={{ expenseEntry.id }}> Edit Text </button>
                                     </form></td></td>
                                     <td class = "table_delete"><form action="{{ url_for('delete_expense') }}" method="post">
                                         <input type="hidden" name="expense_id" value="{{ expenseEntry.id }}">
-                                        <button type="submit" class="del-exp-button">Delete</button>
+                                        <button type="submit" class="btn btn-light" class="del-exp-button">Delete</button>
                                     </form></td>
                                 </tr>
                                 </ul>
@@ -125,7 +125,7 @@
             </div>
         </div>
         <div id="rowThree">
-                <h3>Graphs</h3>
+            <h3>Graphs</h3>
             <div class="row">
                 <script type="text/javascript">
                     function changeVisibility(desiredGraph){
@@ -140,189 +140,169 @@
                         document.getElementById(desiredGraph).style.visibility='visible';
                     }
                 </script>
-                <input type="button" value="Income Pie Chart" onClick="changeVisibility('incomePie')">
-                <input type="button" value="Expense Pie Chart" onClick="changeVisibility('expensePie')">
-                <input type="button" value="Total Pie Chart" onClick="changeVisibility('totalPie')">
-                <input type="button" value="Income Bar Graph" onClick="changeVisibility('incomeBar')">
-                <input type="button" value="Expense Bar Graph" onClick="changeVisibility('expenseBar')">
-                <input type="button" value="Total Bar Graph" onClick="changeVisibility('totalBar')">
+                <select class="btn btn-dark">
+                    <option value="Income Pie Chart" onClick="changeVisibility('incomePie')">Income Pie Chart</option>
+                    <option value="Expense Pie Chart" onClick="changeVisibility('expensePie')">Expense Pie Chart</option>
+                    <option value="Total Pie Chart" onClick="changeVisibility('totalPie')">Total Pie Chart</option>
+                    <option value="Income Bar Graph" onClick="changeVisibility('incomeBar')">Income Bar Graph</option>
+                    <option value="Expense Bar Graph" onClick="changeVisibility('expenseBar')">Expense Bar Graph</option>
+                    <option value="Total Bar Graph" onClick="changeVisibility('totalBar')">Total Bar Graph</option>
+                </select>
                 <div class="graphs" id="incomePie">
-                    <head>
-                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                        <script type="text/javascript">
-                            google.charts.load('current', {'packages':['corechart']});
-                            google.charts.setOnLoadCallback(drawChart);
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                            function drawChart() {
+                        function drawChart() {
 
-                                var data = google.visualization.arrayToDataTable([
-                                    ['Incomes', 'Amount'],
-                                    ['Salary', {{ salaryTotal }}],
-                                    ['Miscellaneous', {{ miscellaneous1Total }}],
-                                ]);
+                            var data = google.visualization.arrayToDataTable([
+                                ['Incomes', 'Amount'],
+                                ['Salary', {{ salaryTotal }}],
+                                ['Miscellaneous', {{ miscellaneous1Total }}],
+                            ]);
 
-                                var options = {
-                                    title: 'Income Pie Chart'
-                                };
+                            var options = {
+                                title: 'Income Pie Chart'
+                            };
 
-                                var chart = new google.visualization.PieChart(document.getElementById('incomepiechart'));
+                            var chart = new google.visualization.PieChart(document.getElementById('incomepiechart'));
 
-                                chart.draw(data, options);
-                            }
-                        </script>
-                    </head>
-                    <body>
+                            chart.draw(data, options);
+                        }
+                    </script>
                     <div id="incomepiechart" style="width: 900px; height: 500px;"></div>
-                    </body>
                 </div>
                 <div class="graphs" id="expensePie">
-                    <head>
-                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                        <script type="text/javascript">
-                            google.charts.load('current', {'packages':['corechart']});
-                            google.charts.setOnLoadCallback(drawChart);
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                            function drawChart() {
+                        function drawChart() {
 
-                                var data = google.visualization.arrayToDataTable([
-                                    ['Expenses', 'Amount'],
-                                    ['Housing', {{ housingTotal }}],
-                                    ['Food/Drink', {{ fooddrinkTotal }}],
-                                    ['Miscellaneous', {{ miscellaneous2Total }}],
-                                    ['Transportation', {{ transportationTotal }}]
-                                ]);
+                            var data = google.visualization.arrayToDataTable([
+                                ['Expenses', 'Amount'],
+                                ['Housing', {{ housingTotal }}],
+                                ['Food/Drink', {{ fooddrinkTotal }}],
+                                ['Miscellaneous', {{ miscellaneous2Total }}],
+                                ['Transportation', {{ transportationTotal }}]
+                            ]);
 
-                                var options = {
-                                    title: 'Expenses Pie Chart'
-                                };
+                            var options = {
+                                title: 'Expenses Pie Chart'
+                            };
 
-                                var chart = new google.visualization.PieChart(document.getElementById('expensespiechart'));
+                            var chart = new google.visualization.PieChart(document.getElementById('expensespiechart'));
 
-                                chart.draw(data, options);
-                            }
-                        </script>
-                    </head>
-                    <body>
+                            chart.draw(data, options);
+                        }
+                    </script>
                     <div id="expensespiechart" style="width: 900px; height: 500px;"></div>
-                    </body>
                 </div>
                 <div class="graphs" id="totalPie">
-                    <head>
-                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                        <script type="text/javascript">
-                            google.charts.load('current', {'packages':['corechart']});
-                            google.charts.setOnLoadCallback(drawChart);
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                            function drawChart() {
+                        function drawChart() {
 
-                                var data = google.visualization.arrayToDataTable([
-                                    ['Type', 'Amount'],
-                                    ['Income', {{ incomeTotal }}],
-                                    ['Expenses', {{ expenseTotal }}]
-                                ]);
+                            var data = google.visualization.arrayToDataTable([
+                                ['Type', 'Amount'],
+                                ['Income', {{ incomeTotal }}],
+                                ['Expenses', {{ expenseTotal }}]
+                            ]);
 
-                                var options = {
-                                    title: 'Income/Expenses Pie Chart'
-                                };
+                            var options = {
+                                title: 'Income/Expenses Pie Chart'
+                            };
 
-                                var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+                            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
 
-                                chart.draw(data, options);
-                            }
-                        </script>
-                    </head>
+                            chart.draw(data, options);
+                        }
+                    </script>
                     <body>
                     <div id="piechart" style="width: 900px; height: 500px;"></div>
                     </body>
                 </div>
                 <div class="graphs" id="totalBar">
-                    <head>
-                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                        <script type="text/javascript">
-                            google.charts.load('current', {'packages':['corechart']});
-                            google.charts.setOnLoadCallback(drawChart);
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                            function drawChart() {
+                        function drawChart() {
 
-                                var data = google.visualization.arrayToDataTable([
-                                    ['Type', 'Amount', { role: "style" } ],
-                                    ['Income', {{ incomeTotal }}, "red"],
-                                    ['Expenses', {{ expenseTotal }}, "blue"]
-                                ]);
+                            var data = google.visualization.arrayToDataTable([
+                                ['Type', 'Amount', { role: "style" } ],
+                                ['Income', {{ incomeTotal }}, "red"],
+                                ['Expenses', {{ expenseTotal }}, "blue"]
+                            ]);
 
-                                var options = {
-                                    title: 'Income/Expenses Bar Chart'
-                                };
+                            var options = {
+                                title: 'Income/Expenses Bar Chart'
+                            };
 
-                                var chart = new google.visualization.BarChart(document.getElementById('barchart'));
+                            var chart = new google.visualization.BarChart(document.getElementById('barchart'));
 
-                                chart.draw(data, options);
-                            }
-                        </script>
-                    </head>
-                    <body>
+                            chart.draw(data, options);
+                        }
+                    </script>
                     <div id="barchart" style="width: 900px; height: 500px;"></div>
-                    </body>
                 </div>
                 <div class="graphs" id="expenseBar">
-                    <head>
-                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                        <script type="text/javascript">
-                            google.charts.load('current', {'packages':['corechart']});
-                            google.charts.setOnLoadCallback(drawChart);
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                            function drawChart() {
+                        function drawChart() {
 
-                                var data = google.visualization.arrayToDataTable([
-                                    ['Expenses', 'Amount', { role: "style" } ],
-                                    ['Housing', {{ housingTotal }}, "red"],
-                                    ['Food/Drink', {{ fooddrinkTotal }}, "blue"],
-                                    ['Miscellaneous', {{ miscellaneous2Total }}, "green"],
-                                    ['Transportation', {{ transportationTotal }}, "orange"]
-                                ]);
+                            var data = google.visualization.arrayToDataTable([
+                                ['Expenses', 'Amount', { role: "style" } ],
+                                ['Housing', {{ housingTotal }}, "red"],
+                                ['Food/Drink', {{ fooddrinkTotal }}, "blue"],
+                                ['Miscellaneous', {{ miscellaneous2Total }}, "green"],
+                                ['Transportation', {{ transportationTotal }}, "orange"]
+                            ]);
 
-                                var options = {
-                                    title: 'Expenses Bar Chart'
-                                };
+                            var options = {
+                                title: 'Expenses Bar Chart'
+                            };
 
-                                var chart = new google.visualization.BarChart(document.getElementById('expensesbarchart'));
+                            var chart = new google.visualization.BarChart(document.getElementById('expensesbarchart'));
 
-                                chart.draw(data, options);
-                            }
-                        </script>
-                    </head>
-                    <body>
+                            chart.draw(data, options);
+                        }
+                    </script>
                     <div id="expensesbarchart" style="width: 900px; height: 500px;"></div>
-                    </body>
                 </div>
                 <div class="graphs" id="incomeBar">
-                    <head>
-                        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-                        <script type="text/javascript">
-                            google.charts.load('current', {'packages':['corechart']});
-                            google.charts.setOnLoadCallback(drawChart);
+                    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+                    <script type="text/javascript">
+                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.setOnLoadCallback(drawChart);
 
-                            function drawChart() {
+                        function drawChart() {
 
-                                var data = google.visualization.arrayToDataTable([
-                                    ['Incomes', 'Amount', { role: "style" } ],
-                                    ['Salary', {{ salaryTotal }}, "red"],
-                                    ['Miscellaneous', {{ miscellaneous1Total }}, "blue"],
-                                ]);
+                            var data = google.visualization.arrayToDataTable([
+                                ['Incomes', 'Amount', { role: "style" } ],
+                                ['Salary', {{ salaryTotal }}, "red"],
+                                ['Miscellaneous', {{ miscellaneous1Total }}, "blue"],
+                            ]);
 
-                                var options = {
-                                    title: 'Income Bar Chart'
-                                };
+                            var options = {
+                                title: 'Income Bar Chart'
+                            };
 
-                                var chart = new google.visualization.BarChart(document.getElementById('incomebarchart'));
+                            var chart = new google.visualization.BarChart(document.getElementById('incomebarchart'));
 
-                                chart.draw(data, options);
-                            }
-                        </script>
-                    </head>
-                    <body>
+                            chart.draw(data, options);
+                        }
+                    </script>
                     <div id="incomebarchart" style="width: 900px; height: 500px;"></div>
-                    </body>
                 </div>
             </div>
         </div>
