@@ -4,7 +4,8 @@ create table incomes (
   'label' text,
   'income_date' text,
   'amount' float,
-  category text
+  category text,
+  'user_id' integer not null
 );
 drop table if exists expenses;
 create table expenses (
@@ -12,10 +13,11 @@ create table expenses (
   'label' text,
   'expense_date' text,
   'amount' float,
-  category text
+  category text,
+  'user_id' integer not null
 );
-drop table if exists login;
-create table login (
+drop table if exists users;
+create table users (
   id integer primary key autoincrement,
   'username' text,
   'password' text
