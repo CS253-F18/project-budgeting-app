@@ -113,3 +113,26 @@ class BudgetTestCase(unittest.TestCase):
         assert b'No expenses entered' not in rv.data
         assert b'50.0' not in rv.data
         assert b'55.0' in rv.data
+
+    def test_add_user(self):
+        rv = self.app.post('/add_user', data=dict(
+            username="admin",
+            password="default"
+        ), follow_redirects=True)
+        assert b'admin' not in rv.data
+        assert b'admin' in rv.data
+        assert b'default' in rv.data
+
+    def test_login(self):
+        rv = self.app.post('/add_user', data=dict(
+            username="admin",
+            password="default"
+        ), follow_redirects=True)
+        rv = self.app.post('/login', data=dict(
+            username="admin",
+            password="default"
+        ), follow_redirects=True)
+        assert b'admin' not in rv.data
+        assert b'admin' in rv.data
+        assert b'default' in rv.data
+        assert b'You were logged in' in rv.data
