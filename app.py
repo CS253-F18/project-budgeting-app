@@ -16,6 +16,7 @@
 
 """
 import os
+import werkzeug
 import formatter
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, g, redirect, url_for, render_template, flash, session
@@ -81,19 +82,28 @@ def login_page():
 @app.route('/login', methods=['POST'])
 def login():
     db = get_db()
-    cur = db.execute('select username, password from users where username=? and password=?',
-                     [request.form['login_username'], request.form['login_password']])
+    cur = db.execute('select username from users where username=?',
+                     [request.form['login_username']])
     loginRow = cur.fetchone()
     if loginRow == None:
         error = 'Username and password do not match'
         return render_template('login.html', error=error)
-    else:
-        session['logged_in'] = True
-        cur = db.execute('select id from users where username=?', [request.form['login_username']])
-        user_id = cur.fetchone()[0]
-        session['user_id'] = int(user_id)
-        flash('You were logged in')
-        return redirect(url_for('show_entries'))
+
+    cur = db.execute('select password from users where username=?',
+                     [request.form['login_username']])
+    pwhash = cur.fetchone()[0]
+
+    password = request.form['login_password']
+    passwordCheck = werkzeug.security.check_password_hash(pwhash, password)
+    if passwordCheck == False:
+        error = 'Username and password do not match'
+        return render_template('login.html', error=error)
+    session['logged_in'] = True
+    cur = db.execute('select id from users where username=?', [request.form['login_username']])
+    user_id = cur.fetchone()[0]
+    session['user_id'] = int(user_id)
+    flash('You were logged in')
+    return redirect(url_for('show_entries'))
 
 
 # Code found from the following website http://flask.pocoo.org/docs/0.12/tutorial/views/
@@ -113,9 +123,10 @@ def add_user():
     if userRow != None:
         flash('Username unavailable')
         return redirect(url_for('login_page'))
-    
+    user_password = request.form['add_password']
+    db_password = werkzeug.security.generate_password_hash(user_password, method='pbkdf2:sha256', salt_length=8)
     db.execute('INSERT INTO users (username, password) VALUES (?, ?)',
-               [request.form['add_username'], request.form['add_password']])
+               [request.form['add_username'], db_password])
     db.commit()
     flash('New user was successfully added')
     return redirect(url_for('login_page'))
