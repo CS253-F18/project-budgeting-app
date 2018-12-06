@@ -16,7 +16,7 @@
 
 """
 import os
-import werkzeug
+import werkzeug.security
 import formatter
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, g, redirect, url_for, render_template, flash, session
