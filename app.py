@@ -177,7 +177,7 @@ def show_entries():
         return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
                                housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
                                incomeTotal=incomeTotal, expenseTotal=expenseTotal)
-    flash('You are not logged in')
+    flash('You are not logged in',  "danger")
     return redirect(url_for('login_page'))
 
 
@@ -218,8 +218,10 @@ def filter_income():
     db = get_db()
     cur = db.execute("select amount, category, income_date from incomes where category=? order by id desc",[request.form['filter_income']])
     incomes = cur.fetchall()
+    cur = db.execute("select amount, category, expense_date from expenses")
+    expenses = cur.fetchall()
     flash('Incomes filtered', "info")
-    return render_template('show_entries.html', incomes=incomes)
+    return render_template('show_entries.html', incomes=incomes,  expenses=expenses)
 
 
 @app.route('/filter_date', methods=['POST'])
@@ -227,8 +229,10 @@ def filter_date():
     db = get_db()
     cur = db.execute("select amount, category, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
     expenses = cur.fetchall()
+    cur = db.execute("select amount, category, income_date from incomes")
+    incomes = cur.fetchall()
     flash('Dates filtered', "info")
-    return render_template('show_entries.html', expenses=expenses)
+    return render_template('show_entries.html', expenses=expenses, incomes=incomes)
 
 
 @app.route('/filter_expense', methods=['POST'])
@@ -236,8 +240,10 @@ def filter_expense():
     db = get_db()
     cur = db.execute("select amount, category, expense_date from expenses where category=? order by id desc", [request.form['filter_expense']])
     expenses = cur.fetchall()
+    cur = db.execute("select amount, category, income_date from incomes")
+    incomes = cur.fetchall()
     flash('Expenses filtered', "info")
-    return render_template('show_entries.html', expenses=expenses)
+    return render_template('show_entries.html', expenses=expenses, incomes=incomes)
 
 
 @app.route('/edit_expense_form', methods=['GET'])
