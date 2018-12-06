@@ -177,7 +177,7 @@ def show_entries():
         return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
                                housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
                                incomeTotal=incomeTotal, expenseTotal=expenseTotal)
-    flash('You are not logged in')
+    flash('You are not logged in',  "danger")
     return redirect(url_for('login_page'))
 
 
