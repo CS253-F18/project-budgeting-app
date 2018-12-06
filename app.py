@@ -253,7 +253,7 @@ def edit_incomes():
 def edit_expenses():
     db = get_db()
     db.execute("update expenses set amount = ?, category = ?, expense_date = ? where id = ?",
-               [request.form['amount'], request.form['category'], request.form['edit_expenses']])
+               [request.form['amount'], request.form['category'], request.form['expense_date'], request.form['edit_expenses']])
     db.commit()
     flash('Expense edited', "info")
     return redirect(url_for("show_entries"))
