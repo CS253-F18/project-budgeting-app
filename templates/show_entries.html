@@ -128,7 +128,7 @@
             <h3>Graphs</h3>
             <div class="row">
                 <script type="text/javascript">
-                    function changeVisibility(desiredGraph){
+                    function changeVisibility(){
 
                         document.getElementById('incomePie').style.display='none';
                         document.getElementById('expensePie').style.display='none';
@@ -137,17 +137,19 @@
                         document.getElementById('expenseBar').style.display='none';
                         document.getElementById('totalBar').style.display='none';
 
+                        var desiredGraph = document.getElementById('typeOfGraph').value;
                         document.getElementById(desiredGraph).style.display='block';
                     }
                 </script>
-                <select class="btn btn-dark">
-                    <option value="Income Pie Chart" onClick="changeVisibility('incomePie')">Income Pie Chart</option>
-                    <option value="Expense Pie Chart" onClick="changeVisibility('expensePie')">Expense Pie Chart</option>
-                    <option value="Total Pie Chart" onClick="changeVisibility('totalPie')">Total Pie Chart</option>
-                    <option value="Income Bar Graph" onClick="changeVisibility('incomeBar')">Income Bar Graph</option>
-                    <option value="Expense Bar Graph" onClick="changeVisibility('expenseBar')">Expense Bar Graph</option>
-                    <option value="Total Bar Graph" onClick="changeVisibility('totalBar')">Total Bar Graph</option>
+                <select class="btn btn-dark" id="typeOfGraph" style="margin-bottom: 20px;">
+                    <option value="incomePie">Income Pie Chart</option>
+                    <option value="expensePie">Expense Pie Chart</option>
+                    <option value="totalPie">Total Pie Chart</option>
+                    <option value="incomeBar">Income Bar Graph</option>
+                    <option value="expenseBar">Expense Bar Graph</option>
+                    <option value="totalBar">Total Bar Graph</option>
                 </select>
+                <input type="submit" class="btn btn-dark" onClick="changeVisibility()" value="Filter Graph" style="margin-left: 20px; margin-bottom: 20px;">
                 <div class="graphs" id="incomePie">
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
