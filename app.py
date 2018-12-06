@@ -229,8 +229,10 @@ def filter_date():
     db = get_db()
     cur = db.execute("select amount, category, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
     expenses = cur.fetchall()
+    cur = db.execute("select amount, category, income_date from incomes")
+    incomes = cur.fetchall()
     flash('Dates filtered', "info")
-    return render_template('show_entries.html', expenses=expenses)
+    return render_template('show_entries.html', expenses=expenses, incomes=incomes)
 
 
 @app.route('/filter_expense', methods=['POST'])
@@ -238,7 +240,7 @@ def filter_expense():
     db = get_db()
     cur = db.execute("select amount, category, expense_date from expenses where category=? order by id desc", [request.form['filter_expense']])
     expenses = cur.fetchall()
-    cur = db.execute("select amount, category, expense_date from incomes")
+    cur = db.execute("select amount, category, income_date from incomes")
     incomes = cur.fetchall()
     flash('Expenses filtered', "info")
     return render_template('show_entries.html', expenses=expenses, incomes=incomes)
