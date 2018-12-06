@@ -86,8 +86,8 @@ def login():
                      [request.form['login_username']])
     loginRow = cur.fetchone()
     if loginRow == None:
-        error = 'Username and password do not match'
-        return render_template('login.html', error=error)
+        flash('Username and password do not match', "danger")
+        return render_template('login.html')
 
     cur = db.execute('select password from users where username=?',
                      [request.form['login_username']])
@@ -96,13 +96,15 @@ def login():
     password = request.form['login_password']
     passwordCheck = werkzeug.security.check_password_hash(pwhash, password)
     if passwordCheck == False:
-        error = 'Username and password do not match'
-        return render_template('login.html', error=error)
+        flash('Username and password do not match', "danger")
+        return render_template('login.html')
     session['logged_in'] = True
     cur = db.execute('select id from users where username=?', [request.form['login_username']])
     user_id = cur.fetchone()[0]
     session['user_id'] = int(user_id)
-    flash('You were logged in')
+    cur = db.execute('select username from users where username=?', [request.form['login_username']])
+    username = cur.fetchone()[0]
+    flash('Welcome, ' + username + '!', "info")
     return redirect(url_for('show_entries'))
 
 
@@ -110,7 +112,7 @@ def login():
 @app.route('/logout', methods=['POST'])
 def logout():
     session.pop('logged_in', None)
-    flash('You were logged out')
+    flash('You were logged out', "info")
     return redirect(url_for('login_page'))
 
 
@@ -121,7 +123,7 @@ def add_user():
                      [request.form['add_username']])
     userRow = cur.fetchone()
     if userRow != None:
-        flash('Username unavailable', 'danger')
+        flash('Username unavailable', "danger")
         return redirect(url_for('login_page'))
     user_password = request.form['add_password']
     db_password = werkzeug.security.generate_password_hash(user_password, method='pbkdf2:sha256', salt_length=8)
