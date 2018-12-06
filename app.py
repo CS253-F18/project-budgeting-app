@@ -74,7 +74,7 @@ def close_db(error):
 
 @app.route('/')
 def login_page():
-    flash('Welcome to our Budgeting Application')
+    flash('Welcome to our Budgeting Application', 'info')
     return render_template('login.html')
 
 
@@ -121,14 +121,14 @@ def add_user():
                      [request.form['add_username']])
     userRow = cur.fetchone()
     if userRow != None:
-        flash('Username unavailable')
+        flash('Username unavailable', 'danger')
         return redirect(url_for('login_page'))
     user_password = request.form['add_password']
     db_password = werkzeug.security.generate_password_hash(user_password, method='pbkdf2:sha256', salt_length=8)
     db.execute('INSERT INTO users (username, password) VALUES (?, ?)',
                [request.form['add_username'], db_password])
     db.commit()
-    flash('New user was successfully added')
+    flash('New user was successfully added', 'info')
     return redirect(url_for('login_page'))
 
 
@@ -203,11 +203,11 @@ def add_expense():
 @app.route('/edit_income_form', methods=['GET'])
 def edit_income_form():
     db = get_db()
-    cur = db.execute('select id, amount, category from incomes where id=?', [request.args['edit_incomes']])
+    cur = db.execute('select id, amount, category, income_date from incomes where id=?', [request.args['edit_incomes']])
     income = cur.fetchone()
     if 'logged_in' in session and session['logged_in']:
         return render_template('edit_incomes.html', income=income)
-    flash('You are not logged in')
+    flash('You are not logged in', "danger")
     return redirect(url_for('login_page'))
 
 
@@ -241,19 +241,19 @@ def filter_expense():
 @app.route('/edit_expense_form', methods=['GET'])
 def edit_expense_form():
     db = get_db()
-    cur = db.execute('select id, amount, category from expenses where id=?', [request.args['edit_expenses']])
+    cur = db.execute('select id, amount, category, expense_date from expenses where id=?', [request.args['edit_expenses']])
     # Created the redirect_edit() function. Used similar format as the functions above.
     expense = cur.fetchone()
     if 'logged_in' in session and session['logged_in']:
         return render_template('edit_expenses.html', expense=expense)
-    flash('You are not logged in')
+    flash('You are not logged in', "danger")
     return redirect(url_for('login_page'))
 
 
 @app.route('/edit_incomes', methods=['POST'])
 def edit_incomes():
     db = get_db()
-    db.execute("update incomes set amount = ?, category = ? where id = ?",
+    db.execute("update incomes set amount = ?, category = ?, income_date = ? where id = ?",
                [request.form['amount'], request.form['category'],request.form['edit_incomes']])
     db.commit()
     flash('Income edited', "info")
@@ -263,8 +263,8 @@ def edit_incomes():
 @app.route('/edit_expenses', methods=['POST'])
 def edit_expenses():
     db = get_db()
-    db.execute("update expenses set amount = ?, category = ? where id = ?",
-               [request.form['amount'], request.form['category'], request.form['edit_expenses']])
+    db.execute("update expenses set amount = ?, category = ?, expense_date = ? where id = ?",
+               [request.form['amount'], request.form['category'], request.form['expense_date'], request.form['edit_expenses']])
     db.commit()
     flash('Expense edited', "info")
     return redirect(url_for("show_entries"))
