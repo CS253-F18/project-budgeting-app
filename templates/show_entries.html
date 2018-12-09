@@ -1,10 +1,18 @@
 {% extends "layout.html" %}
 {% block body %}
     <div class="container">
+        <div id="rowZero">
+            <div class="float-right">
+                    <form action ="{{ url_for('logout') }}" method="post" class="logout">
+                        <dd><input type="submit" class="btn btn-dark" value="Logout"></dd>
+                    </form>
+            </div>
+        </div>
+    </div>
+    <div class="container">
         <div id="rowOne">
             <div class="row">
                 <div class="col">
-
                     <form action="{{ url_for('add_income') }}" method="post" class="add-income">
                         <h4>Add Income:</h4>
                         <dd><input type="date" name="income_date"></dd>

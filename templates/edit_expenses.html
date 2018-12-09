@@ -1,5 +1,14 @@
 {% extends "layout.html" %}
 {% block body %}
+    <div class="container">
+        <div id="rowZero">
+            <div class="float-right">
+                <form action ="{{ url_for('logout') }}" method="post" class="logout">
+                    <dd><input type="submit" class="btn btn-dark" value="Logout"></dd>
+                </form>
+            </div>
+        </div>
+    </div>
     <form action="{{ url_for('edit_expenses') }}" method="post" class="edit-expenses">
         <table id="expense_table">
             <tr>
