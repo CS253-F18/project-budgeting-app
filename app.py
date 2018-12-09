@@ -72,6 +72,7 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
+
 @app.route('/')
 def login_page():
     flash('Welcome to our Budgeting Application', 'info')
@@ -254,7 +255,7 @@ def edit_expense_form():
 def edit_incomes():
     db = get_db()
     db.execute("update incomes set amount = ?, category = ?, income_date = ? where id = ?",
-               [request.form['amount'], request.form['category'],request.form['edit_incomes']])
+               [request.form['amount'], request.form['category'], request.form['income_date'], request.form['edit_id']])
     db.commit()
     flash('Income edited', "info")
     return redirect(url_for("show_entries"))
@@ -264,7 +265,7 @@ def edit_incomes():
 def edit_expenses():
     db = get_db()
     db.execute("update expenses set amount = ?, category = ?, expense_date = ? where id = ?",
-               [request.form['amount'], request.form['category'], request.form['expense_date'], request.form['edit_expenses']])
+               [request.form['amount'], request.form['category'], request.form['expense_date'], request.form['edit_id']])
     db.commit()
     flash('Expense edited', "info")
     return redirect(url_for("show_entries"))
