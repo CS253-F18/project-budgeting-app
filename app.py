@@ -34,14 +34,14 @@ app.config.update(dict(
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
-
+# Connect_db: imported from Flask
 def connect_db():
     """Connects to the specific database."""
     rv = sqlite3.connect(app.config['DATABASE'])
     rv.row_factory = sqlite3.Row
     return rv
 
-
+# Init_db: imported from Flask
 def init_db():
     """Initializes the database."""
     db = get_db()
@@ -49,14 +49,14 @@ def init_db():
         db.cursor().executescript(f.read())
     db.commit()
 
-
+# Initdb_command: Imported from Flask
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
     init_db()
     print('Initialized the database.')
 
-
+# get_db: Imported from Flask
 def get_db():
     """Opens a new database connection if there is none yet for the
     current application context.
@@ -65,19 +65,22 @@ def get_db():
         g.sqlite_db = connect_db()
     return g.sqlite_db
 
-
+# close_db: Imported from Flask
 @app.teardown_appcontext
 def close_db(error):
     """Closes the database again at the end of the request."""
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
+# login_page: This the default loading page for our application.
+#             Will be called when first accessing the application, will render login.html
 @app.route('/')
 def login_page():
     flash('Welcome to our Budgeting Application', 'info')
     return render_template('login.html')
 
-
+# login: Checks to see if the username and password are the same, if true, load show_entries
+#        if false, then print error and reload login.
 # Code found from the following website: http://flask.pocoo.org/docs/0.12/tutorial/views/
 @app.route('/login', methods=['POST'])
 def login():
@@ -85,6 +88,8 @@ def login():
     cur = db.execute('select username from users where username=?',
                      [request.form['login_username']])
     loginRow = cur.fetchone()
+    # If loginRow = none, then selected username does not exist within the datebase.
+    # give the user an error and reload login.html
     if loginRow == None:
         flash('Username and password do not match', "danger")
         return render_template('login.html')
@@ -94,17 +99,24 @@ def login():
     pwhash = cur.fetchone()[0]
 
     password = request.form['login_password']
+    # Adds hashing to our password security. Adds SALT to password to create additional security.
     passwordCheck = werkzeug.security.check_password_hash(pwhash, password)
+    # If passwordCheck == false, then there is no correct username/password combination.
+    # give the user an error and reload login.html
     if passwordCheck == False:
         flash('Username and password do not match', "danger")
         return render_template('login.html')
+    # If passing all of the above, then the username/password combination is correct. Set session to true.
     session['logged_in'] = True
     cur = db.execute('select id from users where username=?', [request.form['login_username']])
     user_id = cur.fetchone()[0]
+    # Set the session's user_id to the user who has just logged in.
     session['user_id'] = int(user_id)
     cur = db.execute('select username from users where username=?', [request.form['login_username']])
     username = cur.fetchone()[0]
+    # Personalized flash message
     flash('Welcome, ' + username + '!', "info")
+    # User is now logged in, so load the url for show_entries
     return redirect(url_for('show_entries'))
 
 
