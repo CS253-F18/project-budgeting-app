@@ -150,6 +150,7 @@
                     <option value="totalBar">Total Bar Graph</option>
                 </select>
                 <input type="submit" class="btn btn-dark" onClick="changeVisibility()" value="Filter Graph" style="margin-left: 20px; margin-bottom: 20px;">
+                <!-- This is the html for the income pie chart -->
                 <div class="graphs" id="incomePie">
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
@@ -166,6 +167,7 @@
 
                             var options = {
                                 title: 'Income Pie Chart'
+                                // the actual sizing of the graph goes in here
                                 ,height: 500
                                 ,width: 900
                             };
@@ -175,8 +177,11 @@
                             chart.draw(data, options);
                         }
                     </script>
+                    <!-- This style is for the box that the graph is in -->
+                    <!-- the actual sizing of the graph goes in the javascript -->
                     <div id="incomepiechart" style="width: 900px; height: 500px;"></div>
                 </div>
+                <!-- This is the html for the expense pie chart -->
                 <div class="graphs" id="expensePie">
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
@@ -195,6 +200,7 @@
 
                             var options = {
                                 title: 'Expenses Pie Chart'
+                                // the actual sizing of the graph goes in here
                                 ,height: 500
                                 ,width: 900
                             };
@@ -204,8 +210,11 @@
                             chart.draw(data, options);
                         }
                     </script>
+                    <!-- This style is for the box that the graph is in -->
+                    <!-- the actual sizing of the graph goes in the javascript -->
                     <div id="expensespiechart" style="width: 900px; height: 500px;"></div>
                 </div>
+                <!-- This is the html for the total pie chart -->
                 <div class="graphs" id="totalPie">
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
@@ -222,6 +231,7 @@
 
                             var options = {
                                 title: 'Income/Expenses Pie Chart'
+                                // the actual sizing of the graph goes in here
                                 ,height: 500
                                 ,width: 900
                             };
@@ -232,9 +242,12 @@
                         }
                     </script>
                     <body>
+                    <!-- This style is for the box that the graph is in -->
+                    <!-- the actual sizing of the graph goes in the javascript -->
                     <div id="piechart" style="width: 900px; height: 500px;"></div>
                     </body>
                 </div>
+                <!-- This is the html for the total bar graph -->
                 <div class="graphs" id="totalBar">
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
@@ -251,6 +264,7 @@
 
                             var options = {
                                 title: 'Income/Expenses Bar Chart'
+                                // the actual sizing of the graph goes in here
                                 ,height: 500
                                 ,width: 900
                             };
@@ -260,8 +274,11 @@
                             chart.draw(data, options);
                         }
                     </script>
+                    <!-- This style is for the box that the graph is in -->
+                    <!-- the actual sizing of the graph goes in the javascript -->
                     <div id="barchart" style="width: 900px; height: 500px;"></div>
                 </div>
+                <!-- This is the html for the expense bar graph -->
                 <div class="graphs" id="expenseBar">
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
@@ -280,6 +297,7 @@
 
                             var options = {
                                 title: 'Expenses Bar Chart'
+                                // the actual sizing of the graph goes in here
                                 ,height: 500
                                 ,width: 900
                             };
@@ -289,8 +307,12 @@
                             chart.draw(data, options);
                         }
                     </script>
+                    <!-- This style is for the box that the graph is in -->
+                    <!-- the actual sizing of the graph goes in the javascript -->
                     <div id="expensesbarchart" style="width: 900px; height: 500px;"></div>
                 </div>
+                <!-- This is the html for the income bar graph -->
+                <!-- This graph only shows bars for the salary and miscellaneous income types -->
                 <div class="graphs" id="incomeBar">
                     <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
                     <script type="text/javascript">
@@ -307,6 +329,7 @@
 
                             var options = {
                                 title: 'Income Bar Chart'
+                                // the actual sizing of the graph goes in here
                                 ,height: 500
                                 ,width: 900
                             };
@@ -316,6 +339,8 @@
                             chart.draw(data, options);
                         }
                     </script>
+                    <!-- This style is for the box that the graph is in -->
+                    <!-- the actual sizing of the graph goes in the javascript -->
                     <div id="incomebarchart" style="width: 900px; height: 500px;"></div>
                 </div>
             </div>
