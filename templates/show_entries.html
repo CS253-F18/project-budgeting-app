@@ -15,7 +15,7 @@
                 <div class="col">
                     <form action="{{ url_for('add_income') }}" method="post" class="add-income">
                         <h4>Add Income:</h4>
-                        <dd><input type="date" name="income_date"></dd>
+                        <dd><input type="date" name="income_date" id="incomeDate" onLoad="document.getElementById('incomeDate').valueAsDate = new Date();"></dd>
                         <dd><input type="text" size="30" name="add_income">
                             <select name="incomeCategory" class="btn btn-primary">
                                 <option value="Salary">Salary</option>

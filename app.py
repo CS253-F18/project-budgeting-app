@@ -34,12 +34,14 @@ app.config.update(dict(
 ))
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
+
 # Connect_db: imported from Flask
 def connect_db():
     """Connects to the specific database."""
     rv = sqlite3.connect(app.config['DATABASE'])
     rv.row_factory = sqlite3.Row
     return rv
+
 
 # Init_db: imported from Flask
 def init_db():
@@ -49,12 +51,14 @@ def init_db():
         db.cursor().executescript(f.read())
     db.commit()
 
+
 # Initdb_command: Imported from Flask
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
     init_db()
     print('Initialized the database.')
+
 
 # get_db: Imported from Flask
 def get_db():
@@ -65,6 +69,7 @@ def get_db():
         g.sqlite_db = connect_db()
     return g.sqlite_db
 
+
 # close_db: Imported from Flask
 @app.teardown_appcontext
 def close_db(error):
@@ -72,12 +77,14 @@ def close_db(error):
     if hasattr(g, 'sqlite_db'):
         g.sqlite_db.close()
 
+
 # login_page: This the default loading page for our application.
 #             Will be called when first accessing the application, will render login.html
 @app.route('/')
 def login_page():
     flash('Welcome to our Budgeting Application', 'info')
     return render_template('login.html')
+
 
 # login: Checks to see if the username and password are the same, if true, load show_entries
 #        if false, then print error and reload login.
@@ -274,7 +281,7 @@ def edit_expense_form():
 def edit_incomes():
     db = get_db()
     db.execute("update incomes set amount = ?, category = ?, income_date = ? where id = ?",
-               [request.form['amount'], request.form['category'], request.form['income_date'], request.form['edit_incomes']])
+               [request.form['amount'], request.form['category'], request.form['income_date'], request.form['edit_id']])
     db.commit()
     flash('Income edited', "info")
     return redirect(url_for("show_entries"))
@@ -284,10 +291,11 @@ def edit_incomes():
 def edit_expenses():
     db = get_db()
     db.execute("update expenses set amount = ?, category = ?, expense_date = ? where id = ?",
-               [request.form['amount'], request.form['category'], request.form['expense_date'], request.form['edit_expenses']])
+               [request.form['amount'], request.form['category'], request.form['expense_date'], request.form['edit_id']])
     db.commit()
     flash('Expense edited', "info")
     return redirect(url_for("show_entries"))
+
 
 @app.route('/delete_income', methods=['POST'])
 def delete_income():
