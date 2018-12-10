@@ -8,7 +8,7 @@ What each person was responsible for accomplishing
 
 What was completed
 ----------------------------
-- Joe: Fixed that the logout button was not visible when logged in. Created a masked input for the password. Made the messages personalized. Added logic for username so that you can not use the same username multiple times. 
+- Joe: Fixed that the logout button was not visible when logged in. Created a masked input for the password. Made the messages personalized. Added logic for username so that you can not use the same username multiple times. Updated login function to hash a salt and password combanation so that we are no longer storing the users passwords. 
 - Jonathan: Fixed the editing of an entry making it lose its date. Fixed the filter error with incomes. Updated some flash messages when logging in. Fixed that filter date did not work for incomes. Fixed that the category did not show up when filtering by date and vice versa. Added date into edit incomes and expenses. Added comments in the code. 
 - Johnny: Fixed the "Save Changes" error that was causing the app to hit a server error. Johnny also fixed all of the unit tests that were not working previously. Fixed the prepopulating error within edit. 
 - Alex: Fixed the styling of graphs to make them a more realistic size. Fixed the x button to close flash messages that were not able to be closed before. Fixed an error that the graphs were not showing up. Added comments in the code. 
