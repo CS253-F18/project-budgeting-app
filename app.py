@@ -16,7 +16,7 @@
 
 """
 import os
-import werkzeug
+import werkzeug.security
 import formatter
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, g, redirect, url_for, render_template, flash, session
@@ -35,6 +35,7 @@ app.config.update(dict(
 app.config.from_envvar('FLASKR_SETTINGS', silent=True)
 
 
+# Connect_db: imported from Flask
 def connect_db():
     """Connects to the specific database."""
     rv = sqlite3.connect(app.config['DATABASE'])
@@ -42,6 +43,7 @@ def connect_db():
     return rv
 
 
+# Init_db: imported from Flask
 def init_db():
     """Initializes the database."""
     db = get_db()
@@ -50,6 +52,7 @@ def init_db():
     db.commit()
 
 
+# Initdb_command: Imported from Flask
 @app.cli.command('initdb')
 def initdb_command():
     """Creates the database tables."""
@@ -57,6 +60,7 @@ def initdb_command():
     print('Initialized the database.')
 
 
+# get_db: Imported from Flask
 def get_db():
     """Opens a new database connection if there is none yet for the
     current application context.
@@ -66,6 +70,7 @@ def get_db():
     return g.sqlite_db
 
 
+# close_db: Imported from Flask
 @app.teardown_appcontext
 def close_db(error):
     """Closes the database again at the end of the request."""
@@ -73,12 +78,16 @@ def close_db(error):
         g.sqlite_db.close()
 
 
+# login_page: This the default loading page for our application.
+#             Will be called when first accessing the application, will render login.html
 @app.route('/')
 def login_page():
     flash('Welcome to our Budgeting Application', 'info')
     return render_template('login.html')
 
 
+# login: Checks to see if the username and password are the same, if true, load show_entries
+#        if false, then print error and reload login.
 # Code found from the following website: http://flask.pocoo.org/docs/0.12/tutorial/views/
 @app.route('/login', methods=['POST'])
 def login():
@@ -86,24 +95,35 @@ def login():
     cur = db.execute('select username from users where username=?',
                      [request.form['login_username']])
     loginRow = cur.fetchone()
+    # If loginRow = none, then selected username does not exist within the datebase.
+    # give the user an error and reload login.html
     if loginRow == None:
-        error = 'Username and password do not match'
-        return render_template('login.html', error=error)
+        flash('Username and password do not match', "danger")
+        return render_template('login.html')
 
     cur = db.execute('select password from users where username=?',
                      [request.form['login_username']])
     pwhash = cur.fetchone()[0]
 
     password = request.form['login_password']
+    # Adds hashing to our password security. Adds SALT to password to create additional security.
     passwordCheck = werkzeug.security.check_password_hash(pwhash, password)
+    # If passwordCheck == false, then there is no correct username/password combination.
+    # give the user an error and reload login.html
     if passwordCheck == False:
-        error = 'Username and password do not match'
-        return render_template('login.html', error=error)
+        flash('Username and password do not match', "danger")
+        return render_template('login.html')
+    # If passing all of the above, then the username/password combination is correct. Set session to true.
     session['logged_in'] = True
     cur = db.execute('select id from users where username=?', [request.form['login_username']])
     user_id = cur.fetchone()[0]
+    # Set the session's user_id to the user who has just logged in.
     session['user_id'] = int(user_id)
-    flash('You were logged in')
+    cur = db.execute('select username from users where username=?', [request.form['login_username']])
+    username = cur.fetchone()[0]
+    # Personalized flash message
+    flash('Welcome, ' + username + '!', "info")
+    # User is now logged in, so load the url for show_entries
     return redirect(url_for('show_entries'))
 
 
@@ -111,7 +131,7 @@ def login():
 @app.route('/logout', methods=['POST'])
 def logout():
     session.pop('logged_in', None)
-    flash('You were logged out')
+    flash('You were logged out', "info")
     return redirect(url_for('login_page'))
 
 
@@ -122,7 +142,7 @@ def add_user():
                      [request.form['add_username']])
     userRow = cur.fetchone()
     if userRow != None:
-        flash('Username unavailable', 'danger')
+        flash('Username unavailable', "danger")
         return redirect(url_for('login_page'))
     user_password = request.form['add_password']
     db_password = werkzeug.security.generate_password_hash(user_password, method='pbkdf2:sha256', salt_length=8)
@@ -176,7 +196,7 @@ def show_entries():
         return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
                                housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
                                incomeTotal=incomeTotal, expenseTotal=expenseTotal)
-    flash('You are not logged in')
+    flash('You are not logged in',  "danger")
     return redirect(url_for('login_page'))
 
 
@@ -215,28 +235,34 @@ def edit_income_form():
 @app.route('/filter_income', methods=['POST'])
 def filter_income():
     db = get_db()
-    cur = db.execute("select amount, category from incomes where category=? order by id desc",[request.form['filter_income']])
+    cur = db.execute("select amount, category, income_date from incomes where category=? order by id desc",[request.form['filter_income']])
     incomes = cur.fetchall()
+    cur = db.execute("select amount, category, expense_date from expenses")
+    expenses = cur.fetchall()
     flash('Incomes filtered', "info")
-    return render_template('show_entries.html', incomes=incomes)
+    return render_template('show_entries.html', incomes=incomes,  expenses=expenses)
 
 
 @app.route('/filter_date', methods=['POST'])
 def filter_date():
     db = get_db()
-    cur = db.execute("select amount, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
+    cur = db.execute("select amount, category, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
     expenses = cur.fetchall()
+    cur = db.execute("select amount, category, income_date from incomes where income_date=? order by id desc", [request.form['filter_date']])
+    incomes = cur.fetchall()
     flash('Dates filtered', "info")
-    return render_template('show_entries.html', expenses=expenses)
+    return render_template('show_entries.html', expenses=expenses, incomes=incomes)
 
 
 @app.route('/filter_expense', methods=['POST'])
 def filter_expense():
     db = get_db()
-    cur = db.execute("select amount, category from expenses where category=? order by id desc", [request.form['filter_expense']])
+    cur = db.execute("select amount, category, expense_date from expenses where category=? order by id desc", [request.form['filter_expense']])
     expenses = cur.fetchall()
+    cur = db.execute("select amount, category, income_date from incomes")
+    incomes = cur.fetchall()
     flash('Expenses filtered', "info")
-    return render_template('show_entries.html', expenses=expenses)
+    return render_template('show_entries.html', expenses=expenses, incomes=incomes)
 
 
 @app.route('/edit_expense_form', methods=['GET'])
@@ -269,6 +295,7 @@ def edit_expenses():
     db.commit()
     flash('Expense edited', "info")
     return redirect(url_for("show_entries"))
+
 
 @app.route('/delete_income', methods=['POST'])
 def delete_income():

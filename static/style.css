@@ -8,6 +8,10 @@ Styles the background, text, margins, and positioning for each respective spot o
     padding: 20px;
     background: white;
 }
+#rowZero {
+    padding: 20px;
+    background: white;
+}
 #rowOne {
     padding: 20px;
     background: white;
