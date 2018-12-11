@@ -216,9 +216,11 @@ def show_entries():
     return redirect(url_for('login_page'))
 
 
+# add_income: This function will add an income entry into the database.
 @app.route('/add_income', methods=['POST'])
 def add_income():
     db = get_db()
+    # Add amount, category, income_date, user_id into incomes database
     db.execute('INSERT INTO incomes (amount, category, income_date, user_id) VALUES (?, ?, ?, ?)',
                [request.form['add_income'], request.form['incomeCategory'], request.form['income_date'], session['user_id']])
     db.commit()
@@ -226,9 +228,11 @@ def add_income():
     return redirect(url_for('show_entries'))
 
 
+# add_expense: This function will add an expense into the database
 @app.route('/add_expense', methods=['POST'])
 def add_expense():
     db = get_db()
+    # same as the add_income select statement above
     db.execute('INSERT INTO expenses (amount, category, expense_date, user_id) VALUES (?, ?, ?, ?)',
                [request.form['add_expense'], request.form['expenseCategory'], request.form['expense_date'],
                 session['user_id']])
@@ -237,6 +241,7 @@ def add_expense():
     return redirect(url_for('show_entries'))
 
 
+# edit_income_form: created separate webpage where edit changes will be made.
 @app.route('/edit_income_form', methods=['GET'])
 def edit_income_form():
     db = get_db()
@@ -248,20 +253,25 @@ def edit_income_form():
     return redirect(url_for('login_page'))
 
 
+# filter_income: filters the inoomes table by category
 @app.route('/filter_income', methods=['POST'])
 def filter_income():
     db = get_db()
+    # only select incomes where category is ?.
     cur = db.execute("select amount, category, income_date from incomes where category=? order by id desc",[request.form['filter_income']])
     incomes = cur.fetchall()
+    # ensures all expenses will show up while filtering incomes
     cur = db.execute("select amount, category, expense_date from expenses")
     expenses = cur.fetchall()
     flash('Incomes filtered', "info")
     return render_template('show_entries.html', incomes=incomes,  expenses=expenses)
 
 
+# filter_date: filters the incomes and expenses table by date
 @app.route('/filter_date', methods=['POST'])
 def filter_date():
     db = get_db()
+    # select expenses and incomes where the date = ?
     cur = db.execute("select amount, category, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
     expenses = cur.fetchall()
     cur = db.execute("select amount, category, income_date from incomes where income_date=? order by id desc", [request.form['filter_date']])
@@ -270,6 +280,7 @@ def filter_date():
     return render_template('show_entries.html', expenses=expenses, incomes=incomes)
 
 
+# filter_expense: same as filter_income. Refer to above
 @app.route('/filter_expense', methods=['POST'])
 def filter_expense():
     db = get_db()
@@ -281,11 +292,11 @@ def filter_expense():
     return render_template('show_entries.html', expenses=expenses, incomes=incomes)
 
 
+# edit_expense_form: same as edit_income_form. Refer to the above
 @app.route('/edit_expense_form', methods=['GET'])
 def edit_expense_form():
     db = get_db()
     cur = db.execute('select id, amount, category, expense_date from expenses where id=?', [request.args['edit_expenses']])
-    # Created the redirect_edit() function. Used similar format as the functions above.
     expense = cur.fetchone()
     if 'logged_in' in session and session['logged_in']:
         return render_template('edit_expenses.html', expense=expense)
@@ -293,9 +304,11 @@ def edit_expense_form():
     return redirect(url_for('login_page'))
 
 
+# edit_incomes: takes the changes made in edit_income_form and updates the database with such changes
 @app.route('/edit_incomes', methods=['POST'])
 def edit_incomes():
     db = get_db()
+    # update incomes with changed new values
     db.execute("update incomes set amount = ?, category = ?, income_date = ? where id = ?",
                [request.form['amount'], request.form['category'], request.form['income_date'], request.form['edit_id']])
     db.commit()
@@ -303,6 +316,7 @@ def edit_incomes():
     return redirect(url_for("show_entries"))
 
 
+# edit_expenses: similar to edit_incomes, refer to above
 @app.route('/edit_expenses', methods=['POST'])
 def edit_expenses():
     db = get_db()
@@ -313,15 +327,18 @@ def edit_expenses():
     return redirect(url_for("show_entries"))
 
 
+# delete_income: delete given entry from the database
 @app.route('/delete_income', methods=['POST'])
 def delete_income():
     db = get_db()
+    # delete row from incomes database where id=?
     db.execute('DELETE FROM incomes WHERE id=?', [request.form['income_id']])
     db.commit()
     flash('Income deleted', "info")
     return redirect(url_for('show_entries'))
 
 
+# delete_expense: similar to delete_income. Refer to above
 @app.route('/delete_expense', methods=['POST'])
 def delete_expense():
     db = get_db()
@@ -331,7 +348,9 @@ def delete_expense():
     return redirect(url_for('show_entries'))
 
 
+# remove_filter: removes filter so user is able to see all entries again.
 @app.route('/remove_filter', methods=['POST'])
 def remove_filter():
+    # calls show_entries which will have no filters
     flash('Removed filter', "info")
     return redirect(url_for('show_entries'))
