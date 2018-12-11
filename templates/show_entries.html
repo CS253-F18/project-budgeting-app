@@ -3,9 +3,10 @@
     <div class="container">
         <div id="rowZero">
             <div class="float-right">
-                    <form action ="{{ url_for('logout') }}" method="post" class="logout">
-                        <dd><input type="submit" class="btn btn-dark" value="Logout"></dd>
-                    </form>
+                <!-- Creating the logout button. Shown at the top of show entries page only -->
+                <form action ="{{ url_for('logout') }}" method="post" class="logout">
+                    <dd><input type="submit" class="btn btn-dark" value="Logout"></dd>
+                </form>
             </div>
         </div>
     </div>
@@ -17,23 +18,28 @@
                         <h4>Add Income:</h4>
                         <dd><input type="date" name="income_date" id="incomeDate" onLoad="document.getElementById('incomeDate').valueAsDate = new Date();"></dd>
                         <dd><input type="text" size="30" name="add_income">
+                            <!-- Select was used for category to create a drop down menu -->
                             <select name="incomeCategory" class="btn btn-primary">
+                                <!-- Created two different options for income category: Salary and Miscellaneous -->
                                 <option value="Salary">Salary</option>
                                 <option value="Miscellaneous">Miscellaneous</option>
                             </select></dd>
+                        <!-- Created a submit button which will add the income into the database -->
                         <dd><input type="submit" class="btn btn-dark" value="Add Income">
                     </form>
                     <br>
+                    <!-- Filter income will have you select one option and send that to the function in app.py -->
+                    <!-- the function in app.py will only show this category -->
                     <form action ="{{ url_for('filter_income') }}" method="post">
                         <select name="filter_income" class="btn btn-primary">
                             <option value="Salary">Salary</option>
                             <option value="Miscellaneous">Miscellaneous</option>
                         </select>
                         <input type="submit" class="btn btn-dark" value="Filter Income Category">
-                        <!-- Created the Filter Text feature -->
                     </form>
                 </div>
                 <div class="col">
+                    <!-- Code for add expense will be the same as add income with the exception of different categories -->
                     <form action ="{{ url_for('add_expense') }}" method="post" class="add-expense">
                         <h4>Add Expense:</h4>
                         <dd><input type="date" name="expense_date"></dd>
@@ -47,6 +53,7 @@
                         <dd><input type="submit" class="btn btn-dark" value="Add Expense">
                     </form>
                     <br>
+                    <!-- Filter expense categories will be same code as filter income category expcept for expense -->
                     <form action ="{{ url_for('filter_expense') }}" method="post">
                         <select name="filter_expense" class="btn btn-primary">
                             <option value="Housing">Housing</option>
