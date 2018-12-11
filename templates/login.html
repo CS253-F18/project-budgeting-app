@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+<!-- Wiil insert into the block body tag in layout.html -->
 {% block body %}
     {% if error %}<p class=error><strong>Error:</strong> {{ error }}{% endif %}
     <div class="container">
@@ -6,13 +7,17 @@
             <div class="row">
                 <form action="{{ url_for('login') }}" method="post" class="login">
                     <dt>Username:</dt>
+                    <!-- Input for the user's username -->
                     <dd><input type="text" name="login_username"></dd>
                     <dt>Password:</dt>
+                    <!-- Input for the user's password -->
                     <dd><input type="password" name="login_password"></dd>
+                    <!-- Button to trigger the login -->
                     <dd><input type="submit" class="btn btn-dark" value="Login">
                 </form>
             </div>
             <div class="row">
+                <!-- Same as the code above except for the creating a new username and password -->
                 <form action="{{ url_for('add_user') }}" method="post" class="add-user">
                     <dt>Create a new username:</dt>
                     <dd><input type="text" name="add_username"></dd>
