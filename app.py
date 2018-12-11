@@ -106,7 +106,7 @@ def login():
     pwhash = cur.fetchone()[0]
 
     password = request.form['login_password']
-    # Adds hashing to our password security. Adds SALT to password to create additional security.
+    # Checks password using hashing from werkzurg
     passwordCheck = werkzeug.security.check_password_hash(pwhash, password)
     # If passwordCheck == false, then there is no correct username/password combination.
     # give the user an error and reload login.html
@@ -127,24 +127,31 @@ def login():
     return redirect(url_for('show_entries'))
 
 
+# logout: If function is called, the user will be logged out adn returned to login.html
 # Code found from the following website http://flask.pocoo.org/docs/0.12/tutorial/views/
 @app.route('/logout', methods=['POST'])
 def logout():
+    # Set session(logged_in) to remove true.
     session.pop('logged_in', None)
     flash('You were logged out', "info")
+    # Return the user to login_page
     return redirect(url_for('login_page'))
 
 
+# add_user: this will add a username and a password to the database and allow the user to log in with it
 @app.route('/add_user', methods=['POST'])
 def add_user():
     db = get_db()
     cur = db.execute('select username from users where username=?',
                      [request.form['add_username']])
     userRow = cur.fetchone()
+    # checks to see if the given username is already in the database,
+    # if true, then give intuitive error and reload page.
     if userRow != None:
         flash('Username unavailable', "danger")
         return redirect(url_for('login_page'))
     user_password = request.form['add_password']
+    # adding salt to increase the security of our login page using werkzurg.
     db_password = werkzeug.security.generate_password_hash(user_password, method='pbkdf2:sha256', salt_length=8)
     db.execute('INSERT INTO users (username, password) VALUES (?, ?)',
                [request.form['add_username'], db_password])
@@ -153,15 +160,20 @@ def add_user():
     return redirect(url_for('login_page'))
 
 
+# show_entries: Once the user is logged in, this is the main page where they will be able to add expenses/incomes,
+#               see table of their expenses/incomes, and graphs.
 @app.route('/show_entries')
 def show_entries():
     db = get_db()
+    # Only selecting the data from the database with the given user_id. This ensures that each account will only
+    # have its own data.
     cur = db.execute('select amount, category, id, income_date from incomes where user_id=? order by id desc', [session['user_id']])
     incomes = cur.fetchall()
     cur = db.execute('select amount, category, id, expense_date from expenses where user_id=? order by id desc',
                      [session['user_id']])
     expenses = cur.fetchall()
 
+    # Getting the totals of certain rows with the database. To be used within graphs and total/net displays.
     cur = db.execute('SELECT TOTAL(amount) FROM incomes where user_id=?', [session['user_id']])
     incomeTotal = cur.fetchone()[0]
     cur = db.execute('SELECT TOTAL(amount) FROM expenses where user_id=?', [session['user_id']])
@@ -179,6 +191,7 @@ def show_entries():
     cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Miscellaneous" and user_id=?', [session['user_id']])
     miscellaneous2Total = cur.fetchone()[0]
 
+    # Adding logic in case there are no incomes or expenses when calculating the net income.
     if incomeTotal == "None" and expenseTotal == "None":
         net = 0.00
     elif incomeTotal != "None" and expenseTotal == "None":
@@ -188,14 +201,17 @@ def show_entries():
     else:
         net = incomeTotal - expenseTotal
 
+    # Intuitive message to help user with budgeting.
     if net < 0:
         flash("Expenses outweigh incomes, needs re-budgeting", "danger")
 
     net = "{:.2f}".format(net)
+    # adding logic to ensure the user must be logged in to access the show_entries page
     if 'logged_in' in session and session['logged_in']:
         return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net, salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
                                housingTotal=housingTotal, transportationTotal=transportationTotal, fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
                                incomeTotal=incomeTotal, expenseTotal=expenseTotal)
+    # if session is not true, then the user is not logged and will be returned to the login_page
     flash('You are not logged in',  "danger")
     return redirect(url_for('login_page'))
 
