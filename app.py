@@ -253,7 +253,42 @@ def edit_income_form():
     return redirect(url_for('login_page'))
 
 
-# filter_income: filters the inoomes table by category
+# edit_incomes: takes the changes made in edit_income_form and updates the database with such changes
+@app.route('/edit_incomes', methods=['POST'])
+def edit_incomes():
+    db = get_db()
+    # update incomes with changed new values
+    db.execute("update incomes set amount = ?, category = ?, income_date = ? where id = ?",
+               [request.form['amount'], request.form['category'], request.form['income_date'], request.form['edit_id']])
+    db.commit()
+    flash('Income edited', "info")
+    return redirect(url_for("show_entries"))
+
+
+# edit_expense_form: same as edit_income_form. Refer to the above
+@app.route('/edit_expense_form', methods=['GET'])
+def edit_expense_form():
+    db = get_db()
+    cur = db.execute('select id, amount, category, expense_date from expenses where id=?', [request.args['edit_expenses']])
+    expense = cur.fetchone()
+    if 'logged_in' in session and session['logged_in']:
+        return render_template('edit_expenses.html', expense=expense)
+    flash('You are not logged in', "danger")
+    return redirect(url_for('login_page'))
+
+
+# edit_expenses: similar to edit_incomes, refer to above
+@app.route('/edit_expenses', methods=['POST'])
+def edit_expenses():
+    db = get_db()
+    db.execute("update expenses set amount = ?, category = ?, expense_date = ? where id = ?",
+               [request.form['amount'], request.form['category'], request.form['expense_date'], request.form['edit_id']])
+    db.commit()
+    flash('Expense edited', "info")
+    return redirect(url_for("show_entries"))
+
+
+# filter_income: filters the incomes table by category
 @app.route('/filter_income', methods=['POST'])
 def filter_income():
     db = get_db()
@@ -290,41 +325,6 @@ def filter_expense():
     incomes = cur.fetchall()
     flash('Expenses filtered', "info")
     return render_template('show_entries.html', expenses=expenses, incomes=incomes)
-
-
-# edit_expense_form: same as edit_income_form. Refer to the above
-@app.route('/edit_expense_form', methods=['GET'])
-def edit_expense_form():
-    db = get_db()
-    cur = db.execute('select id, amount, category, expense_date from expenses where id=?', [request.args['edit_expenses']])
-    expense = cur.fetchone()
-    if 'logged_in' in session and session['logged_in']:
-        return render_template('edit_expenses.html', expense=expense)
-    flash('You are not logged in', "danger")
-    return redirect(url_for('login_page'))
-
-
-# edit_incomes: takes the changes made in edit_income_form and updates the database with such changes
-@app.route('/edit_incomes', methods=['POST'])
-def edit_incomes():
-    db = get_db()
-    # update incomes with changed new values
-    db.execute("update incomes set amount = ?, category = ?, income_date = ? where id = ?",
-               [request.form['amount'], request.form['category'], request.form['income_date'], request.form['edit_id']])
-    db.commit()
-    flash('Income edited', "info")
-    return redirect(url_for("show_entries"))
-
-
-# edit_expenses: similar to edit_incomes, refer to above
-@app.route('/edit_expenses', methods=['POST'])
-def edit_expenses():
-    db = get_db()
-    db.execute("update expenses set amount = ?, category = ?, expense_date = ? where id = ?",
-               [request.form['amount'], request.form['category'], request.form['expense_date'], request.form['edit_id']])
-    db.commit()
-    flash('Expense edited', "info")
-    return redirect(url_for("show_entries"))
 
 
 # delete_income: delete given entry from the database
