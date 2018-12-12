@@ -220,6 +220,12 @@ def show_entries():
 @app.route('/add_income', methods=['POST'])
 def add_income():
     db = get_db()
+    #check to see if what the user entered is a numeric value.
+    income_amount = request.form['add_income']
+    numeric_income = income_amount.isdigit()
+    if numeric_income == False:
+        flash('Please enter a numeric value', "danger")
+        return redirect(url_for('show_entries'))
     # Add amount, category, income_date, user_id into incomes database
     db.execute('INSERT INTO incomes (amount, category, income_date, user_id) VALUES (?, ?, ?, ?)',
                [request.form['add_income'], request.form['incomeCategory'], request.form['income_date'], session['user_id']])
@@ -233,6 +239,11 @@ def add_income():
 def add_expense():
     db = get_db()
     # same as the add_income select statement above
+    expense_amount = request.form['add_expense']
+    numeric_expense = expense_amount.isdigit()
+    if numeric_expense == False:
+        flash('Please enter a numeric value', "danger")
+        return redirect(url_for('show_entries'))
     db.execute('INSERT INTO expenses (amount, category, expense_date, user_id) VALUES (?, ?, ?, ?)',
                [request.form['add_expense'], request.form['expenseCategory'], request.form['expense_date'],
                 session['user_id']])
