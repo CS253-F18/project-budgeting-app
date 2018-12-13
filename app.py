@@ -224,13 +224,14 @@ def add_income():
     db = get_db()
     #check to see if what the user entered is a numeric value.
     income_amount = request.form['add_income']
-    numeric_income = income_amount.isdigit()
-    if numeric_income == False:
-        flash('Please enter a numeric value', "danger")
+    try:
+        numeric_income = float(income_amount)
+    except ValueError:
+        flash('Please enter a positive numeric value', "danger")
         return redirect(url_for('show_entries'))
-    # Add amount, category, income_date, user_id into incomes database
+# Add amount, category, income_date, user_id into incomes database
     db.execute('INSERT INTO incomes (amount, category, income_date, user_id) VALUES (?, ?, ?, ?)',
-               [request.form['add_income'], request.form['incomeCategory'], request.form['income_date'], session['user_id']])
+                [request.form['add_income'], request.form['incomeCategory'], request.form['income_date'], session['user_id']])
     db.commit()
     flash('New income was successfully added', "info")
     return redirect(url_for('show_entries'))
@@ -242,9 +243,10 @@ def add_expense():
     db = get_db()
     # same as the add_income select statement above
     expense_amount = request.form['add_expense']
-    numeric_expense = expense_amount.isdigit()
-    if numeric_expense == False:
-        flash('Please enter a numeric value', "danger")
+    try:
+        numeric_expense = float(expense_amount)
+    except ValueError:
+        flash('Please enter a positive numeric value', "danger")
         return redirect(url_for('show_entries'))
     db.execute('INSERT INTO expenses (amount, category, expense_date, user_id) VALUES (?, ?, ?, ?)',
                [request.form['add_expense'], request.form['expenseCategory'], request.form['expense_date'],
