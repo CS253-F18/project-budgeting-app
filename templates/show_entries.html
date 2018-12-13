@@ -262,9 +262,9 @@
                         function drawChart() {
 
                             var data = google.visualization.arrayToDataTable([
-                                ['Type', 'Amount', { role: "style" } ],
-                                ['Income', {{ incomeTotal }}, "red"],
-                                ['Expenses', {{ expenseTotal }}, "blue"]
+                                ['Type', 'Amount'],
+                                ['Income', {{ incomeTotal }}],
+                                ['Expenses', {{ expenseTotal }}]
                             ]);
 
                             var options = {
@@ -286,22 +286,23 @@
                 <!-- This is the html for the expense bar graph -->
                 <div class="graphs" id="expenseBar">
                     <script type="text/javascript">
-                        google.charts.load('current', {'packages':['corechart']});
+                        google.charts.load('current', {'packages':['corechart', 'bar']});
                         google.charts.setOnLoadCallback(drawChart);
 
                         function drawChart() {
 
                             var data = google.visualization.arrayToDataTable([
-                                ['Expenses', 'Amount', { role: "style" } ],
-                                ['Housing', {{ housingTotal }}, "red"],
-                                ['Food/Drink', {{ fooddrinkTotal }}, "blue"],
-                                ['Miscellaneous', {{ miscellaneous2Total }}, "green"],
-                                ['Transportation', {{ transportationTotal }}, "orange"]
+                                ['Expenses', 'Amount'],
+                                ['Housing', {{ housingTotal }}],
+                                ['Food/Drink', {{ fooddrinkTotal }}],
+                                ['Miscellaneous', {{ miscellaneous2Total }}],
+                                ['Transportation', {{ transportationTotal }}]
                             ]);
 
                             var options = {
                                 title: 'Expenses Bar Chart'
                                 // the actual sizing of the graph goes in here
+                                ,chartArea: {width: '50%'}
                                 ,height: 500
                                 ,width: 900
                             };
@@ -325,9 +326,9 @@
                         function drawChart() {
 
                             var data = google.visualization.arrayToDataTable([
-                                ['Incomes', 'Amount', { role: "style" } ],
-                                ['Salary', {{ salaryTotal }}, "red"],
-                                ['Miscellaneous', {{ miscellaneous1Total }}, "blue"],
+                                ['Incomes', 'Amount'],
+                                ['Salary', {{ salaryTotal }}],
+                                ['Miscellaneous', {{ miscellaneous1Total }}],
                             ]);
 
                             var options = {
