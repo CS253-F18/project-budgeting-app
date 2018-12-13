@@ -151,7 +151,7 @@ def add_user():
         flash('Username unavailable', "danger")
         return redirect(url_for('login_page'))
     user_password = request.form['add_password']
-    # adding salt to increase the security of our login page using werkzurg.
+    # appends a randomized salt to the password that is then hashed using werkzurg.
     db_password = werkzeug.security.generate_password_hash(user_password, method='pbkdf2:sha256', salt_length=8)
     db.execute('INSERT INTO users (username, password) VALUES (?, ?)',
                [request.form['add_username'], db_password])
@@ -304,13 +304,60 @@ def edit_expenses():
 def filter_income():
     db = get_db()
     # only select incomes where category is ?.
-    cur = db.execute("select amount, category, income_date from incomes where category=? order by id desc",[request.form['filter_income']])
+    cur = db.execute("select id, amount, category, income_date from incomes where category=? order by id desc",[request.form['filter_income']])
     incomes = cur.fetchall()
     # ensures all expenses will show up while filtering incomes
-    cur = db.execute("select amount, category, expense_date from expenses")
+    cur = db.execute("select id, amount, category, expense_date from expenses")
     expenses = cur.fetchall()
-    flash('Incomes filtered', "info")
-    return render_template('show_entries.html', incomes=incomes,  expenses=expenses)
+    # Getting the totals of certain rows with the database. To be used within graphs and total/net displays.
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes where user_id=?', [session['user_id']])
+    incomeTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses where user_id=?', [session['user_id']])
+    expenseTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Salary" and user_id=?', [session['user_id']])
+    salaryTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Miscellaneous" and user_id=?',
+                     [session['user_id']])
+    miscellaneous1Total = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Housing" and user_id=?',
+                     [session['user_id']])
+    housingTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Transportation" and user_id=?',
+                     [session['user_id']])
+    transportationTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Food/Drink" and user_id=?',
+                     [session['user_id']])
+    fooddrinkTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Miscellaneous" and user_id=?',
+                     [session['user_id']])
+    miscellaneous2Total = cur.fetchone()[0]
+
+    # Adding logic in case there are no incomes or expenses when calculating the net income.
+    if incomeTotal == "None" and expenseTotal == "None":
+        net = 0.00
+    elif incomeTotal != "None" and expenseTotal == "None":
+        net = incomeTotal
+    elif incomeTotal == "None" and expenseTotal != "None":
+        net = 0.00 - expenseTotal
+    else:
+        net = incomeTotal - expenseTotal
+
+    # Intuitive message to help user with budgeting.
+    if net < 0:
+        flash("Expenses outweigh incomes, needs re-budgeting", "danger")
+
+    net = "{:.2f}".format(net)
+    # adding logic to ensure the user must be logged in to access the show_entries page
+    if 'logged_in' in session and session['logged_in']:
+        flash('Incomes filtered', "info")
+        return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net,
+                               salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
+                               housingTotal=housingTotal, transportationTotal=transportationTotal,
+                               fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
+                               incomeTotal=incomeTotal, expenseTotal=expenseTotal)
+    # if session is not true, then the user is not logged and will be returned to the login_page
+    flash('You are not logged in', "danger")
+    return redirect(url_for('login_page'))
 
 
 # filter_date: filters the incomes and expenses table by date
@@ -318,24 +365,118 @@ def filter_income():
 def filter_date():
     db = get_db()
     # select expenses and incomes where the date = ?
-    cur = db.execute("select amount, category, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
+    cur = db.execute("select id, amount, category, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
     expenses = cur.fetchall()
-    cur = db.execute("select amount, category, income_date from incomes where income_date=? order by id desc", [request.form['filter_date']])
+    cur = db.execute("select id, amount, category, income_date from incomes where income_date=? order by id desc", [request.form['filter_date']])
     incomes = cur.fetchall()
-    flash('Dates filtered', "info")
-    return render_template('show_entries.html', expenses=expenses, incomes=incomes)
+    # Getting the totals of certain rows with the database. To be used within graphs and total/net displays.
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes where user_id=?', [session['user_id']])
+    incomeTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses where user_id=?', [session['user_id']])
+    expenseTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Salary" and user_id=?', [session['user_id']])
+    salaryTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Miscellaneous" and user_id=?',
+                     [session['user_id']])
+    miscellaneous1Total = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Housing" and user_id=?',
+                     [session['user_id']])
+    housingTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Transportation" and user_id=?',
+                     [session['user_id']])
+    transportationTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Food/Drink" and user_id=?',
+                     [session['user_id']])
+    fooddrinkTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Miscellaneous" and user_id=?',
+                     [session['user_id']])
+    miscellaneous2Total = cur.fetchone()[0]
+
+    # Adding logic in case there are no incomes or expenses when calculating the net income.
+    if incomeTotal == "None" and expenseTotal == "None":
+        net = 0.00
+    elif incomeTotal != "None" and expenseTotal == "None":
+        net = incomeTotal
+    elif incomeTotal == "None" and expenseTotal != "None":
+        net = 0.00 - expenseTotal
+    else:
+        net = incomeTotal - expenseTotal
+
+    # Intuitive message to help user with budgeting.
+    if net < 0:
+        flash("Expenses outweigh incomes, needs re-budgeting", "danger")
+
+    net = "{:.2f}".format(net)
+    # adding logic to ensure the user must be logged in to access the show_entries page
+    if 'logged_in' in session and session['logged_in']:
+        flash('Dates filtered', "info")
+        return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net,
+                               salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
+                               housingTotal=housingTotal, transportationTotal=transportationTotal,
+                               fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
+                               incomeTotal=incomeTotal, expenseTotal=expenseTotal)
+    # if session is not true, then the user is not logged and will be returned to the login_page
+    flash('You are not logged in', "danger")
+    return redirect(url_for('login_page'))
 
 
 # filter_expense: same as filter_income. Refer to above
 @app.route('/filter_expense', methods=['POST'])
 def filter_expense():
     db = get_db()
-    cur = db.execute("select amount, category, expense_date from expenses where category=? order by id desc", [request.form['filter_expense']])
+    cur = db.execute("select id, amount, category, expense_date from expenses where category=? order by id desc", [request.form['filter_expense']])
     expenses = cur.fetchall()
-    cur = db.execute("select amount, category, income_date from incomes")
+    cur = db.execute("select id, amount, category, income_date from incomes")
     incomes = cur.fetchall()
-    flash('Expenses filtered', "info")
-    return render_template('show_entries.html', expenses=expenses, incomes=incomes)
+    # Getting the totals of certain rows with the database. To be used within graphs and total/net displays.
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes where user_id=?', [session['user_id']])
+    incomeTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses where user_id=?', [session['user_id']])
+    expenseTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Salary" and user_id=?', [session['user_id']])
+    salaryTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM incomes WHERE category = "Miscellaneous" and user_id=?',
+                     [session['user_id']])
+    miscellaneous1Total = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Housing" and user_id=?',
+                     [session['user_id']])
+    housingTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Transportation" and user_id=?',
+                     [session['user_id']])
+    transportationTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Food/Drink" and user_id=?',
+                     [session['user_id']])
+    fooddrinkTotal = cur.fetchone()[0]
+    cur = db.execute('SELECT TOTAL(amount) FROM expenses WHERE category = "Miscellaneous" and user_id=?',
+                     [session['user_id']])
+    miscellaneous2Total = cur.fetchone()[0]
+
+    # Adding logic in case there are no incomes or expenses when calculating the net income.
+    if incomeTotal == "None" and expenseTotal == "None":
+        net = 0.00
+    elif incomeTotal != "None" and expenseTotal == "None":
+        net = incomeTotal
+    elif incomeTotal == "None" and expenseTotal != "None":
+        net = 0.00 - expenseTotal
+    else:
+        net = incomeTotal - expenseTotal
+
+    # Intuitive message to help user with budgeting.
+    if net < 0:
+        flash("Expenses outweigh incomes, needs re-budgeting", "danger")
+
+    net = "{:.2f}".format(net)
+    # adding logic to ensure the user must be logged in to access the show_entries page
+    if 'logged_in' in session and session['logged_in']:
+        flash('Expenses filtered', "info")
+        return render_template('show_entries.html', incomes=incomes, expenses=expenses, net=net,
+                               salaryTotal=salaryTotal, miscellaneous1Total=miscellaneous1Total,
+                               housingTotal=housingTotal, transportationTotal=transportationTotal,
+                               fooddrinkTotal=fooddrinkTotal, miscellaneous2Total=miscellaneous2Total,
+                               incomeTotal=incomeTotal, expenseTotal=expenseTotal)
+    # if session is not true, then the user is not logged and will be returned to the login_page
+    flash('You are not logged in', "danger")
+    return redirect(url_for('login_page'))
 
 
 # delete_income: delete given entry from the database
