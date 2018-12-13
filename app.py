@@ -82,6 +82,8 @@ def close_db(error):
 #             Will be called when first accessing the application, will render login.html
 @app.route('/')
 def login_page():
+    if 'logged_in' in session and session['logged_in']:
+        return redirect(url_for('show_entries'))
     flash('Welcome to our Budgeting Application', 'info')
     return render_template('login.html')
 
