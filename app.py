@@ -308,10 +308,11 @@ def edit_expenses():
 def filter_income():
     db = get_db()
     # only select incomes where category is ?.
-    cur = db.execute("select id, amount, category, income_date from incomes where category=? order by id desc",[request.form['filter_income']])
+    cur = db.execute("select id, amount, category, income_date from incomes where category=? and user_id=? order by id desc",
+                     [request.form['filter_income'], session['user_id']])
     incomes = cur.fetchall()
     # ensures all expenses will show up while filtering incomes
-    cur = db.execute("select id, amount, category, expense_date from expenses")
+    cur = db.execute("select id, amount, category, expense_date from expenses where user_id=?", [session['user_id']])
     expenses = cur.fetchall()
     # Getting the totals of certain rows with the database. To be used within graphs and total/net displays.
     cur = db.execute('SELECT TOTAL(amount) FROM incomes where user_id=?', [session['user_id']])
@@ -369,9 +370,11 @@ def filter_income():
 def filter_date():
     db = get_db()
     # select expenses and incomes where the date = ?
-    cur = db.execute("select id, amount, category, expense_date from expenses where expense_date=? order by id desc",[request.form['filter_date']])
+    cur = db.execute("select id, amount, category, expense_date from expenses where expense_date=? and user_id=? order by id desc",
+                     [request.form['filter_date'], session['user_id']])
     expenses = cur.fetchall()
-    cur = db.execute("select id, amount, category, income_date from incomes where income_date=? order by id desc", [request.form['filter_date']])
+    cur = db.execute("select id, amount, category, income_date from incomes where income_date=? and user_id=? order by id desc",
+                     [request.form['filter_date'], session['user_id']])
     incomes = cur.fetchall()
     # Getting the totals of certain rows with the database. To be used within graphs and total/net displays.
     cur = db.execute('SELECT TOTAL(amount) FROM incomes where user_id=?', [session['user_id']])
@@ -428,9 +431,10 @@ def filter_date():
 @app.route('/filter_expense', methods=['POST'])
 def filter_expense():
     db = get_db()
-    cur = db.execute("select id, amount, category, expense_date from expenses where category=? order by id desc", [request.form['filter_expense']])
+    cur = db.execute("select id, amount, category, expense_date from expenses where category=? and user_id=? order by id desc",
+                     [request.form['filter_expense'], session['user_id']])
     expenses = cur.fetchall()
-    cur = db.execute("select id, amount, category, income_date from incomes")
+    cur = db.execute("select id, amount, category, income_date from incomes where user_id=?", [session['user_id']])
     incomes = cur.fetchall()
     # Getting the totals of certain rows with the database. To be used within graphs and total/net displays.
     cur = db.execute('SELECT TOTAL(amount) FROM incomes where user_id=?', [session['user_id']])
