@@ -26,6 +26,9 @@ Styles the background, text, margins, and positioning for each respective spot o
     background: white;
 }
 #login {
+    min-width: 400px;
+    width: 100%;
+    height: 800px;
     padding: 20px;
     background: white;
 }
@@ -55,6 +58,7 @@ html {
     padding: 0px;
 }
 #page {
+    height: 200%;
     width: 100%;
     margin: 0 auto;
     background: #ccc;
