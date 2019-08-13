@@ -5,25 +5,30 @@ Styles the background, text, margins, and positioning for each respective spot o
  */
 
 #header {
-    padding: 20px;
-    background: white;
+    padding: 30px;
+    background: cadetblue;
+    min-width: 320px;
 }
 #rowZero {
     padding: 20px;
     background: white;
+    min-width: 320px;
 }
 #rowOne {
     padding: 20px;
     background: white;
+    min-width: 320px;
 }
 #rowTwo {
     border: 1px black;
     padding: 20px;
     background: white;
+    min-width: 320px;
 }
 #rowThree {
     padding: 20px;
     background: white;
+    min-width: 320px;
 }
 #login {
     min-width: 400px;
@@ -36,6 +41,7 @@ Styles the background, text, margins, and positioning for each respective spot o
     clear: both;
     padding: 10px 20px;
     background: white;
+    min-width: 320px;
 }
 h1 {
     margin: 0;
@@ -51,14 +57,14 @@ html {
     margin: 0;
     padding: 0;
     color: #000;
-    background: #ccc;
+    background: cadetblue;
 }
 #messages {
     background: white;
     padding: 0px;
 }
 #page {
-    height: 200%;
+    height: 100%;
     width: 100%;
     margin: 0 auto;
     background: #ccc;

@@ -21,7 +21,7 @@ import formatter
 from sqlite3 import dbapi2 as sqlite3
 from flask import Flask, request, g, redirect, url_for, render_template, flash, session
 
-# create our little application :)
+# create our application
 app = Flask(__name__)
 
 # Load default config and override config from an environment variable
